@@ -7,7 +7,7 @@
         <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- FAVICON -->
-        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/images/brand/favi.jpg') }}" />
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/images/brand/favicon.ico') }}" />
         <!-- TITLE -->
         <title>{{ env('APP_NAME') }} | Forgot Password</title>
         <!-- BOOTSTRAP CSS -->
@@ -48,11 +48,11 @@
                                 @csrf
                                 <span class="login100-form-title pb-0">
                                     <div class="text-center pb-3">
-                                        <a href="javascript:void(0)"><img src="{{ asset('backend/images/brand/logoleef.jpg') }}" class="header-brand-img rounded-2" alt="" style="max-height: 80px;"></a>
+                                        <a href="javascript:void(0)"><img src="{{ asset('backend/images/brand/logo-3.png') }}" class="header-brand-img rounded-2" alt="" style="max-height: 100px;"></a>
                                     </div>
                                     Forgot Password
                                 </span>
-                                <p class="text-muted">Enter the email address registered on your account</p>
+                                <p class="text-muted my-0 pt-5">Enter the email address registered on your account</p>
                                 <x-input-error :messages="$errors->get('email')" class="mt-2 text-red" />
                                 <div class="wrap-input100 validate-input input-group py-4" data-bs-validate="Valid email is required: ex@abc.xyz">
                                     <a href="javascript:void(0)" class="input-group-text bg-white text-muted">

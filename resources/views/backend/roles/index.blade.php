@@ -18,12 +18,10 @@
     <div class="card">
         <div class="card-header justify-content-between">
             <h3 class="card-title font-weight-bold">Roles</h3>
-         @can('add_role')
-            <a href="{{ route('roles.create') }}" class="btn dark-icon btn-primary btn-sm" data-method="get"
-            data-title="Add New User">
-            <i class="ri-add-fill"></i> Add Role
-        </a>
-        @endcan
+            <a href="{{ route('roles.create') }}" class="btn dark-icon btn-primary" data-method="get"
+                data-title="Add New User">
+                <i class="ri-add-fill"></i> Add Role
+            </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">

@@ -5,7 +5,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <!-- FAVICON -->
-<link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/images/brand/favi.ico') }}" />
+<link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/images/brand/favicon.ico') }}" />
 
 <!-- TITLE -->
 <title>{{ env('APP_NAME') }} @yield('title') </title>
@@ -27,8 +27,5 @@
 <!-- COLOR SKIN CSS -->
 <link id="theme" rel="stylesheet" type="text/css" media="all" href="{{ asset('backend/colors/color1.css') }}" />
 
-<!-- Include FullCalendar CSS via CDN -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.css" rel="stylesheet">
-
+<!-- Custom CSS -->
 <link href="{{ asset('backend/css/custom.css') }}" rel="stylesheet" />
-

@@ -124,7 +124,7 @@ class RoleController extends Controller
             }
             $users = $role->users;
             foreach ($users as $user) {
-                $user->syncPermissions($role->permissions()->pluck('name')->toArray());
+                $user->syncPermissions($role->permissions);
             }
             return response()->json([
                 'success' => JsonResponse::HTTP_OK,
@@ -147,6 +147,11 @@ class RoleController extends Controller
     {
         try {
             $role = Role::findOrFail($id);
+            if ($role->users()->count()) {
+                return response()->json([
+                    'message' => 'Unable to Delete! Users are associated with this role.',
+                ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+            }
             $role->delete();
             return response()->json([
                 'success' => JsonResponse::HTTP_OK,

@@ -7,7 +7,7 @@
         <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- FAVICON -->
-        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/images/brand/favi.jpg') }}" />
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/images/brand/favicon.ico') }}" />
         <!-- TITLE -->
         <title>{{ env('APP_NAME') }} | Login</title>
         <!-- BOOTSTRAP CSS -->
@@ -36,9 +36,6 @@
                 <div class="">
                     <!-- CONTAINER OPEN -->
                     {{-- <div class="mx-auto mb-2">
-                        <div class="text-center">
-                            <a href="javascript:void(0)"><img src="{{ asset('backend/images/brand/logo-3.png') }}" class="header-brand-img rounded-2" alt="" style="max-height: 100px;"></a>
-                        </div>
                     </div> --}}
                     <div class="mx-auto" style="max-width: 500px;">
                         <div class="wrap-login100 p-6">
@@ -49,7 +46,7 @@
                                 <input type="hidden" value="admin" name="user_type">
                                 <span class="login100-form-title pb-0">
                                     <div class="text-center pb-3">
-                                        <a href="javascript:void(0)"><img src="{{ asset('backend/images/brand/logoleef.jpg') }}" class="header-brand-img rounded-2" alt="" style="max-height: 80px;"></a>
+                                        <a href="javascript:void(0)"><img src="{{ asset('backend/images/brand/logo-3.png') }}" class="header-brand-img rounded-2" alt="" style="max-height: 100px;"></a>
                                     </div>
                                     Login
                                 </span>

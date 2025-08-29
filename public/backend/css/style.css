@@ -157,17 +157,17 @@ License        :   Licensed under ThemeForest License
 /*Transparent variables*/
 /* ###### Bootstrap ###### */
 :root {
-    --primary-bg-color: #0072e9;
-    --primary-bg-hover: #0072e9;
-    --primary-bg-border: #327c22;
+    --primary-bg-color: #6c5ffc;
+    --primary-bg-hover: #233ac5;
+    --primary-bg-border: #5161c1;
     --dark-body: #292e4a;
     --dark-border: #30314e;
-    --transparent-primary: #0072e9;
-    --transparent-body: #4db83a;
+    --transparent-primary: #6c5ffc;
+    --transparent-body: #584cd9;
     --transparent-theme: rgba(0, 0, 0, 0.2);
     --transparent-border: rgba(255, 255, 255, 0.1);
     --blue: #1a1a3c;
-    --dark-primary-hover: #0072e9;
+    --dark-primary-hover: #233ac5;
     --primary-transparentcolor: #eaedf7;
     --darkprimary-transparentcolor: #2b356e;
     --transparentprimary-transparentcolor: rgba(255, 255, 255, 0.05);
@@ -182,7 +182,7 @@ License        :   Licensed under ThemeForest License
     --white: #ffffff;
     --gray: #6c757d;
     --gray-dark: #343a40;
-    --primary: #42a934;
+    --primary: #6c5ffc;
     --secondary: #6c757d;
     --success: #28a745;
     --info: #17a2b8;
@@ -18783,7 +18783,7 @@ img {
 }
 
 .landing-top-header .top .nav li a.active {
-    color: #42a934;
+    color: #6c5ffc;
 }
 
 @media (max-width: 992px) {
@@ -18812,7 +18812,7 @@ img {
 .nav-pills .show>.nav-link {
     background-color: transparent;
     font-weight: bold;
-    color: #42a934;
+    color: #6c5ffc;
 }
 
 .logo-demo {
@@ -18920,7 +18920,7 @@ img {
     position: absolute;
     content: "";
     height: 8px;
-    border: 2px solid #42a934;
+    border: 2px solid #6c5ffc;
     margin: 0px auto;
     transform: rotate(45deg);
     width: 8px;
@@ -19179,7 +19179,7 @@ img {
 }
 
 .landing-page .landing-title {
-    background: linear-gradient(to right, transparent, #42a934, transparent);
+    background: linear-gradient(to right, transparent, #6c5ffc, transparent);
     height: 1px;
     margin: 0px auto;
     width: 70px !important;
@@ -19343,11 +19343,11 @@ img {
 }
 
 .landing-page #faqs .card.bg-primary-transparent .card-header {
-    border-left: 5px solid #42a934;
+    border-left: 5px solid #6c5ffc;
 }
 
 .landing-page #faqs .card.bg-primary-transparent .card-header .card-options-collapse i {
-    background-color: #42a934;
+    background-color: #6c5ffc;
 }
 
 .landing-page #faqs .card.bg-primary-transparent .card-header a:hover {
@@ -19355,7 +19355,7 @@ img {
 }
 
 .landing-page #faqs .card.bg-primary-transparent .card-body {
-    border-left: 5px solid #42a934;
+    border-left: 5px solid #6c5ffc;
     border-radius: 0 0 7px 7px;
 }
 
@@ -19471,7 +19471,7 @@ img {
     height: 35px;
     width: 35px;
     background-color: #fff;
-    border: 1px solid #42a934;
+    border: 1px solid #6c5ffc;
     font-size: 14px;
     line-height: 2.3;
 }
@@ -20319,12 +20319,12 @@ img {
 }
 
 .rtl.landing-page #faqs .card.bg-primary-transparent .card-header {
-    border-right: 5px solid #42a934;
+    border-right: 5px solid #6c5ffc;
     border-left: inherit;
 }
 
 .rtl.landing-page #faqs .card.bg-primary-transparent .card-body {
-    border-right: 5px solid #42a934;
+    border-right: 5px solid #6c5ffc;
     border-left: inherit;
 }
 

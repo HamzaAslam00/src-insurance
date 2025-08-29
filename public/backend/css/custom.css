@@ -1,50 +1,63 @@
-/* Change the background color of the calendar */
-.fc .fc-col-header-cell {
-    background-color: #f0f0f0; /* light gray */
+.dropify-wrapper {
+    height: 100px;
 }
 
-/* Change the font color and size of the days */
-.fc .fc-daygrid-day-number {
-    color: #007bff; /* blue */
-    font-size: 16px;
-    font-weight: bold;
+.h-36p {
+    height: 36px !important;
+}
+.stickys {
+    position: static!important;
+}
+.iti {
+    width: 100% !important;
+}
+span {cursor:pointer; }
+
+.plus{
+    width: 30px;
+    height: 30px;
+    background: #6c5ffc;
+    border-radius: 4px;
+    padding: 4px 4px 10px 6px;
+    border: 1px solid #6c5ffc;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    color: white;
+}
+.minus {
+    width: 30px;
+    height: 30px;
+    background: #6c5ffc;
+    border-radius: 4px;
+    padding: 4px 4px 10px 6px;
+    border: 1px solid #6c5ffc;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    color: white;
+}
+.number input{
+    height: 34px;
+    width: 50%;
+    text-align: center;
+    border: 1px solid #ddd;
+    vertical-align: middle;
 }
 
-/* Style the events */
-.fc .fc-daygrid-event {
-    background-color: #28a745; /* green */
-    color: #ffffff; /* white */
-    border: none;
-    border-radius: 5px;
-    padding: 5px;
+.badge-secondary {
+    color: #fff;
+    background-color: #6c5ffc;
 }
-
-/* Change the color of the selected day */
-.fc .fc-daygrid-day.fc-day-today {
-    background-color: #ffc107; /* yellow */
-    color: #000000; /* black */
-}
-.fc-daygrid-day-frame:hover {
-    cursor: pointer !important;
-}
-
-/* Customize the month header */
-.fc .fc-toolbar-title {
-    color: #17a2b8; /* teal */
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.selected-day {
-    background-color: #ffeb3b; /* Yellow */
-    color: #000; /* Black text */
-}
-
-.register .active {
-    border-bottom: 4px solid;
-}
-
-ul li a[href="#tab20"].active, 
-ul li a[href="#tab21"].active {
-  border-bottom: 4px solid; 
+.badge {
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }

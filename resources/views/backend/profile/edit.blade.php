@@ -1,13 +1,13 @@
 @extends('backend.layouts.app')
-@section('title', '| '. __('messages.profile'))
+@section('title', '| Edit Profile')
 
 @section('breadcrumb')
     <div class="page-header">
-        <h1 class="page-title">Profile</h1>
+        <h1 class="page-title">{{ __('messages.profile') }}</h1>
         <div>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{__('messages.dashboard')}}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{__('messages.profile')}}</li>
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('messages.dashboard') }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ __('messages.profile') }}</li>
             </ol>
         </div>
     </div>
@@ -24,8 +24,8 @@
                             <div class="tabs-menu1">
                                 <!-- Tabs -->
                                 <ul class="nav panel-tabs">
-                                    <li><a href="#tab25" class="active" data-bs-toggle="tab">{{__('messages.profile')}}</a></li>
-                                    <li><a href="#tab26" data-bs-toggle="tab">{{__('messages.change_password')}}</a></li>
+                                    <li><a href="#tab25" class="active" data-bs-toggle="tab">{{ __('messages.profile') }}</a></li>
+                                    <li><a href="#tab26" data-bs-toggle="tab">{{ __('messages.change_password') }}</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -33,7 +33,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tab25">
                                     <div class="col-xl-12 px-0">
-                                        <form action="{{ route('profile.update', auth()->user()->id) }}" method="post" data-confirm="yes" data-form="ajax-form" enctype="multipart/form-data">
+                                        <form action="{{ route('profile.update', auth()->user()->id) }}" method="post" data-form="ajax-form" enctype="multipart/form-data">
                                             @method('PUT')
                                             <div class="text-center chat-image mb-5">
                                                 <div class="avatar chat-profile mb-3 brround upload-button"
@@ -48,35 +48,35 @@
                                             <div class="row">
                                                 <div class="col-lg-6 col-md-12">
                                                     <div class="form-group">
-                                                        <label class="form-label" for="first_name">{{__('messages.first_name')}}</label>
+                                                        <label class="form-label" for="first_name">{{ __('messages.first_name') }}</label>
                                                         <input type="text" class="form-control" id="first_name"
-                                                            name="first_name" placeholder="{{__('messages.first_name')}}" value="{{ auth()->user()->first_name }}">
+                                                            name="first_name" placeholder="{{ __('messages.first_name') }}" value="{{ auth()->user()->first_name }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-12">
                                                     <div class="form-group">
-                                                        <label class="form-label" for="last_name">{{__('messages.last_name')}}</label>
+                                                        <label class="form-label" for="last_name">{{ __('messages.last_name') }}</label>
                                                         <input type="text" class="form-control" id="last_name"
-                                                            name="last_name" placeholder="{{__('messages.last_name')}}" value="{{ auth()->user()->last_name }}">
+                                                            name="last_name" placeholder="{{ __('messages.last_name') }}" value="{{ auth()->user()->last_name }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-12">
                                                     <div class="form-group">
-                                                        <label class="form-label" for="email">{{__('messages.email_address')}}</label>
+                                                        <label class="form-label" for="email">{{ __('messages.email') }}</label>
                                                         <input type="email" class="form-control" id="email" name="email"
-                                                            placeholder="{{__('messages.email_address')}}" value="{{ auth()->user()->email }}">
+                                                            placeholder="Email address" value="{{ auth()->user()->email }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-12">
                                                     <div class="form-group">
-                                                        <label class="form-label" for="phone">{{__('messages.phone')}}</label>
+                                                        <label class="form-label" for="phone">{{ __('messages.phone') }}</label>
                                                         <input type="tel" class="form-control" id="phone" name="phone"
-                                                            placeholder="{{__('messages.contact_number')}}" value="{{ auth()->user()->phone }}">
+                                                            placeholder="Contact number" value="{{ auth()->user()->phone }}">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-primary" data-button="submit">{{__('messages.update')}}</button>
+                                                <button type="submit" class="btn btn-primary" data-button="submit">{{ __('messages.update') }}</button>
                                             </div>
                                         </form>
                                     </div>
@@ -87,43 +87,42 @@
                                             data-form="ajax-form">
                                             @method('PUT')
                                             <div class="form-group">
-                                                <label class="form-label" for="current_password">{{__('messages.current_password')}}
-                                                    </label>
+                                                <label class="form-label" for="current_password">{{ __('messages.current_password') }}</label>
                                                 <div class="wrap-input100 validate-input input-group"
                                                     id="Password-toggle">
                                                     <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
                                                         <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
                                                     </a>
                                                     <input class="input100 form-control" type="password"
-                                                        placeholder="{{__('messages.current_password')}}" autocomplete="current_password" id="current_password" name="current_password">
+                                                        placeholder="{{ __('messages.current_password') }}" autocomplete="current_password" id="current_password" name="current_password">
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6 form-group">
-                                                    <label class="form-label" for="password">{{__('messages.new_password')}}</label>
+                                                    <label class="form-label" for="password">{{ __('messages.new_password') }}</label>
                                                     <div class="wrap-input100 validate-input input-group" id="Password-toggle1">
                                                         <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
                                                             <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
                                                         </a>
                                                         <input class="input100 form-control" type="password"
-                                                            placeholder="{{__('messages.new_password')}}" autocomplete="password" id="password" name="password">
+                                                            placeholder="{{ __('messages.new_password') }}" autocomplete="password" id="password" name="password">
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <label class="form-label" for="password_confirmation">{{__('messages.confirm_password')}}</label>
+                                                    <label class="form-label" for="password_confirmation">{{ __('messages.confirm_password') }}</label>
                                                     <div class="wrap-input100 validate-input input-group"
                                                         id="Password-toggle2">
                                                         <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
                                                             <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
                                                         </a>
                                                         <input class="input100 form-control" type="password"
-                                                            placeholder="{{__('messages.confirm_password')}}" autocomplete="password_confirmation"
+                                                            placeholder="{{ __('messages.confirm_password') }}" autocomplete="password_confirmation"
                                                             id="password_confirmation" name="password_confirmation">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-primary" data-button="submit">{{__('messages.change_password')}}</button>
+                                                <button type="submit" class="btn btn-primary" data-button="submit">{{ __('messages.update') }}</button>
                                             </div>
                                         </form>
                                     </div>

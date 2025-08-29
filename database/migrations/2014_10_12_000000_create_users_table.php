@@ -16,18 +16,13 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name')->nullable();
             $table->string('email')->unique();
-            $table->string('designation')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('phone')->nullable();
             $table->string('user_type')->default('user');
             $table->string('avatar')->nullable();
-            $table->integer('call_in_better')->default(1);
-            $table->dateTime('call_in_better_time')->nullable();
-            $table->integer('working_hour')->default(0);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->rememberToken();
-            // $table->softDeletes();
             $table->timestamps();
         });
     }

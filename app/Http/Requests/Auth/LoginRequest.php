@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests\Auth;
 
-use Illuminate\Auth\Events\Lockout;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\RateLimiter;
+use App\Models\User;
 use Illuminate\Support\Str;
+use Illuminate\Auth\Events\Lockout;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
@@ -41,7 +42,14 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        $user = User::where('email', $this->input('email'))->where('user_type', $this->input('user_type'))->first();
+        if (!$user) {
+            throw ValidationException::withMessages([
+                'email' => trans('auth.failed'),
+            ]);
+        }
+
+        if (!Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -50,6 +58,19 @@ class LoginRequest extends FormRequest
         }
 
         RateLimiter::clear($this->throttleKey());
+
+        $user = Auth::user();
+        $userRole = $user->roles[0]->name;
+
+        if ($this->input('user_type') === $userRole) {
+            return;
+        }
+
+        Auth::logout();
+
+        throw ValidationException::withMessages([
+            'user_type' => 'Unauthorized! Credencials are not in our records',
+        ]);
     }
 
     /**

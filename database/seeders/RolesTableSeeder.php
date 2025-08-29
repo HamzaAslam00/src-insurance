@@ -26,9 +26,10 @@ class RolesTableSeeder extends Seeder
 
         // Assign permissions to roles
         $admin = Role::updateOrCreate(['name' => 'admin', 'title' => 'Admin', 'is_deleteable' => 0]);
-        $employee = Role::updateOrCreate(['name' => 'employee', 'title' => 'Employee', 'is_deleteable' => 0]);
+        $client = Role::updateOrCreate(['name' => 'client', 'title' => 'Client', 'is_deleteable' => 0]);
+
+        $client->givePermissionTo(['request_a_quote','edit_client','view_policies','view_clients','edit_policy','view_notices','edit_notice','view_payments']);
 
         $admin->permissions()->sync($permissions);
-        $employee->permissions()->sync($permissions);
     }
 }

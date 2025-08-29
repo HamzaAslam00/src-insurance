@@ -1,5 +1,3 @@
-
-
 $(document).on('click', '.delete', function () {
     let url = $(this).data('url');
     let tableId = $(this).data('table');
@@ -9,20 +7,19 @@ $(document).on('click', '.delete', function () {
 });
 
 function deleteConfirmation(url, tableId, refresh = false, div_id = null) {
-    // const someMessage = getTranslation('are_you_sure');
     window.swal.fire({
-        title: window.translations['are_you_sure'] || `Default message for ${'are_you_sure'}`,
-        text: window.translations['delete_confirmation_text'] || 'You want to delete this record',
+        title: 'Are you sure?',
+        text: "You want to delete this record",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-         confirmButtonText: window.translations['yes_delete_it'] || 'Yes, delete it!'
+        confirmButtonText: "Yes, delete it!"
     }).then((result) => {
         if (result.value) {
             window.swal.fire({
                 title: "",
-                text: window.translations['please_wait'] || 'Please wait...',
+                text: "Please wait...",
                 showConfirmButton: false,
                 backdrop: true
             });
@@ -57,11 +54,10 @@ function deleteConfirmation(url, tableId, refresh = false, div_id = null) {
 }
 
 function toastMessage(message = '', status = '') {
-    console.log("57");
     status = status=='' ? 'error' : status;
 
     if (message=='')
-        message = status === 'error' ? window.translations['something_went_wrong'] || 'Something went wrong' : window.translations['default_success_message'] || 'Success';
+        message = status=='error' ? 'Something went wrong' : 'Success';
 
     window.toast.fire({
         title: message,
@@ -105,7 +101,7 @@ $('body').on('click', '[data-act=ajax-modal]', function () {
         spinner.hide();
         if (response.status === 200) {
             content.html(response.data).show();
-
+            
             $("#ajax_model").modal("show");
 
             $('#imageInput').change(function() {
@@ -130,7 +126,7 @@ $('body').on('click', '[data-act=ajax-modal]', function () {
             minimumResultsForSearch: Infinity,
             width: '100%',
         });
-
+        
     }).catch(error => {
         spinner.hide();
         toastMessage(error.response.data.message);
@@ -141,12 +137,11 @@ $('body').on('submit', '[data-form=ajax-form]', function(e) {
     e.preventDefault();
     const form = this;
     const confirm = $(form).data('confirm');
-    console.log(confirm);
 
     if (confirm=='yes') {
         window.swal.fire({
-            title: window.translations['are_you_sure?'] || 'Are you sure?',
-            text: window.translations['do_you_really_want_to_submit_this_form'] || 'Do you really want to submit this form?',
+            title: 'Are you sure?',
+            text: "Do you really want to submit this form?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -170,8 +165,7 @@ function sendAjaxForm(form) {
     const html_div_id = _self.data('html-div-id');
     const show_div = _self.data('show-div');
     const hide_div = _self.data('hide-div');
-    const refresh = _self.data('refresh');
-    const formReset = _self.data('form-reset');
+    const form_reset = _self.data('form-reset');
 
     btn.attr('disabled', 'disabled');
     btn.html(btnHtml + '&nbsp;&nbsp;<span class="spinner-border spinner-border-sm"></span>');
@@ -183,15 +177,10 @@ function sendAjaxForm(form) {
     })
     .then(response => {
         if (response.status == 200) {
-            if (modal !== '') $(modal).modal('hide');
+            console.log(modal);
+            if (modal) $(modal).modal('hide');
+            if (dt) $(dt).DataTable().ajax.reload();
             toastMessage(response.data.message, 'success');
-            if (formReset) {
-                _self[0].reset();
-            }
-            if (refresh) {
-                window.location.reload();
-            }
-            if (dt !== '') $(dt).DataTable().ajax.reload();
             if (redirect) {
                 window.location.href = response.data.redirectUrl;
             }
@@ -201,12 +190,15 @@ function sendAjaxForm(form) {
             if (show_div || hide_div) {
                 $(show_div).removeClass('d-none');
                 $(hide_div).addClass('d-none');
+            }
+            if (form_reset) {
                 _self[0].reset();
             }
         }
         else toastMessage();
     })
     .catch(error => {
+        console.log(error);
         toastMessage(error.response.data.message);
     })
     .finally(response => {

@@ -20,6 +20,7 @@ class PermissionsTableSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         $permissions = [
+
             // Roles
             ['group' => 'roles', 'name' => 'view_roles', 'title' => 'View Roles', 'guard_name' => 'web'],
             ['group' => 'roles', 'name' => 'add_role', 'title' => 'Add Role', 'guard_name' => 'web'],
@@ -31,46 +32,35 @@ class PermissionsTableSeeder extends Seeder
             ['group' => 'users', 'name' => 'add_user', 'title' => 'Add User', 'guard_name' => 'web'],
             ['group' => 'users', 'name' => 'edit_user', 'title' => 'Edit User', 'guard_name' => 'web'],
             ['group' => 'users', 'name' => 'delete_user', 'title' => 'Delete User', 'guard_name' => 'web'],
-            ['group' => 'users', 'name' => 'upload_document', 'title' => 'Upload Document', 'guard_name' => 'web'],
-            
-            // User Documents
-            ['group' => 'user_documents', 'name' => 'view_documents', 'title' => 'View Documents', 'guard_name' => 'web'],
-            ['group' => 'user_documents', 'name' => 'add_document', 'title' => 'Add Document', 'guard_name' => 'web'],
-            ['group' => 'user_documents', 'name' => 'delete_document', 'title' => 'Delete Document', 'guard_name' => 'web'],
-            ['group' => 'user_documents', 'name' => 'download_document', 'title' => 'Download Document', 'guard_name' => 'web'],
 
-             // Holiday Agenda
-            ['group' => 'holiday', 'name' => 'view_holiday', 'title' => 'View Holiday', 'guard_name' => 'web'],
-            ['group' => 'holiday', 'name' => 'create_holiday', 'title' => 'Add Holiday', 'guard_name' => 'web'],
-            ['group' => 'holiday', 'name' => 'delete_holiday', 'title' => 'Delete Holiday', 'guard_name' => 'web'],
-            ['group' => 'holiday', 'name' => 'edit_holiday', 'title' => 'Edit Holiday', 'guard_name' => 'web'],
-            
-              // Personal File
-            ['group' => 'personal_file', 'name' => 'view_personal_file', 'title' => 'View Personal File', 'guard_name' => 'web'],
 
-            // leaves
-            ['group' => 'leaves', 'name' => 'view_leaves', 'title' => 'View leaves', 'guard_name' => 'web'],
-            ['group' => 'leaves', 'name' => 'apply_leave', 'title' => 'Apply leave', 'guard_name' => 'web'],
-            ['group' => 'leaves', 'name' => 'approve_leave', 'title' => 'Approve leave', 'guard_name' => 'web'],
+            // Clients
+            ['group' => 'clients', 'name' => 'view_clients', 'title' => 'View Clients', 'guard_name' => 'web'],
+            ['group' => 'clients', 'name' => 'add_client', 'title' => 'Add Client', 'guard_name' => 'web'],
+            ['group' => 'clients', 'name' => 'edit_client', 'title' => 'Edit Client', 'guard_name' => 'web'],
+            ['group' => 'clients', 'name' => 'delete_client', 'title' => 'Delete Client', 'guard_name' => 'web'],
+            // Policies
+            ['group' => 'policies', 'name' => 'view_policies', 'title' => 'View Policies', 'guard_name' => 'web'],
+            ['group' => 'policies', 'name' => 'add_policy', 'title' => 'Add Policy', 'guard_name' => 'web'],
+            ['group' => 'policies', 'name' => 'edit_policy', 'title' => 'Edit Policy', 'guard_name' => 'web'],
+            ['group' => 'policies', 'name' => 'delete_policy', 'title' => 'Delete Policy', 'guard_name' => 'web'],
+            //Notes
+            ['group' => 'notices', 'name' => 'view_notices', 'title' => 'View Notices', 'guard_name' => 'web'],
+            ['group' => 'notices', 'name' => 'add_notice', 'title' => 'Add Notice', 'guard_name' => 'web'],
+            ['group' => 'notices', 'name' => 'edit_notice', 'title' => 'Edit Notice', 'guard_name' => 'web'],
+            ['group' => 'notices', 'name' => 'delete_notice', 'title' => 'Delete Notice', 'guard_name' => 'web'],
+            // Quotes
+            ['group' => 'quotes', 'name' => 'request_a_quote', 'title' => 'Request A Quote', 'guard_name' => 'web'],
+            ['group' => 'quotes', 'name' => 'view_pending_quotes', 'title' => 'View Pending Quotes', 'guard_name' => 'web'],
+            ['group' => 'quotes', 'name' => 'delete_pending_quote', 'title' => 'Delete Pending Quote', 'guard_name' => 'web'],
+           //  Payments
+            ['group' => 'payments', 'name' => 'view_payments', 'title' => 'View Payments', 'guard_name' => 'web'],
+            ['group' => 'payments', 'name' => 'add_payment', 'title' => 'Add Payment', 'guard_name' => 'web'],
+            ['group' => 'payments', 'name' => 'edit_payment', 'title' => 'Edit Payment', 'guard_name' => 'web'],
+            ['group' => 'payments', 'name' => 'delete_payment', 'title' => 'Delete Payment', 'guard_name' => 'web'],
 
-            // leaves
-            ['group' => 'sick_leaves', 'name' => 'view_sick_leaves', 'title' => 'View sick leaves', 'guard_name' => 'web'],
-            ['group' => 'sick_leaves', 'name' => 'apply_sick_leave', 'title' => 'Apply sick leave', 'guard_name' => 'web'],
-            ['group' => 'sick_leaves', 'name' => 'approve_sick_leave', 'title' => 'Approve sick leave', 'guard_name' => 'web'],
 
-            // locations
-            ['group' => 'locations', 'name' => 'view_locations', 'title' => 'View Locations', 'guard_name' => 'web'],
-            ['group' => 'locations', 'name' => 'add_location', 'title' => 'Add Location', 'guard_name' => 'web'],
-            ['group' => 'locations', 'name' => 'edit_location', 'title' => 'Edit Location', 'guard_name' => 'web'],
-            // ['group' => 'locations', 'name' => 'delete_location', 'title' => 'Delete Location', 'guard_name' => 'web'],
-
-            // Working Hours
-            ['group' => 'work', 'name' => 'view_working_hours', 'title' => 'View Working Hours', 'guard_name' => 'web'],
-            ['group' => 'work', 'name' => 'add_working_hours', 'title' => 'Add Working Hours', 'guard_name' => 'web'],
-            ['group' => 'work', 'name' => 'edit_working_hours', 'title' => 'Edit Working Hours', 'guard_name' => 'web'],
-            ['group' => 'work', 'name' => 'delete_working_hours', 'title' => 'Delete Working Hours', 'guard_name' => 'web'],
         ];
-        
         Permission::insert($permissions);
     }
 }

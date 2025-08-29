@@ -7,7 +7,7 @@
         <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- FAVICON -->
-        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/images/brand/favi.jpg') }}" />
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/images/brand/favicon.ico') }}" />
         <!-- TITLE -->
         <title>{{ env('APP_NAME') }} | Login</title>
         <!-- BOOTSTRAP CSS -->
@@ -73,7 +73,7 @@
                                                         type="last_name" name="last_name" :value="old('last_name')" required autofocus
                                                         autocomplete="last_name" placeholder="Last Name"/>
                                                 </div>
-
+                                                
                                                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
                                                 <div class="wrap-input100 validate-input input-group"
                                                     data-bs-validate="Valid email is required: ex@abc.xyz">
@@ -84,7 +84,7 @@
                                                         type="email" name="email" :value="old('email')" required autofocus
                                                         autocomplete="email" placeholder="Email"/>
                                                 </div>
-
+                                                
                                                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
                                                 <div class="wrap-input100 validate-input input-group" id="Password-toggle">
                                                     <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
@@ -93,7 +93,7 @@
                                                     <x-text-input id="password" class="input100 border-start-0 ms-0 form-control"
                                                         type="password" name="password" required autocomplete="current-password" placeholder="Password"/>
                                                 </div>
-
+                                                
                                                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                                                 <div class="wrap-input100 validate-input input-group" id="Password-toggle">
                                                     <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
