@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Quote;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,8 +21,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $quotesCount = Quote::where('status', 'pending')->where('partner_id', 0)->count();
-        $partnerQuotesCount = Quote::where('status', 'pending')->where('partner_id', '>', 0)->count();
-        view()->share(['quotesCount' => $quotesCount, 'partnerQuotesCount' => $partnerQuotesCount]);
+        if (Schema::hasTable('quotes')) {
+            $quotesCount = Quote::where('status', 'pending')->where('partner_id', 0)->count();
+            $partnerQuotesCount = Quote::where('status', 'pending')->where('partner_id', '>', 0)->count();
+            view()->share(['quotesCount' => $quotesCount, 'partnerQuotesCount' => $partnerQuotesCount]);
+        }
     }
 }
