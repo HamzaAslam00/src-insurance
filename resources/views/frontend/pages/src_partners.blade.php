@@ -54,7 +54,7 @@
 
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
-                            <input type="hidden" value="src_partner" name="user_type">
+                            <input type="hidden" value="partner" name="user_type">
                             <div class="row g-3">
                                 <div class="col-sm-12">
                                     <div class="form-floating">

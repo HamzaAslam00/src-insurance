@@ -33,7 +33,7 @@
                     <form action="{{ route('frontend.contact-us') }}" method="post" data-form="ajax-form" data-form-reset='true'>
                         @csrf
                         <div class="row g-3">
-                            <div class="col-md-6">
+                            <div class="col-12">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="name" name="name"placeholder="{{ __('messages.your_name') }}" required/>
                                     <label for="name">{{ __('messages.your_name') }}</label>
@@ -43,6 +43,12 @@
                                 <div class="form-floating">
                                     <input type="email" class="form-control" id="email" name="email" placeholder="{{ __('messages.your_email') }}" required/>
                                     <label for="email">{{ __('messages.your_email') }}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="{{ __('messages.your_phone') }}" required/>
+                                    <label for="phone">{{ __('messages.your_phone') }}</label>
                                 </div>
                             </div>
                             <div class="col-12">

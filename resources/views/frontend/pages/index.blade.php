@@ -338,7 +338,7 @@
                 </div>
                 <div class="col-lg-4 wow fadeIn" data-wow-delay="0.5s">
                     <div class="d-flex justify-content-end">
-                        <a href="{{ route('frontend.src-partners') }}" class="btn btn-light btn-lg px-5">{{ __('messages.join_us') }}</a>
+                        <a href="#contact_form" class="btn btn-light btn-lg px-5">{{ __('messages.join_us') }}</a>
                     </div>
                 </div>
             </div>

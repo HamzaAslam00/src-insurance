@@ -23,6 +23,7 @@
     <ul>
         <li><strong>Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> {{ $data['name'] }}</li>
         <li><strong>Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> {{ $data['email'] }}</li>
+        <li><strong>Phone:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> {{ $data['phone'] }}</li>
         <li><strong>Subject:&nbsp;&nbsp;</strong> {{ $data['subject'] }}</li>
         <li><strong>Message:</strong> {{ $data['message'] }}</li>
     </ul>

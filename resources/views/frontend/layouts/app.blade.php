@@ -19,6 +19,10 @@
     
     @yield('content')
     
+    <!-- CONTACT FORM -->
+    @include('frontend.layouts.partials.contact_form')
+    <!-- CONTACT FORM END -->
+
     <!-- Footer -->
     @include('frontend.layouts.partials.footer')
     <!-- FOOTER END -->

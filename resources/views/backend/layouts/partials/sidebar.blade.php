@@ -44,22 +44,65 @@
                         <span class="side-menu__label"> {{ __('messages.clients') }}</span>
                     </a>
                 </li>
+                <li class="slide">
+                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('partners.index') }}">
+                        <i class="side-menu__icon fe fe-users"></i>
+                        <span class="side-menu__label"> {{ __('messages.src_partners') }}</span>
+                    </a>
+                </li>
+                <li class="slide">
+                    <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('quotes.index', 'partner') }}">
+                        <i class="side-menu__icon fe fe-file-plus"></i>
+                        <span class="side-menu__label"> {{ __('messages.partner_quotes') }}</span>
+                        <span class="badge bg-yellow side-badge">{{ $partnerQuotesCount }}</span>
+                    </a>
+                </li>
             </ul>
             @endrole
-            @if(auth()->user()->hasRole('client'))
-            <ul class="side-menu">
-                <li class="sub-category">
-                    <h3>Main</h3>
-                </li>
-            <li class="slide">
-                <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('clients.edit', auth()->user()->client->id) }}">
-                    <i class="side-menu__icon fe fe-home"></i>
-                    <span class="side-menu__label"> {{ __('messages.dashboard') }}</span>
-                </a>
-            </li>
-             @endif
-            </ul>
 
+            @role('partner')
+                <ul class="side-menu">
+                    <li class="sub-category">
+                        <h3> {{ __('messages.main') }}</h3>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('dashboard') }}">
+                            <i class="side-menu__icon fe fe-home"></i>
+                            <span class="side-menu__label"> {{ __('messages.dashboard') }}</span>
+                        </a>
+                    </li>
+                    <li class="sub-category">
+                        <h3>  {{ __('messages.manage') }}</h3>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('quotes.index') }}">
+                            <i class="side-menu__icon fe fe-file-plus"></i>
+                            <span class="side-menu__label"> {{ __('messages.quotes') }}</span>
+                            <span class="badge bg-yellow side-badge">{{ \App\Models\Quote::where('status', 'pending')->where('partner_id',auth()->user()->id)->count() }}</span>
+                        </a>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('clients.index') }}">
+                            <i class="side-menu__icon fe fe-users"></i>
+                            <span class="side-menu__label"> {{ __('messages.clients') }}</span>
+                        </a>
+                    </li>
+                </ul>
+            @endrole
+
+            @if(auth()->user()->hasRole('client'))
+                <ul class="side-menu">
+                    <li class="sub-category">
+                        <h3>Main</h3>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item has-link" data-bs-toggle="slide" href="{{ route('clients.edit', auth()->user()->client->id) }}">
+                            <i class="side-menu__icon fe fe-home"></i>
+                            <span class="side-menu__label"> {{ __('messages.dashboard') }}</span>
+                        </a>
+                    </li>
+                </ul>
+             @endif
 
         </div>
     </div>

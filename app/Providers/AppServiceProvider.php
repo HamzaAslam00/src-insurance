@@ -20,7 +20,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $quotesCount = Quote::where('status', 'pending')->count();
-        view()->share('quotesCount', $quotesCount);
+        $quotesCount = Quote::where('status', 'pending')->where('partner_id', 0)->count();
+        $partnerQuotesCount = Quote::where('status', 'pending')->where('partner_id', '>', 0)->count();
+        view()->share(['quotesCount' => $quotesCount, 'partnerQuotesCount' => $partnerQuotesCount]);
     }
 }

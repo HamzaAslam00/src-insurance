@@ -68,7 +68,7 @@ class FrontendController extends Controller
                     'message' => 'reCAPTCHA verification failed. Please try again.',
                 ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
             }
-            $data = $request->only('name', 'email', 'subject', 'message');
+            $data = $request->only('name', 'email', 'subject', 'message', 'phone');
             Mail::to(config('services.adminemail'))->send(new ContactUsMail($data));
             return response()->json([
                 'success' => JsonResponse::HTTP_OK,

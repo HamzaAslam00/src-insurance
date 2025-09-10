@@ -20,7 +20,8 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
             <div class="row">
-                @if(auth()->user()->user_type == 'admin')
+                @if(in_array(auth()->user()->user_type, ['admin', 'partner']))
+                {{-- {{ dd(auth()->user()->roles) }} --}}
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
                         <a href="{{ route('clients.index') }}">
                             <div class="card overflow-hidden bg-primary text-white">

@@ -33,26 +33,36 @@ class PermissionsTableSeeder extends Seeder
             ['group' => 'users', 'name' => 'edit_user', 'title' => 'Edit User', 'guard_name' => 'web'],
             ['group' => 'users', 'name' => 'delete_user', 'title' => 'Delete User', 'guard_name' => 'web'],
 
+            // Partners
+            ['group' => 'partners', 'name' => 'view_partners', 'title' => 'View Partners', 'guard_name' => 'web'],
+            ['group' => 'partners', 'name' => 'add_partner', 'title' => 'Add Partner', 'guard_name' => 'web'],
+            ['group' => 'partners', 'name' => 'edit_partner', 'title' => 'Edit Partner', 'guard_name' => 'web'],
+            ['group' => 'partners', 'name' => 'delete_partner', 'title' => 'Delete Partner', 'guard_name' => 'web'],
 
             // Clients
             ['group' => 'clients', 'name' => 'view_clients', 'title' => 'View Clients', 'guard_name' => 'web'],
             ['group' => 'clients', 'name' => 'add_client', 'title' => 'Add Client', 'guard_name' => 'web'],
             ['group' => 'clients', 'name' => 'edit_client', 'title' => 'Edit Client', 'guard_name' => 'web'],
             ['group' => 'clients', 'name' => 'delete_client', 'title' => 'Delete Client', 'guard_name' => 'web'],
+
             // Policies
             ['group' => 'policies', 'name' => 'view_policies', 'title' => 'View Policies', 'guard_name' => 'web'],
             ['group' => 'policies', 'name' => 'add_policy', 'title' => 'Add Policy', 'guard_name' => 'web'],
             ['group' => 'policies', 'name' => 'edit_policy', 'title' => 'Edit Policy', 'guard_name' => 'web'],
             ['group' => 'policies', 'name' => 'delete_policy', 'title' => 'Delete Policy', 'guard_name' => 'web'],
+
             //Notes
             ['group' => 'notices', 'name' => 'view_notices', 'title' => 'View Notices', 'guard_name' => 'web'],
             ['group' => 'notices', 'name' => 'add_notice', 'title' => 'Add Notice', 'guard_name' => 'web'],
             ['group' => 'notices', 'name' => 'edit_notice', 'title' => 'Edit Notice', 'guard_name' => 'web'],
             ['group' => 'notices', 'name' => 'delete_notice', 'title' => 'Delete Notice', 'guard_name' => 'web'],
+
             // Quotes
             ['group' => 'quotes', 'name' => 'request_a_quote', 'title' => 'Request A Quote', 'guard_name' => 'web'],
             ['group' => 'quotes', 'name' => 'view_pending_quotes', 'title' => 'View Pending Quotes', 'guard_name' => 'web'],
             ['group' => 'quotes', 'name' => 'delete_pending_quote', 'title' => 'Delete Pending Quote', 'guard_name' => 'web'],
+            ['group' => 'quotes', 'name' => 'create_proposal', 'title' => 'Create Proposal', 'guard_name' => 'web'],
+
            //  Payments
             ['group' => 'payments', 'name' => 'view_payments', 'title' => 'View Payments', 'guard_name' => 'web'],
             ['group' => 'payments', 'name' => 'add_payment', 'title' => 'Add Payment', 'guard_name' => 'web'],

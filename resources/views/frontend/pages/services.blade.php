@@ -91,6 +91,53 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="row g-5 mt-3">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="position-relative overflow-hidden rounded ps-5 pt-5 h-100" style="min-height: 400px">
+                        <img class="position-absolute w-100 h-100" src="{{ asset('frontend/img/about.jpg') }}" alt="" style="object-fit: cover" />
+                        <div class="position-absolute top-0 start-0 bg-white rounded pe-3 pb-3"
+                            style="width: 200px; height: 200px">
+                            <div class="d-flex flex-column justify-content-center text-center bg-primary rounded h-100 p-3">
+                                <h1 class="text-white mb-0">20</h1>
+                                <h2 class="text-white">{{ __('messages.years') }}</h2>
+                                <h5 class="text-white mb-0">{{ __('messages.experience') }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="h-100">
+                        <h1 class="display-6 mb-5">
+                            {{ __('messages.who_we_are') }}
+                            <!-- We're Here To Assist You With Exploring Protection -->
+                        </h1>
+                        <p class="mb-4"> {{ __('messages.src_insurance_brokerage_inc_was_founded') }}
+
+                        </p>
+                        <p class="mb-4">{{ __('messages.95_percent_of_our') }}
+                        </p>
+                        <p class="mb-4">{{ __('messages.when_we_service') }}</p>
+                        <div class="row g-4 mb-4 mt-1">
+                            <div class="col-sm-6">
+                                <div class="d-flex align-items-center">
+                                    <img class="flex-shrink-0 me-3 filter-hue" src="{{ asset('frontend/img/icon/icon-04-primary.png') }}" alt="" />
+                                    <h5 class="mb-0">{{ __('messages.flexible_insurance_plans') }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="d-flex align-items-center">
+                                    <img class="flex-shrink-0 me-3 filter-hue" src="{{ asset('frontend/img/icon/icon-03-primary.png') }}" alt="" />
+                                    <h5 class="mb-0">{{ __('messages.small_businesses') }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <button class="btn btn-primary py-3 px-5" type="submit">
+                    Learn More
+                  </button> -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Features End -->
@@ -107,7 +154,7 @@
                 </div>
                 <div class="col-lg-4 wow fadeIn" data-wow-delay="0.5s">
                     <div class="d-flex justify-content-end">
-                        <a href="" class="btn btn-light btn-lg px-5">{{ __('messages.join_us') }}</a>
+                        <a href="#contact_form" class="btn btn-light btn-lg px-5">{{ __('messages.join_us') }}</a>
                     </div>
                 </div>
             </div>

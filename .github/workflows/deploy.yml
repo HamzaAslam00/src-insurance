@@ -1,0 +1,85 @@
+name: Deploy Laravel to Hostinger
+
+on:
+  push:
+    branches:
+      - test-env  # Only trigger on push to master
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: mbstring, bcmath, intl, gd, pdo_mysql
+
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install NPM Dependencies
+      run: npm install
+
+    - name: Build Assets
+      run: npm run build
+
+    - name: Upload to Hostinger (via SCP)
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.HOSTINGER_HOST }}
+        username: ${{ secrets.HOSTINGER_USER }}
+        password: ${{ secrets.HOSTINGER_PASS }}
+        port: 65002
+        source: "."  # Upload everything
+        target: "/home/u963576778/domains/srcinsurance.com/public_html/test-src"
+        strip_components: 1
+        rm: false
+
+    - name: SSH to Hostinger (clean old files, keep .env & .htaccess)
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.HOSTINGER_HOST }}
+        username: ${{ secrets.HOSTINGER_USER }}
+        password: ${{ secrets.HOSTINGER_PASS }}
+        port: 65002
+        script: |
+          cd /home/u963576778/domains/srcinsurance.com/public_html/test-src
+          
+          echo "🧹 Cleaning old files (except .env, .htaccess, and recent ones)..."
+          find . -type f -not -name '.env' -not -name '.htaccess' -not -newermt '-3 minutes' -exec rm -f {} + 2>/dev/null || true
+          find . -type d -empty -delete 2>/dev/null || true
+
+    - name: SSH to Hostinger (run Laravel deploy commands)
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.HOSTINGER_HOST }}
+        username: ${{ secrets.HOSTINGER_USER }}
+        password: ${{ secrets.HOSTINGER_PASS }}
+        port: 65002
+        script: |
+          cd /home/u963576778/domains/srcinsurance.com/public_html/test-src
+
+          echo "📦 Get latest Composer phar file..."
+          php -r "copy('https://getcomposer.org/composer.phar', 'composer.phar');"
+
+          echo "📦 Installing composer dependencies on server..."
+          php composer.phar install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+
+          echo "🛠 Running Laravel optimizations..."
+          php artisan migrate --force
+          php artisan config:clear
+          php artisan cache:clear
+          php artisan route:clear
+          php artisan route:cache
+          php artisan view:clear
+          composer dump-autoload
+
+          echo "🔐 Fixing permissions..."
+          chmod -R 775 storage bootstrap/cache

@@ -46,9 +46,9 @@
         <input type="text" class="form-control" name="city" id="city" value="{{ $quote->city }}" disabled>
     </div>
     <div class="form-group col-md-6">
-        <label for="state">{{ __('messages.select_state') }}</label>
+        <label for="state">{{ __('messages.state') }}</label>
         <select class="form-control select2 form-select form-select-modal" name="state" id="state" disabled>
-            <option value="" selected disabled>{{ __('messages.other') }}</option>
+            <option value="" selected disabled>{{ __('messages.select_state') }}</option>
             <option value="new-york" @if($quote->state == 'new-york') selected @endif>{{ __('messages.new_york') }}</option>
             <option value="new-jersey" @if($quote->state == 'new-jersey') selected @endif>{{ __('messages.new_jersey') }}</option>
         </select>

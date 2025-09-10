@@ -39,7 +39,7 @@
                             <div class="dropdown align-self-center ms-lg-5">
                                 <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    Español
+                                    {{ __('messages.english') }}
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>

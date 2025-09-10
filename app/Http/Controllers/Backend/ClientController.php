@@ -56,6 +56,7 @@ class ClientController extends Controller
         try {
             DB::beginTransaction();
             $user = User::where('email', $request->client_email)->first();
+            $client = Client::where('client_email', $request->client_email)->first();
 
             if (!$user) {
                 // If the user does not exist, create a new one
@@ -70,6 +71,7 @@ class ClientController extends Controller
             $data = [
                 'business_name' => $request->business_name,
                 'user_id' => $user->id,
+                // 'quote_id' => $request->quote_id,
                 'owner_name' => $request->owner_name,
                 'email' => $request->email,
                 'phone' => $request->phone,
@@ -102,14 +104,16 @@ class ClientController extends Controller
                 $directory = 'client_images';
                 $data['client_image'] = saveResizeImage($clientImageFile, $directory, 300, 300);
             }
-            Client::create($data);
+            if (!$client) {
+                Client::create($data);
+            }
             if($request->quote_id) {
                 Quote::where('id', $request->quote_id)->update(['status' => 'replied']);
             }
             DB::commit();
             return response()->json([
                 'success' => JsonResponse::HTTP_OK,
-                'redirectUrl' => route('clients.index'),
+                'redirectUrl' => auth()->user()->user_type == 'admin' ? route('clients.index') : route('quotes.index'),
                 'message' => 'Client created successfully.',
             ], JsonResponse::HTTP_OK);
 
@@ -304,8 +308,12 @@ class ClientController extends Controller
     public function dataTable(Request $request)
     {
 
-        $client = Client::orderByRaw("LOWER(client_name) ASC")->get();
-        return Datatables::of($client)
+        $clientQuery = Client::orderByRaw("LOWER(client_name) ASC")->where('status', 'active');
+        if (auth()->user()->roles[0]->name == 'partner') {
+            $clientQuery->where('partner_id', auth()->user()->id);
+        }
+        $clients = $clientQuery->get();
+        return Datatables::of($clients)
             ->addColumn('actions', function ($record) {
                 $actions = '';
                 if (auth()->user()->hasPermissionTo('edit_client') || auth()->user()->hasPermissionTo('delete_client')) {

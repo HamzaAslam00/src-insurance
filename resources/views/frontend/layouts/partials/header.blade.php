@@ -36,20 +36,23 @@
     </button>
     <style>
         .navbar .navbar-nav .nav-link {
-            margin-left: 20px;
+            margin-left: 0px;
+            padding-left: 10px;
+            padding-right: 10px;
         }
     </style>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav mx-auto rounded pe-4 py-3 py-lg-0 text-uppercase">
-            <a href="{{ route('frontend.home') }}" class="nav-item nav-link">{{ __('messages.home') }}</a>
-            <a href="{{ route('frontend.services') }}" class="nav-item nav-link">{{ __('messages.services') }}</a>
-            <a href="{{ route('frontend.about-us') }}" class="nav-item nav-link">{{ __('messages.about_us') }}</a>
-            <a href="{{ route('frontend.contact-us') }}" class="nav-item nav-link">{{ __('messages.contact_us') }}</a>
-            <a href="{{ route('frontend.client-login') }}" class="nav-item nav-link">{{ __('messages.client_login') }}</a>
+            <a href="{{ route('frontend.home') }}" class="nav-item nav-link border-end border-2 border-light" style="border-color: #e0e0e0 !important;">{{ __('messages.home') }}</a>
+            <a href="{{ route('frontend.services') }}" class="nav-item nav-link border-end border-2 border-light" style="border-color: #e0e0e0 !important;">{{ __('messages.services') }}</a>
+            {{-- <a href="{{ route('frontend.about-us') }}" class="nav-item nav-link border-end border-2 border-light" style="border-color: #e0e0e0 !important;">{{ __('messages.about_us') }}</a>
+            <a href="{{ route('frontend.contact-us') }}" class="nav-item nav-link border-end border-2 border-light" style="border-color: #e0e0e0 !important;">{{ __('messages.contact_us') }}</a> --}}
+            <a href="{{ route('frontend.client-login') }}" class="nav-item nav-link" style="border-right: 2px solid #e0e0e0;">{{ __('messages.client_login') }}</a>
+            <a href="{{ route('frontend.src-partners') }}" class="nav-item nav-link" >{{ __('messages.partner_login') }}</a>
             <div class="dropdown align-self-center ms-lg-5">
                 <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
-                    Español
+                    {{ __('messages.english') }}
                 </button>
                 <ul class="dropdown-menu">
                     <li>

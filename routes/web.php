@@ -23,10 +23,16 @@ Route::middleware('auth')->group(function () {
     // Profile Routes
     Route::resource('profile', Backend\ProfileController::class);
     Route::put('change-password/{id}', [Backend\ProfileController::class, 'changePassword'])->name('change-password');
+
     // Clients Routes
     Route::resource('clients', Backend\ClientController::class);
     Route::get('clients-dt', [Backend\ClientController::class, 'dataTable'])->name('clients-datatable');
     Route::put('edit-client/{id}', [Backend\ClientController::class, 'client'])->name('edit-client');
+
+    // Partners Routes
+    Route::resource('partners', Backend\PartnerController::class);
+    Route::get('partners-dt', [Backend\PartnerController::class, 'dataTable'])->name('partners-datatable');
+    Route::put('edit-partner/{id}', [Backend\PartnerController::class, 'partner'])->name('edit-partner');
 
     // Policies Routes
     Route::get('policies-dt/{clientId}', [Backend\PolicyController::class, 'dataTable'])->name('policies-datatable');
@@ -39,7 +45,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('notices-and-files', Backend\NoticeController::class);
         Route::get('notices-and-files-dt', [Backend\NoticeController::class, 'dataTable'])->name('notices-and-files-datatable');
     });
- // Payments Routes
+    // Payments Routes
     Route::prefix('/{policy}')->group(function () {
         Route::resource('payments', Backend\PaymentController::class);
         Route::get('payments-dt', [Backend\PaymentController::class, 'dataTable'])->name('payments-datatable');
@@ -53,27 +59,20 @@ Route::middleware('auth')->group(function () {
     Route::get('roles-dt', [Backend\RoleController::class, 'dataTable'])->name('roles-datatable');
 
      // Quote Routes
-    Route::get('quotes', [Backend\QuoteController::class, 'index'])->name('quotes.index');
-    Route::get('quotes/{id}', [Backend\QuoteController::class, 'show'])->name('quotes.show');
+    Route::get('quotes/{type?}', [Backend\QuoteController::class, 'index'])->name('quotes.index');
+    Route::get('quotes/{id}/show', [Backend\QuoteController::class, 'show'])->name('quotes.show');
+    Route::get('quotes/{quoteId}/client-forms', [Backend\QuoteController::class, 'acrobatForms'])->name('quotes.show.acrobat-forms');
     Route::get('quotes/create/{id}', [Backend\QuoteController::class, 'create'])->name('quotes.create');
-    Route::get('quotes-dt', [Backend\QuoteController::class, 'dataTable'])->name('quotes-dt');
+    Route::match(['get', 'post'], 'edit-quote/{id}', [Backend\QuoteController::class, 'editQuote'])->name('edit-quote');
+    Route::get('quotes-dt/{type?}', [Backend\QuoteController::class, 'dataTable'])->name('quotes-dt');
     Route::delete('quotes/{id}', [Backend\QuoteController::class, 'destroy'])->name('quotes.destroy');
+    Route::match(['get', 'post'], 'request-quote', [Backend\QuoteController::class, 'requestAQuoteByPartner'])->name('request-quote-by-partner');
+    Route::match(['get', 'post'], 'quote/create-proposal/{clientId}', [Backend\QuoteController::class, 'createProposal'])->name('create-proposal');
 
     //  Request Cirtificate
     Route::match(['get', 'post'], '/request-certificate/{clientId}', [Backend\Certificate::class, 'certificate'])->name('request-certificate');
 
-    Route::get('lang/{locale}', function ($locale) {
-        if (in_array($locale, ['en', 'es'])) {
-            Session::put('locale', $locale);
-            App::setLocale($locale);
-        }
-        return Redirect::back();
-    })->name('setLocale');
-
 });
-
-// Frontend Routes
-Route::redirect('/', '/login');
 
 // Frontend Routes
 Route::post('request-a-quote', [Backend\QuoteController::class, 'requestAQuote'])->name('request-a-quote');
@@ -85,6 +84,8 @@ Route::get('/about-us', [Frontend\FrontendController::class, 'aboutUs'])->name('
 Route::get('/payment-portal', [Frontend\FrontendController::class, 'paymentPortal'])->name('frontend.payment-portal');
 Route::match(['get', 'post'], '/contact-us', [Frontend\FrontendController::class, 'contactUs'])->name('frontend.contact-us');
 Route::get('/request-a-quote', [Frontend\FrontendController::class, 'requestAQuote'])->name('frontend.request-a-quote');
+
+// Change Language
 Route::get('lang/{locale}', function ($locale) {
         if (in_array($locale, ['en', 'es'])) {
             Session::put('locale', $locale);
@@ -93,11 +94,14 @@ Route::get('lang/{locale}', function ($locale) {
         return Redirect::back();
     })->name('setLocale');
 
+
+// Clear Cache
 Route::get('/clear-cache', function () {
     Artisan::call('optimize:clear');
     return 'Cache cleared successfully.';
 });
 
+// Create Storage Link
 Route::get('/create-storage-link', function () {
     Artisan::call('storage:link');
     return 'Storage link created successfully.';

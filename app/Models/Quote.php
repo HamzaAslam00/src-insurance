@@ -39,6 +39,8 @@ class Quote extends Model
         'revenue_other',
         'note',
         'status',
+        'created_by',
+        'partner_id',
     ];
 
     public function user()

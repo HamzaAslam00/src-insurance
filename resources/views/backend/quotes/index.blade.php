@@ -20,6 +20,11 @@
     <div class="card">
         <div class="card-header justify-content-between">
             <h3 class="card-title font-weight-bold">{{ __('messages.pending_proposals') }}</h3>
+            @role('partner')
+                <a type="button" class="btn dark-icon btn-primary btn-sm" href="{{ route('request-quote-by-partner') }}">
+                    <i class="ri-add-fill"></i> {{ __('messages.request_a_quote') }}
+                </a>
+            @endrole
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -27,6 +32,9 @@
                     <thead>
                         <tr>
                             <th class="border-bottom-0">#</th>
+                            @if($type == 'partner')
+                                <th class="border-bottom-0">{{ __('messages.src_partner_name') }}</th>
+                            @endif
                             <th class="border-bottom-0">{{ __('messages.business_owner') }}</th>
                             <th class="border-bottom-0">{{ __('messages.city') }}</th>
                             <th class="border-bottom-0">{{ __('messages.requested_service') }}</th>
@@ -53,7 +61,7 @@
                 scrollX: false,
                 autoWidth: true,
                 ajax: {
-                    url: '{{ route('quotes-dt') }}',
+                    url: '{{ route('quotes-dt', $type) }}',
                     type: 'GET',
 
                 },
@@ -70,6 +78,9 @@
                         data: 'DT_RowIndex',
                         name: 'id'
                     },
+                    @if($type == 'partner')
+                        { data: 'partner_name', name: 'partner_name' },
+                    @endif
                     {
                         data: 'business_owner',
                         name: 'business_owner'

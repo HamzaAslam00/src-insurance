@@ -35,6 +35,8 @@ class Client extends Model
         'client_accountant_email',
         'client_estimated_sales',
         'client_estimated_payroll',
+        'partner_id',
+        'quote_id',
     ];
     public function user()
     {
