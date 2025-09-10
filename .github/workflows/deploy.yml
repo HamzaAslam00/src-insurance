@@ -83,3 +83,4 @@ jobs:
 
           echo "🔐 Fixing permissions..."
           chmod -R 775 storage bootstrap/cache
+          
