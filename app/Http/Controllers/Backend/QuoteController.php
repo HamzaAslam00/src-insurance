@@ -395,7 +395,7 @@ class QuoteController extends Controller
                 return $result;
             })
             ->addColumn('status', function ($record) {
-                return '<span class="badge bg-' . statusClasses($record->status) . '">' . ucfirst($record->status) . '</span>';
+                return '<span class="badge bg-' . statusClasses($record->status) . '">' . ucwords(formatString($record->status)) . '</span>';
             })
             ->rawColumns(['actions', 'business_owner', 'city', 'business_name', 'service', 'status', 'partner_name'])
             ->addIndexColumn()->make(true);
