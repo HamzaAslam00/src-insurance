@@ -159,21 +159,21 @@
                                                     <div class="">
                                                         <select required class="form-control form-select select-style col-md-12" name="client_business_type" id="client_business_type">
                                                             <option value="" selected disabled>{{ __('messages.select_business_type') }}</option>
-                                                            <option value="grocery_store">{{ __('messages.grocery_store') }}</option>
-                                                            <option value="salon_barbershop">{{ __('messages.salon_barbershop') }}</option>
-                                                            <option value="restaurant">{{ __('messages.restaurant') }}</option>
-                                                            <option value="bar">{{ __('messages.bar') }}</option>
-                                                            <option value="liquor">{{ __('messages.liquor') }}</option>
-                                                            <option value="store">{{ __('messages.store') }}</option>
-                                                            <option value="retail_store">{{ __('messages.retail_store') }}</option>
-                                                            <option value="auto_repair_shop">{{ __('messages.auto_repair_shop') }}</option>
-                                                            <option value="office">{{ __('messages.office') }}</option>
-                                                            <option value="commercial_building">{{ __('messages.commercial_building') }}</option>
-                                                            <option value="residential_building">{{ __('messages.residential_building') }}</option>
-                                                            <option value="other">{{ __('messages.other') }}</option>
+                                                            <option value="grocery_store" @if($quoteData->business_kind == 'grocery_store') selected @endif>{{ __('messages.grocery_store') }}</option>
+                                                            <option value="salon_barbershop" @if($quoteData->business_kind == 'salon_barbershop') selected @endif>{{ __('messages.salon_barbershop') }}</option>
+                                                            <option value="restaurant" @if($quoteData->business_kind == 'restaurant') selected @endif>{{ __('messages.restaurant') }}</option>
+                                                            <option value="bar" @if($quoteData->business_kind == 'bar') selected @endif>{{ __('messages.bar') }}</option>
+                                                            <option value="liquor" @if($quoteData->business_kind == 'liquor') selected @endif>{{ __('messages.liquor') }}</option>
+                                                            <option value="store" @if($quoteData->business_kind == 'store') selected @endif>{{ __('messages.store') }}</option>
+                                                            <option value="retail_store" @if($quoteData->business_kind == 'retail_store') selected @endif>{{ __('messages.retail_store') }}</option>
+                                                            <option value="auto_repair_shop" @if($quoteData->business_kind == 'auto_repair_shop') selected @endif>{{ __('messages.auto_repair_shop') }}</option>
+                                                            <option value="office" @if($quoteData->business_kind == 'office') selected @endif>{{ __('messages.office') }}</option>
+                                                            <option value="commercial_building" @if($quoteData->business_kind == 'commercial_building') selected @endif>{{ __('messages.commercial_building') }}</option>
+                                                            <option value="residential_building" @if($quoteData->business_kind == 'residential_building') selected @endif>{{ __('messages.residential_building') }}</option>
+                                                            <option value="other" @if($quoteData->business_kind == 'other') selected @endif>{{ __('messages.other') }}</option>
                                                         </select>
                                                         <div class="col-md-8 other">
-                                                            <input type="text" class="form-control" name="client_business_type_other" id="client_business_type_other" placeholder="{{ __('messages.other_business_type') }}" value="{{ old('client_business_type_other') }}">
+                                                            <input type="text" class="form-control" name="client_business_type_other" id="client_business_type_other" placeholder="{{ __('messages.other_business_type') }}" value="{{ old('client_business_type_other', $quoteData->business_kind_other ?? '') }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -182,14 +182,14 @@
                                                     <div class="">
                                                         <select required class="form-control form-select select-style col-md-12" name="client_business_organization" id="client_business_organization">
                                                             <option value="" selected disabled>{{ __('messages.select_business_organization') }}</option>
-                                                            <option value="corp">{{ __('messages.corp') }}</option>
-                                                            <option value="LLC">{{ __('messages.llc') }}</option>
-                                                            <option value="sole-prop">{{ __('messages.sole_prop') }}</option>
-                                                            <option value="non-profit">{{ __('messages.non_profit') }}</option>
-                                                            <option value="other">{{ __('messages.other') }}</option>
+                                                            <option value="corp" @if($quoteData->organization == 'corp') selected @endif>{{ __('messages.corp') }}</option>
+                                                            <option value="LLC" @if($quoteData->organization == 'LLC') selected @endif>{{ __('messages.llc') }}</option>
+                                                            <option value="sole-prop" @if($quoteData->organization == 'sole-prop') selected @endif>{{ __('messages.sole_prop') }}</option>
+                                                            <option value="non-profit" @if($quoteData->organization == 'non-profit') selected @endif>{{ __('messages.non_profit') }}</option>
+                                                            <option value="other" @if($quoteData->organization == 'other') selected @endif>{{ __('messages.other') }}</option>
                                                         </select>
                                                         <div class="col-md-8 other">
-                                                            <input type="text" class="form-control" name="client_business_organization_other" id="client_business_organization_other" placeholder="{{ __('messages.other_business_organization') }}" value="{{ old('client_business_organization_other') }}">
+                                                            <input type="text" class="form-control" name="client_business_organization_other" id="client_business_organization_other" placeholder="{{ __('messages.other_business_organization') }}" value="{{ old('client_business_organization_other', $quoteData->organization_other ?? '') }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -206,7 +206,7 @@
                                                         <label for="client_no_of_employees">{{ __('messages.no_of_employees') }}</label>
                                                         <input type="number" min="0" step="1" class="form-control" id="client_no_of_employees"
                                                             name="client_no_of_employees" placeholder="{{ __('messages.no_of_employees') }}"
-                                                            value="{{ old('client_no_of_employees') }}">
+                                                            value="{{ old('client_no_of_employees', $quoteData->no_of_employees ?? '') }}">
                                                     </div>
                                                 </div>
                                             </div>

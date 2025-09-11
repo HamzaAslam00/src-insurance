@@ -37,6 +37,7 @@ class Client extends Model
         'client_estimated_payroll',
         'partner_id',
         'quote_id',
+        'proposal_id',
     ];
     public function user()
     {

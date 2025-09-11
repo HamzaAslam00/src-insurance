@@ -71,7 +71,7 @@ class ClientController extends Controller
             $data = [
                 'business_name' => $request->business_name,
                 'user_id' => $user->id,
-                // 'quote_id' => $request->quote_id,
+                'quote_id' => $request->quote_id,
                 'owner_name' => $request->owner_name,
                 'email' => $request->email,
                 'phone' => $request->phone,

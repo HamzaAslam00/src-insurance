@@ -67,7 +67,7 @@ Route::middleware('auth')->group(function () {
     Route::get('quotes-dt/{type?}', [Backend\QuoteController::class, 'dataTable'])->name('quotes-dt');
     Route::delete('quotes/{id}', [Backend\QuoteController::class, 'destroy'])->name('quotes.destroy');
     Route::match(['get', 'post'], 'request-quote', [Backend\QuoteController::class, 'requestAQuoteByPartner'])->name('request-quote-by-partner');
-    Route::match(['get', 'post'], 'quote/create-proposal/{clientId}', [Backend\QuoteController::class, 'createProposal'])->name('create-proposal');
+    Route::match(['get', 'post'], 'quote/create-proposal/{quoteId}', [Backend\QuoteController::class, 'createProposal'])->name('create-proposal');
 
     //  Request Cirtificate
     Route::match(['get', 'post'], '/request-certificate/{clientId}', [Backend\Certificate::class, 'certificate'])->name('request-certificate');

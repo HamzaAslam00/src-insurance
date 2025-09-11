@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Backend;
 use App\Models\User;
 use App\Models\Quote;
 use App\Models\Client;
+use App\Models\Proposal;
 use ReCaptcha\ReCaptcha;
 use App\Mail\ContactUsMail;
 use Illuminate\Http\Request;
 use App\Mail\QuoteRequestMail;
+use App\Mail\ProposalCreatedMail;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -336,8 +338,7 @@ class QuoteController extends Controller
             ->addColumn('actions', function ($record) {
                 $actions = '<div class="btn-list">';
                 if (auth()->user()->hasPermissionTo('create_proposal') && ($record->status == 'replied' || ($record->partner_id > 0 && $record->status == 'pending'))) {
-                    $client = Client::where('quote_id', $record->id)->first();
-                    $actions .= '<a data-act="ajax-modal" data-action-url="' . route('create-proposal', $client->id) . '" data-title="' . __('messages.create_proposal') . '" class="btn btn-sm btn-primary">
+                    $actions .= '<a data-act="ajax-modal" data-action-url="' . route('create-proposal', $record->id) . '" data-title="' . __('messages.create_proposal') . '" class="btn btn-sm btn-primary">
                                     <span class="fe fe-plus"> </span>
                                 </a>';
                 }
@@ -347,18 +348,23 @@ class QuoteController extends Controller
                                 </a>';
                 }
 
-                if (auth()->user()->hasPermissionTo('delete_pending_quote')) {
+                if (auth()->user()->hasPermissionTo('delete_pending_quote') && $record->status !== 'pending') {
                     $actions .= '<button type="button" class="btn btn-sm btn-danger delete" data-url="' . route('quotes.destroy', $record->id) . '" data-method="get" data-table="#quote_datatable">
                                     <span class="fe fe-trash-2"> </span>
                                 </button>';
                 }
-                if (auth()->user()->hasPermissionTo('view_pending_quotes') && $record->status !== 'replied') {
+                if (auth()->user()->hasPermissionTo('view_pending_quotes') && !in_array($record->status, ['replied', 'ready_quote', 'signed'])) {
                     if ((auth()->user()->user_type == 'admin' && $record->partner_id == 0) || auth()->user()->user_type == 'partner' && $record->partner_id > 0 && $record->status == 'pending') {
                         $url = auth()->user()->user_type == 'admin' ? route('quotes.create', $record->id) : route('edit-quote', $record->id);
                         $actions .= '<a href="' . $url . '" data-title="Requested Quote" class="btn btn-sm btn-info">
                                         <span class="fe fe-edit-3"> </span>
                                     </a>';
                     }
+                }
+                if (auth()->user()->user_type == 'partner' && $record->status == 'ready_quote') {
+                    $actions .= '<a href="' . asset('backend/demo_file.pdf') . '" target="_blank" data-title="Requested Quote" class="btn btn-sm btn-success">
+                        <span class="fe fe-download"> </span>
+                    </a>';
                 }
                 $actions .= '</div>';
                 return $actions;
@@ -379,14 +385,14 @@ class QuoteController extends Controller
                 return $record->business_name;
             })
             ->addColumn('partner_name', function ($record) {
+                $result = NULL;
                 if ($record->partner_id > 0) {
                     $partner = User::find($record->partner_id);
                     if ($partner) {
-                        return getFullName($partner);
-                    } else {
-                        return NULL;
+                        $result =  getFullName($partner);
                     }
                 }
+                return $result;
             })
             ->addColumn('status', function ($record) {
                 return '<span class="badge bg-' . statusClasses($record->status) . '">' . ucfirst($record->status) . '</span>';
@@ -536,15 +542,16 @@ class QuoteController extends Controller
         return view('backend.clients.acrobat_forms', compact('quote', 'client'));
     }
     
-    public function createProposal(Request $request, $clientId)
+    public function createProposal(Request $request, $quoteId)
     {
         if ($request->isMethod('get')) {
-            $client = Client::findOrFail($clientId);
+            $client = Client::where('quote_id', $quoteId)->first();
             return view('backend.quotes.proposal_modal', compact('client'));
         }
 
         $validator = Validator::make($request->all(), [
             'client_name' => 'required',
+            'client_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -554,17 +561,34 @@ class QuoteController extends Controller
             ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        
-
         try {
             DB::beginTransaction();
+            $client = Client::where('id', $request->client_id)->first();
+            $proposal = Proposal::create([
+                'client_id' => $client->id,
+                'quote_id' => $quoteId,
+                'client_name' => $request->client_name,
+            ]);
+            Quote::where('id', $client->quote_id)->update(['status' => 'ready_quote']);
+            $client->update(['status' => 'active', 'proposal_id' => $proposal->id]);
             
+            $data = [
+                'name' => $request->client_name,
+                'email' => $client->email,
+            ];
+            $ccMail = config('services.adminemail');
+            if ($client->partner_id > 0) {
+                $partner = User::find($client->partner_id);
+                if ($partner) {
+                    $ccMail .= ',' . $partner->email;
+                }
+            }
+            Mail::to($request->business_email)->cc($ccMail)->send(new ProposalCreatedMail($data));
             DB::commit();
 
             return response()->json([
                 'success' => JsonResponse::HTTP_OK,
                 'message' => 'Proposal created successfully',
-                'redirectUrl' => route('quotes.index'),
             ], JsonResponse::HTTP_OK);
         } catch (\Exception $exception) {
             return response()->json([

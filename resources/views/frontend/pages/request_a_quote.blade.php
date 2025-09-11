@@ -99,9 +99,10 @@
                                     <div class="">
                                         <select required class="form-select select-style col-md-12" name="organization" id="organization">
                                             <option value="" selected disabled> {{ __('messages.select_organization') }} <span class="text-danger">*</span></option>
-                                            <option value="corporation">{{ __('messages.corporation') }}</option>
-                                            <option value="llc">{{ __('messages.llc') }}</option>
-                                            <option value="sole-propriorship">{{ __('messages.sole_proprietorship') }}</option>
+                                            <option value="corp">{{ __('messages.corporation') }}</option>
+                                            <option value="LLC">{{ __('messages.llc') }}</option>
+                                            <option value="sole-prop">{{ __('messages.sole_proprietorship') }}</option>
+                                            <option value="non-profit">{{ __('messages.non_profit') }}</option>
                                             <option value="other">{{ __('messages.other') }}</option>
                                         </select>
                                         <div class="col-md-8 form-floating ms-2 other ps-0">
@@ -168,9 +169,18 @@
                                     <div class="">
                                         <select required class="form-select select-style col-md-12" name="business_kind" id="business_kind">
                                             <option value="" selected disabled>{{ __('messages.select_kind_of_business') }} <span class="text-danger">*</span></option>
-                                            @foreach (config('businesstypes') as $key => $businessType)
-                                                <option value="{{ $key }}">{{ $businessType }}</option>
-                                            @endforeach
+                                            <option value="grocery_store">{{ __('messages.grocery_store') }}</option>
+                                            <option value="salon_barbershop">{{ __('messages.salon_barbershop') }}</option>
+                                            <option value="restaurant">{{ __('messages.restaurant') }}</option>
+                                            <option value="bar">{{ __('messages.bar') }}</option>
+                                            <option value="liquor">{{ __('messages.liquor') }}</option>
+                                            <option value="store">{{ __('messages.store') }}</option>
+                                            <option value="retail_store">{{ __('messages.retail_store') }}</option>
+                                            <option value="auto_repair_shop">{{ __('messages.auto_repair_shop') }}</option>
+                                            <option value="office">{{ __('messages.office') }}</option>
+                                            <option value="commercial_building">{{ __('messages.commercial_building') }}</option>
+                                            <option value="residential_building")>{{ __('messages.residential_building') }}</option>
+                                            <option value="other">{{ __('messages.other') }}</option>
                                         </select>
                                         <div class="col-md-8 form-floating ms-2 other ps-0">
                                             <input type="text" class="form-control" name="business_kind_other" id="business_kind_other" placeholder="{{ __('messages.explain_other_kind_of_business') }}" value="{{ old('business_kind_other') }}">

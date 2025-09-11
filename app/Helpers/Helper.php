@@ -93,6 +93,9 @@ function statusClasses($status)
         case 'required':
             $class = 'danger';
             break;
+        case 'ready_quote':
+            $class = 'info';
+            break;
         case 'pending':
         case 'pending_cancellation':
             $class = 'warning';
