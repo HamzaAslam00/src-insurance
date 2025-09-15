@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('quote_id');
             $table->string('client_name');
             $table->string('file_path')->nullable();
-            $table->string('client_sign_path')->nullable();
+            $table->json('client_sign_path')->nullable();
             $table->dateTime('sign_date')->nullable();
             $table->string('status')->default('unsigned');
             $table->timestamps();

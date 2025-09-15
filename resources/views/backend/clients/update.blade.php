@@ -1,9 +1,19 @@
 @php
     $isEdit = isset($client);
+    $disabled = (auth()->user()->hasRole('client') && auth()->user()->client?->proposal->status == 'unsigned') ? 'disabled' : '';
 @endphp
 <style>
     .select2-container {
         width: 100% !important;
+    }
+    .kbw-signature{
+        height: 200px;
+        width: 350px;
+        border: 1px dotted #a0a0a0;
+    }
+    #sig canvas{
+        width: 100% !important;
+        height: 100%;
     }
 </style>
 <div class="card">
@@ -46,7 +56,7 @@
                                         <div class="form-group">
                                             <input type="text" class="form-control" id="business_name"
                                                 name="business_name" placeholder="{{ __('messages.business_name') }}"
-                                                value="{{ old('business_name', $client->business_name ?? '') }}">
+                                                value="{{ old('business_name', $client->business_name ?? '') }}" {{ $disabled }}>
                                         </div>
                                     </div>
                                     <!-- Owner's Name -->
@@ -54,7 +64,7 @@
                                         <div class="form-group">
                                             <input type="text" class="form-control" id="owner_name" name="owner_name"
                                                 placeholder="{{ __('messages.owners_name') }}"
-                                                value="{{ old('owner_name', $client->owner_name ?? '') }}">
+                                                value="{{ old('owner_name', $client->owner_name ?? '') }}" {{ $disabled }}>
                                         </div>
                                     </div>
                                     <!-- Telephone -->
@@ -62,43 +72,62 @@
                                         <div class="form-group">
                                             <input type="tel" class="form-control" id="phone" name="phone"
                                                 placeholder="{{ __('messages.phone') }}"
-                                                value="{{ old('phone', $client->phone ?? '') }}">
+                                                value="{{ old('phone', $client->phone ?? '') }}" {{ $disabled }}>
                                         </div>
                                     </div>
                                     <!-- Email -->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <input type="email" class="form-control" id="email" name="email"
-                                                placeholder="{{ __('messages.email') }}" value="{{ old('email', $client->email ?? '') }}">
+                                                placeholder="{{ __('messages.email') }}" value="{{ old('email', $client->email ?? '') }}" {{ $disabled }}>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <hr>
-                        <!-- Submit Button -->
-                        <div class="col-md-12 px-0 text-right d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary" data-button="submit">{{ __('messages.submit') }}</button>
-                        </div>
+                        @if (!auth()->user()->hasRole('client'))
+                            <!-- Submit Button -->
+                            <div class="col-md-12 px-0 text-right d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary" data-button="submit">{{ __('messages.submit') }}</button>
+                            </div>
+                        @endif
                     </form>
                 </div>
                 <div class="container mt-4">
                     <div class="row" style="margin-bottom: 10px;">
-                        <div class="{{ auth()->user()->hasRole('client') ? 'col-md-4' : 'col-md-6' }}">
-                            <button class="btn btn-light" id="policies-button" style="height: 50px; width: 100%;">{{ __('messages.policies') }}</button>
-                        </div>
+                        @if(!(auth()->user()->hasRole('client') && auth()->user()->client?->proposal->status == 'unsigned'))
+                            <div class="{{ auth()->user()->hasRole('client') ? 'col-md-4' : 'col-md-6' }}">
+                                <button class="btn btn-light" id="policies-button" style="height: 50px; width: 100%;">{{ __('messages.policies') }}</button>
+                            </div>
 
-                        @if(auth()->user()->hasRole('client'))
-                            <div class="col-md-4">
-                                <button class="btn btn-light" style="height: 50px; width: 100%;" id="toggle-client-request">
-                                    {{ __('messages.request_a_certificate') }}
-                                </button>
+                            @if(auth()->user()->hasRole('client'))
+                                <div class="col-md-4">
+                                    <button class="btn btn-light" style="height: 50px; width: 100%;" id="toggle-client-request">
+                                        {{ __('messages.request_a_certificate') }}
+                                    </button>
+                                </div>
+                            @endif
+
+                            <div class="{{ auth()->user()->hasRole('client') ? 'col-md-4' : 'col-md-6' }}">
+                                <button class="btn btn-light" id="toggle-client-details" style="height: 50px; width: 100%;">{{ __('messages.client_details') }}</button>
+                            </div>
+                        @else
+                            <div class="col-md-6">
+                                <a href="{{ asset('backend/demo_file.pdf') }}" target="_blank">
+                                    <button class="btn btn-light" style="height: 50px; width: 100%;">
+                                        {{ __('messages.view_proposal') }}
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="javascript:void(0)" data-act="ajax-modal" data-action-url="{{ route('sign-proposal', auth()->user()->client?->id ?? 0) }}" data-toggle="tooltip" data-placement="top" data-title="{{ __('messages.sign_proposal') }}">
+                                    <button class="btn btn-light" style="height: 50px; width: 100%;">
+                                        {{ __('messages.sign_proposal') }}
+                                    </button>
+                                </a>
                             </div>
                         @endif
-
-                        <div class="{{ auth()->user()->hasRole('client') ? 'col-md-4' : 'col-md-6' }}">
-                            <button class="btn btn-light" id="toggle-client-details" style="height: 50px; width: 100%;">{{ __('messages.client_details') }}</button>
-                        </div>
                     </div>
                 </div>
 
@@ -117,7 +146,7 @@
                         @csrf
                         @method('PUT')
                         @php
-                            $disabled = auth()->user()->roles[0]->name != 'admin' ? 'disabled' : '';
+                            $disabled = !in_array(auth()->user()->roles[0]->name, ['admin', 'partner']) ? 'disabled' : '';
                         @endphp
                         <div class="row mb-5">
                             <h3 style="text-align: center;">{{ __('messages.client_details') }}</h3> <br>

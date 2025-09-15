@@ -141,7 +141,7 @@ class ClientController extends Controller
     {
         $client = Client::findOrFail($id);
 
-        if (auth()->user()->roles[0]->name !== 'admin' && $client->user_id !== auth()->id()) {
+        if ((auth()->user()->roles[0]->name !== 'admin' && $client->user_id !== auth()->id()) && !(auth()->user()->roles[0]->name == 'partner' && $client->user->status == 'active')) {
             abort(403, 'You do not have permission to access this page.');
         }
 
@@ -226,85 +226,85 @@ class ClientController extends Controller
             ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-            public function client(Request $request, $id)
-            {
-                // dd($request->all());
-            $validator = Validator::make($request->all(), [
-                'client_name'=>'required',
-                'client_email' => 'required|email|unique:clients,client_email,' . $id,
-                'client_phone' => 'required',
-                'client_address' => 'required',
-                'client_city' => 'required',
-                'client_state' => 'required',
-                'client_zip_code' => 'required',
-                'client_business_type_other' => 'required_if:client_business_type,other',
-                'client_business_organization_other' => 'required_if:client_business_organization,other',
-        ], [
-            'client_business_type_other.required_if' => 'Other business type is required',
-            'client_business_organization_other.required_if' => 'Other business organization is required',
-        ]);
+    public function client(Request $request, $id)
+    {
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'client_name'=>'required',
+            'client_email' => 'required|email|unique:clients,client_email,' . $id,
+            'client_phone' => 'required',
+            'client_address' => 'required',
+            'client_city' => 'required',
+            'client_state' => 'required',
+            'client_zip_code' => 'required',
+            'client_business_type_other' => 'required_if:client_business_type,other',
+            'client_business_organization_other' => 'required_if:client_business_organization,other',
+    ], [
+        'client_business_type_other.required_if' => 'Other business type is required',
+        'client_business_organization_other.required_if' => 'Other business organization is required',
+    ]);
 
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => JsonResponse::HTTP_UNPROCESSABLE_ENTITY,
-                    'message' => $validator->errors()->first(),
-                ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
-            }
-            try {
-                DB::beginTransaction();
-                $client = Client::findOrFail($id);
-                $user = User::findOrFail($client->user_id);
-                $user->update([
-                    'first_name' => $request->client_name,
-                    'email' => $request->client_email,
-                    'password' => $request->password ? Hash::make($request->password) : $user->password, // Only update if password provided
-                ]);
-                $data = [
-                    'client_name' => $request->client_name,
-                    'client_phone' => $request->client_phone,
-                    'client_email' => $request->client_email,
-                    'client_address' => $request->client_address,
-                    'client_city' => $request->client_city,
-                    'client_state' => $request->client_state,
-                    'client_zip_code' => $request->client_zip_code,
-                    'client_business_type' => $request->client_business_type,
-                    'client_business_type_other' => $request->client_business_type_other,
-                    'client_business_organization' => $request->client_business_organization,
-                    'client_business_organization_other' => $request->client_business_organization_other,
-                    'client_fein' => $request->client_fein,
-                    'client_no_of_employees' => $request->client_no_of_employees,
-                    'client_accountant_name' => $request->client_accountant_name,
-                    'client_accountant_phone' => $request->client_accountant_phone,
-                    'client_accountant_email' => $request->client_accountant_email,
-                    'client_estimated_sales' => $request->client_estimated_sales,
-                    'client_estimated_payroll' => $request->client_estimated_payroll,
-                ];
-                if ($request->hasFile('client_image')) {
-                    $clientImageFile = $request->file('client_image');
-                    $directory = 'client_images';
-                    $data['client_image'] = saveResizeImage($clientImageFile, $directory, 300, 300);
-
-                    if ($client->client_image) {
-                    }
-                } else {
-                    $data['client_image'] = $client->client_image;
-                }
-                $client->update($data);
-                DB::commit();
-                return response()->json([
-                    'success' => JsonResponse::HTTP_OK,
-                    'redirectUrl' => route('clients.edit', $id),
-                    'message' => 'Client updated successfully.',
-
-                ], JsonResponse::HTTP_OK);
-            } catch (\Exception $e) {
-                DB::rollBack();
-                return response()->json([
-                    'status' => JsonResponse::HTTP_INTERNAL_SERVER_ERROR,
-                    'message' => $e->getMessage(),
-                ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-            }
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => JsonResponse::HTTP_UNPROCESSABLE_ENTITY,
+                'message' => $validator->errors()->first(),
+            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         }
+        try {
+            DB::beginTransaction();
+            $client = Client::findOrFail($id);
+            $user = User::findOrFail($client->user_id);
+            $user->update([
+                'first_name' => $request->client_name,
+                'email' => $request->client_email,
+                'password' => $request->password ? Hash::make($request->password) : $user->password, // Only update if password provided
+            ]);
+            $data = [
+                'client_name' => $request->client_name,
+                'client_phone' => $request->client_phone,
+                'client_email' => $request->client_email,
+                'client_address' => $request->client_address,
+                'client_city' => $request->client_city,
+                'client_state' => $request->client_state,
+                'client_zip_code' => $request->client_zip_code,
+                'client_business_type' => $request->client_business_type,
+                'client_business_type_other' => $request->client_business_type_other,
+                'client_business_organization' => $request->client_business_organization,
+                'client_business_organization_other' => $request->client_business_organization_other,
+                'client_fein' => $request->client_fein,
+                'client_no_of_employees' => $request->client_no_of_employees,
+                'client_accountant_name' => $request->client_accountant_name,
+                'client_accountant_phone' => $request->client_accountant_phone,
+                'client_accountant_email' => $request->client_accountant_email,
+                'client_estimated_sales' => $request->client_estimated_sales,
+                'client_estimated_payroll' => $request->client_estimated_payroll,
+            ];
+            if ($request->hasFile('client_image')) {
+                $clientImageFile = $request->file('client_image');
+                $directory = 'client_images';
+                $data['client_image'] = saveResizeImage($clientImageFile, $directory, 300, 300);
+
+                if ($client->client_image) {
+                }
+            } else {
+                $data['client_image'] = $client->client_image;
+            }
+            $client->update($data);
+            DB::commit();
+            return response()->json([
+                'success' => JsonResponse::HTTP_OK,
+                'redirectUrl' => route('clients.edit', $id),
+                'message' => 'Client updated successfully.',
+
+            ], JsonResponse::HTTP_OK);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => JsonResponse::HTTP_INTERNAL_SERVER_ERROR,
+                'message' => $e->getMessage(),
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
     public function dataTable(Request $request)
     {
 

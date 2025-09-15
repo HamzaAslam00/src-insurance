@@ -116,6 +116,8 @@ $('body').on('click', '[data-act=ajax-modal]', function () {
                     reader.readAsDataURL(file);
                 }
             });
+
+            initSignaturePad();
         }
         else {
             toastMessage();
@@ -399,3 +401,48 @@ $(document).on('click', '.reset_filters', function() {
     $(".select2").not('.reset-disable').val('').trigger('change');
     $('.toggle-date').val('');
 });
+
+function initSignaturePad() {
+    var sig = $('#sig').signature({
+        syncField: '#signature64',
+        syncFormat: 'PNG',
+        guideline: true
+    });
+    console.log(sig);
+
+    $('#clear').off('click').on('click', function (e) {
+        e.preventDefault();
+        sig.signature('clear');
+        $("#signature64").val('');
+    });
+
+    $(document).off('submit', '#update_sign').on('submit', '#update_sign', function (e) {
+        e.preventDefault();
+        const btn = $(this).find('[data-id=update]');
+        const btnHtml = btn.html();
+        btn.attr('disabled', 'disabled');
+        btn.html(btnHtml + '&nbsp;&nbsp;<span class="spinner-border spinner-border-sm"></span>');
+
+        axios({
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            data: new FormData($(this)[0]),
+        })
+            .then(response => {
+                if (response.status == 200) {
+                    let url = window.location.origin + '/storage/' + response.data.profilr_signature;
+                    $("#saved_sign").attr("src", url);
+                    toastMessage(response.data.message, 'success');
+                } else {
+                    toastMessage();
+                }
+            })
+            .catch(error => {
+                toastMessage(error.response.data.message);
+            })
+            .finally(() => {
+                btn.removeAttr('disabled');
+                btn.html(btnHtml);
+            });
+    });
+}

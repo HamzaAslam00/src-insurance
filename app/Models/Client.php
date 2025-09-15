@@ -47,5 +47,9 @@ class Client extends Model
         return $this->hasMany(Policy::class);
     }
 
+    public function proposal()
+    {
+        return $this->hasOne(Proposal::class);
+    }
 
 }

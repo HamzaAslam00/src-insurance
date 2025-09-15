@@ -94,8 +94,10 @@
         });
     </script>
 
-    {{-- Common Js --}}
+    <script type="text/javascript" src="{{ asset('/backend/js/signature-jquery-ui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/backend/js/signature.js') }}"></script>
 
+    {{-- Common Js --}}
     <script src="{{ asset('backend/js/common.js') }}"></script>
 
     @stack('scripts')

@@ -596,4 +596,52 @@ class QuoteController extends Controller
             ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+    
+    public function signProposal(Request $request, $clientId)
+    {
+        if ($request->isMethod('get')) {
+            $client = Client::find($clientId);
+            return view('backend.quotes.sign_proposal_modal', compact('client'));
+        }
+
+        dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'client_name' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => JsonResponse::HTTP_UNPROCESSABLE_ENTITY,
+                'message' => $validator->errors()->first(),
+            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        try {
+            DB::beginTransaction();
+            $client = Client::where('id', $request->client_id)->first();
+            
+            $data = [
+                'name' => $request->client_name,
+                'email' => $client->email,
+            ];
+            $ccMail = config('services.adminemail');
+            if ($client->partner_id > 0) {
+                $partner = User::find($client->partner_id);
+                if ($partner) {
+                    $ccMail .= ',' . $partner->email;
+                }
+            }
+            Mail::to($request->business_email)->cc($ccMail)->send(new ProposalCreatedMail($data));
+            DB::commit();
+
+            return response()->json([
+                'success' => JsonResponse::HTTP_OK,
+                'message' => 'Proposal Signed successfully',
+            ], JsonResponse::HTTP_OK);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'message' => $exception->getMessage()
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
