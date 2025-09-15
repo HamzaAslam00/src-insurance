@@ -268,5 +268,16 @@ return [
     'update' => 'Actualizar',
     'current_password' => 'Contraseña actual',
     'new_password' => 'Nueva contraseña',
-
+    'view_proposal' => 'Ver Propuesta',
+    'create_proposal' => 'Crear Propuesta',
+    'sign_proposal' => 'Firmar Propuesta',
+    'update_signature' => 'Actualizar Firma',
+    'clear_signature' => 'Borrar Firma',
+    'save' => 'Guardar',
+    'src_partner_name' => 'Nombre del Socio SRC',
+    'form125' => 'FORM 125',
+    'form126' => 'FORM 126',
+    'form140' => 'FORM 140',
+    'proposal_has_been_created_please_review_and_sign' => 'La propuesta ha sido creada, por favor revise y firme',
+    'proposal_has_been_signed_successfully' => 'La propuesta ha sido firmada con éxito',
 ];

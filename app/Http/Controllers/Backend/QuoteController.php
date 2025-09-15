@@ -575,6 +575,7 @@ class QuoteController extends Controller
             $data = [
                 'name' => $request->client_name,
                 'email' => $client->email,
+                'message' => __('messages.proposal_has_been_created_please_review_and_sign'),
             ];
             $ccMail = config('services.adminemail');
             if ($client->partner_id > 0) {
@@ -623,6 +624,7 @@ class QuoteController extends Controller
             $data = [
                 'name' => $request->client_name,
                 'email' => $client->email,
+                'message' => __('messages.proposal_has_been_signed_successfully'),
             ];
             $ccMail = config('services.adminemail');
             if ($client->partner_id > 0) {
