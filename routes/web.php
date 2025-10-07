@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::get('quotes/{type?}', [Backend\QuoteController::class, 'index'])->name('quotes.index');
     Route::get('quotes/{id}/show', [Backend\QuoteController::class, 'show'])->name('quotes.show');
     Route::get('quotes/{quoteId}/client-forms', [Backend\QuoteController::class, 'acrobatForms'])->name('quotes.show.acrobat-forms');
+    Route::get('quotes/{quoteId}/print-form/{formId}', [Backend\QuoteController::class, 'acrobatPrintForm'])->name('quotes.print.acrobat-form');
     Route::get('quotes/create/{id}', [Backend\QuoteController::class, 'create'])->name('quotes.create');
     Route::match(['get', 'post'], 'edit-quote/{id}', [Backend\QuoteController::class, 'editQuote'])->name('edit-quote');
     Route::get('quotes-dt/{type?}', [Backend\QuoteController::class, 'dataTable'])->name('quotes-dt');

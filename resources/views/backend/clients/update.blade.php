@@ -1,6 +1,6 @@
 @php
     $isEdit = isset($client);
-    $disabled = (auth()->user()->hasRole('client') && auth()->user()->client?->proposal->status == 'unsigned') ? 'disabled' : '';
+    $disabled = (auth()->user()->hasRole('client') && auth()->user()->client?->proposal?->status == 'unsigned') ? 'disabled' : '';
 @endphp
 <style>
     .select2-container {
@@ -96,7 +96,7 @@
                 </div>
                 <div class="container mt-4">
                     <div class="row" style="margin-bottom: 10px;">
-                        @if(!(auth()->user()->hasRole('client') && auth()->user()->client?->proposal->status == 'unsigned'))
+                        @if(!(auth()->user()->hasRole('client') && auth()->user()->client?->proposal?->status == 'unsigned'))
                             <div class="{{ auth()->user()->hasRole('client') ? 'col-md-4' : 'col-md-6' }}">
                                 <button class="btn btn-light" id="policies-button" style="height: 50px; width: 100%;">{{ __('messages.policies') }}</button>
                             </div>

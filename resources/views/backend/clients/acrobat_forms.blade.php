@@ -85,13 +85,13 @@
                     <div class="container mt-4">
                         <div class="row" style="margin-bottom: 10px;">
                             <div class="col-md-4">
-                                <a href="{{ asset('backend/demo_file.pdf') }}" target="_blank" class="btn btn-light" id="form125-button" style="height: 50px; width: 100%;">{{ __('messages.form125') }}</a>
+                                <a href="{{ route('quotes.print.acrobat-form', [$quote->id, 125]) }}" target="_blank" class="btn btn-light" id="form125-button" style="height: 50px; width: 100%;">{{ __('messages.form125') }}</a>
                             </div>
                             <div class="col-md-4">
-                                <a href="{{ asset('backend/demo_file.pdf') }}" target="_blank" class="btn btn-light" id="form126-button" style="height: 50px; width: 100%;">{{ __('messages.form126') }}</a>
+                                <a href="{{ route('quotes.print.acrobat-form', [$quote->id, 126]) }}" target="_blank" class="btn btn-light" id="form126-button" style="height: 50px; width: 100%;">{{ __('messages.form126') }}</a>
                             </div>
                             <div class="col-md-4">
-                                <a href="{{ asset('backend/demo_file.pdf') }}" target="_blank" class="btn btn-light" id="form140-button" style="height: 50px; width: 100%;">{{ __('messages.form140') }}</a>
+                                <a href="{{ route('quotes.print.acrobat-form', [$quote->id, 140]) }}" target="_blank" class="btn btn-light" id="form140-button" style="height: 50px; width: 100%;">{{ __('messages.form140') }}</a>
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', '| '. __('messages.requrest_a_quote'))
+@section('title', '| '. __('messages.request_a_quote'))
 
 @section('breadcrumb')
 <div class="page-header">

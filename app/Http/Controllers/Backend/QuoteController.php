@@ -10,6 +10,7 @@ use ReCaptcha\ReCaptcha;
 use App\Mail\ContactUsMail;
 use Illuminate\Http\Request;
 use App\Mail\QuoteRequestMail;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Mail\ProposalCreatedMail;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -338,7 +339,7 @@ class QuoteController extends Controller
             ->addColumn('actions', function ($record) {
                 $actions = '<div class="btn-list">';
                 if (auth()->user()->hasPermissionTo('create_proposal') && ($record->status == 'replied' || ($record->partner_id > 0 && $record->status == 'pending'))) {
-                    $actions .= '<a data-act="ajax-modal" data-action-url="' . route('create-proposal', $record->id) . '" data-title="' . __('messages.create_proposal') . '" class="btn btn-sm btn-primary">
+                    $actions .= '<a href="' . route('create-proposal', $record->id) . '" class="btn btn-sm btn-primary">
                                     <span class="fe fe-plus"> </span>
                                 </a>';
                 }
@@ -541,12 +542,33 @@ class QuoteController extends Controller
         $client = Client::where('quote_id', $quoteId)->first();
         return view('backend.clients.acrobat_forms', compact('quote', 'client'));
     }
+
+    public function acrobatPrintForm($quoteId, $formId)
+    {
+        $quote = Quote::findOrFail($quoteId);
+        $client = Client::where('quote_id', $quoteId)->first();
+        if($formId == 125) {
+            $pdf = Pdf::loadView('backend.clients.forms.form125', compact('quote', 'client'));
+            return $pdf->download('125.pdf');
+        } elseif($formId == 126) {
+            $pdf = Pdf::loadView('backend.clients.forms.form125', compact('quote', 'client'));
+            return $pdf->download('126.pdf');
+        } else {
+            $pdf = Pdf::loadView('backend.clients.forms.form125', compact('quote', 'client'));
+            return $pdf->download('140.pdf');
+        }
+    }
     
     public function createProposal(Request $request, $quoteId)
     {
         if ($request->isMethod('get')) {
+            $quote = Quote::where('id', $quoteId)->first();
             $client = Client::where('quote_id', $quoteId)->first();
-            return view('backend.quotes.proposal_modal', compact('client'));
+            if ($quote->service_type == 'worker_compensation') {
+                return view('backend.quotes.workr_comp_proposal_form', compact('client', 'quote'));
+            } else {
+                return view('backend.quotes.general_insurance_proposal_form', compact('client', 'quote'));
+            }
         }
 
         $validator = Validator::make($request->all(), [
