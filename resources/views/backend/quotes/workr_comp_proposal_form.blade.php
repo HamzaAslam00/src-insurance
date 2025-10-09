@@ -22,35 +22,35 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab25">
                         <div class="col-xl-12 px-0">
-                            <form action="{{ route('create-proposal', $client->id) }}" method="post" data-form="ajax-form" data-modal="#ajax_model" data-datatable="#quote_datatable">
+                            <form action="{{ route('create-proposal', $quote->id) }}" method="post" data-form="ajax-form" data-modal="#ajax_model" data-redirect="true">
                                 @csrf
-                                <input type="hidden" name="client_id" value="{{ $client->id }}">
-                                <input type="hidden" name="quote_id" value="{{ $quote->id }}">
+                                <input type="hidden" name="client_id" value="{{ $client->id }}" readonly>
+                                <input type="hidden" name="quote_id" value="{{ $quote->id }}" readonly>
                                 <div class="row">
                                     <div class="form-group col-lg-6">
                                         <label for="business_name">{{ __('messages.business_name') }} <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="business_name" id="business_name" value="{{ $client->business_name }}">
+                                        <input type="text" class="form-control" name="business_name" id="business_name" value="{{ $client->business_name }}" readonly>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label for="owner_name">{{ __('messages.owners_name') }}</label>
-                                        <input type="text" class="form-control" name="owner_name" id="owner_name" value="{{ $client->owner_name }}">
+                                        <input type="text" class="form-control" name="owner_name" id="owner_name" value="{{ $client->owner_name }}" readonly>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label for="business_telephone">{{ __('messages.business_telephone') }}</label>
-                                        <input type="text" class="form-control" name="business_telephone" id="business_telephone" value="{{ $client->phone }}">
+                                        <input type="text" class="form-control" name="business_telephone" id="business_telephone" value="{{ $client->phone }}" readonly>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label for="address">{{ __('messages.address') }}</label>
-                                        <input type="text" class="form-control" name="address" id="address" value="{{ $client->client_address }}">
+                                        <input type="text" class="form-control" name="address" id="address" value="{{ $client->client_address }}" readonly>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label for="city">{{ __('messages.city') }}</label>
-                                        <input type="text" class="form-control" name="city" id="city" value="{{ $client->client_city }}">
+                                        <input type="text" class="form-control" name="city" id="city" value="{{ $client->client_city }}" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="state">{{ __('messages.state') }}</label>
                                         <div class="">
-                                            <select required class="form-control form-select select-style col-md-12" name="state" id="state">
+                                            <select class="form-control form-select select-style col-md-12" name="state" id="state" readonly>
                                                 <option value="" selected disabled>{{ __('messages.select_state') }}</option>
                                                 <option value="new-york" @if($client->client_state == 'new-york') selected @endif>{{ __('messages.new_york') }}</option>
                                                 <option value="new-jersey" @if($client->client_state == 'new-jersey') selected @endif>{{ __('messages.new_jersey') }}</option>
@@ -59,7 +59,7 @@
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label for="zip_code">{{ __('messages.zip_code') }}</label>
-                                        <input type="text" class="form-control" name="zip_code" id="zip_code" value="{{ $client->client_zip_code }}">
+                                        <input type="text" class="form-control" name="zip_code" id="zip_code" value="{{ $client->client_zip_code }}" readonly>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label for="insurance_carrier">{{ __('messages.insurance_carrier') }}</label>
@@ -92,7 +92,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="brokers_fee_wc">{{ __('messages.brokers_fee_wc') }}</label>
                                         <div class="">
-                                            <select required class="form-control form-select select-style col-md-12" name="brokers_fee_wc" id="brokers_fee_wc">
+                                            <select class="form-control form-select select-style col-md-12" name="brokers_fee_wc" id="brokers_fee_wc">
                                                 <option value="" selected disabled>{{ __('messages.select_brokers_fee_wc') }}</option>
                                                 <option value="$650">$650</option>
                                                 <option value="$350">$350</option>
@@ -107,7 +107,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="service_fee_dbl">{{ __('messages.service_fee_dbl') }}</label>
                                         <div class="">
-                                            <select required class="form-control form-select select-style col-md-12" name="service_fee_dbl" id="service_fee_dbl">
+                                            <select class="form-control form-select select-style col-md-12" name="service_fee_dbl" id="service_fee_dbl">
                                                 <option value="" selected disabled>{{ __('messages.select_service_fee_dbl') }}</option>
                                                 <option value="$650">$150</option>
                                                 <option value="other">{{ __('messages.other') }}</option>
@@ -120,7 +120,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="wc_coverage_by_accident">{{ __('messages.wc_coverage_by_accident') }}</label>
                                         <div class="">
-                                            <select required class="form-control form-select select-style col-md-12" name="wc_coverage_by_accident" id="wc_coverage_by_accident">
+                                            <select class="form-control form-select select-style col-md-12" name="wc_coverage_by_accident" id="wc_coverage_by_accident">
                                                 <option value="" selected disabled>{{ __('messages.select_wc_coverage_by_accident') }}</option>
                                                 <option value="$650">$150</option>
                                                 <option value="other">{{ __('messages.other') }}</option>
@@ -133,7 +133,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="wc_coverage_each_employee">{{ __('messages.wc_coverage_each_employee') }}</label>
                                         <div class="">
-                                            <select required class="form-control form-select select-style col-md-12" name="wc_coverage_each_employee" id="wc_coverage_each_employee">
+                                            <select class="form-control form-select select-style col-md-12" name="wc_coverage_each_employee" id="wc_coverage_each_employee">
                                                 <option value="" selected disabled>{{ __('messages.select_wc_coverage_each_employee') }}</option>
                                                 <option value="$650">$150</option>
                                                 <option value="other">{{ __('messages.other') }}</option>

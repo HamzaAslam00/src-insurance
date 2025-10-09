@@ -22,34 +22,35 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab25">
                         <div class="col-xl-12 px-0">
-                            <form action="{{ route('create-proposal', $client->id) }}" method="post" data-form="ajax-form" data-modal="#ajax_model" data-datatable="#quote_datatable">
+                            <form action="{{ route('create-proposal', $quote->id) }}" method="post" data-form="ajax-form" data-modal="#ajax_model" data-redirect="true">
                                 @csrf
-                                <input type="hidden" name="client_id" value="{{ $client->id }}">
+                                <input type="hidden" name="client_id" value="{{ $client->id }}" readonly>
+                                <input type="hidden" name="quote_id" value="{{ $quote->id }}" readonly>
                                 <div class="row">
                                     <div class="form-group col-lg-6">
                                         <label for="business_name">{{ __('messages.business_name') }} <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="business_name" id="business_name" value="{{ $client->business_name }}">
+                                        <input type="text" class="form-control" name="business_name" id="business_name" value="{{ $client->business_name }}" readonly>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label for="owner_name">{{ __('messages.owners_name') }}</label>
-                                        <input type="text" class="form-control" name="owner_name" id="owner_name" value="{{ $client->owner_name }}">
+                                        <input type="text" class="form-control" name="owner_name" id="owner_name" value="{{ $client->owner_name }}" readonly>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label for="business_telephone">{{ __('messages.business_telephone') }}</label>
-                                        <input type="text" class="form-control" name="business_telephone" id="business_telephone" value="{{ $client->phone }}">
+                                        <input type="text" class="form-control" name="business_telephone" id="business_telephone" value="{{ $client->phone }}" readonly>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label for="address">{{ __('messages.address') }}</label>
-                                        <input type="text" class="form-control" name="address" id="address" value="{{ $client->client_address }}">
+                                        <input type="text" class="form-control" name="address" id="address" value="{{ $client->client_address }}" readonly>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label for="city">{{ __('messages.city') }}</label>
-                                        <input type="text" class="form-control" name="city" id="city" value="{{ $client->client_city }}">
+                                        <input type="text" class="form-control" name="city" id="city" value="{{ $client->client_city }}" readonly>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="state">{{ __('messages.state') }}</label>
                                         <div class="">
-                                            <select required class="form-control form-select select-style col-md-12" name="state" id="state">
+                                            <select class="form-control form-select select-style col-md-12" name="state" id="state" readonly>
                                                 <option value="" selected disabled>{{ __('messages.select_state') }}</option>
                                                 <option value="new-york" @if($client->client_state == 'new-york') selected @endif>{{ __('messages.new_york') }}</option>
                                                 <option value="new-jersey" @if($client->client_state == 'new-jersey') selected @endif>{{ __('messages.new_jersey') }}</option>
@@ -58,7 +59,7 @@
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label for="zip_code">{{ __('messages.zip_code') }}</label>
-                                        <input type="text" class="form-control" name="zip_code" id="zip_code" value="{{ $client->client_zip_code }}">
+                                        <input type="text" class="form-control" name="zip_code" id="zip_code" value="{{ $client->client_zip_code }}" readonly>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label for="insurance_carrier">{{ __('messages.insurance_carrier') }}</label>
@@ -87,7 +88,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="aggregate">{{ __('messages.aggregate') }}</label>
                                         <div class="">
-                                            <select required class="form-control form-select select-style col-md-12" name="aggregate" id="aggregate">
+                                            <select class="form-control form-select select-style col-md-12" name="aggregate" id="aggregate">
                                                 <option value="" selected disabled>{{ __('messages.select_aggregate') }}</option>
                                                 <option value="$2,000,000">$2,000,000</option>
                                                 <option value="$1,000,000">$1,000,000</option>
@@ -102,7 +103,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="products_complicated_oprations">{{ __('messages.products_completed_operations') }}</label>
                                         <div class="">
-                                            <select required class="form-control form-select select-style col-md-12" name="products_complicated_oprations" id="products_complicated_oprations">
+                                            <select class="form-control form-select select-style col-md-12" name="products_complicated_oprations" id="products_complicated_oprations">
                                                 <option value="" selected disabled>{{ __('messages.select_products_complicated_oprations') }}</option>
                                                 <option value="$2,000,000">$2,000,000</option>
                                                 <option value="$1,000,000">$1,000,000</option>
@@ -116,7 +117,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="each_occurence">{{ __('messages.each_occurence') }}</label>
                                         <div class="">
-                                            <select required class="form-control form-select select-style col-md-12" name="each_occurence" id="each_occurence">
+                                            <select class="form-control form-select select-style col-md-12" name="each_occurence" id="each_occurence">
                                                 <option value="" selected disabled>{{ __('messages.select_each_occurence') }}</option>
                                                 <option value="$1,000,000">$1,000,000</option>
                                                 <option value="$2,000,000">$2,000,000</option>
@@ -130,7 +131,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="damage_to_rented_premises">{{ __('messages.damage_to_rented_premises') }}</label>
                                         <div class="">
-                                            <select required class="form-control form-select select-style col-md-12" name="damage_to_rented_premises" id="damage_to_rented_premises">
+                                            <select class="form-control form-select select-style col-md-12" name="damage_to_rented_premises" id="damage_to_rented_premises">
                                                 <option value="" selected disabled>{{ __('messages.select_damage_to_rented_premises') }}</option>
                                                 <option value="$50,000">$50,000</option>
                                                 <option value="$100,000">$100,000</option>
@@ -146,7 +147,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="medical_expenses">{{ __('messages.medical_expenses') }}</label>
                                         <div class="">
-                                            <select required class="form-control form-select select-style col-md-12" name="medical_expenses" id="medical_expenses">
+                                            <select class="form-control form-select select-style col-md-12" name="medical_expenses" id="medical_expenses">
                                                 <option value="" selected disabled>{{ __('messages.select_medical_expenses') }}</option>
                                                 <option value="$50,000">$5,000</option>
                                                 <option value="other">{{ __('messages.other') }}</option>
@@ -159,7 +160,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="business_personal_property">{{ __('messages.business_personal_property') }}</label>
                                         <div class="">
-                                            <select required class="form-control form-select select-style col-md-12" name="business_personal_property" id="business_personal_property">
+                                            <select class="form-control form-select select-style col-md-12" name="business_personal_property" id="business_personal_property">
                                                 <option value="" selected disabled>{{ __('messages.select_business_personal_property') }}</option>
                                                 <option value="NONE">NONE</option>
                                                 <option value="other">{{ __('messages.other') }}</option>
@@ -172,7 +173,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="building_coverage">{{ __('messages.building_coverage') }}</label>
                                         <div class="">
-                                            <select required class="form-control form-select select-style col-md-12" name="building_coverage" id="building_coverage">
+                                            <select class="form-control form-select select-style col-md-12" name="building_coverage" id="building_coverage">
                                                 <option value="" selected disabled>{{ __('messages.select_building_coverage') }}</option>
                                                 <option value="NONE">NONE</option>
                                                 <option value="other">{{ __('messages.other') }}</option>
@@ -185,7 +186,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="deductible">{{ __('messages.deductible') }}</label>
                                         <div class="">
-                                            <select required class="form-control form-select select-style col-md-12" name="deductible" id="deductible">
+                                            <select class="form-control form-select select-style col-md-12" name="deductible" id="deductible">
                                                 <option value="" selected disabled>{{ __('messages.select_deductible') }}</option>
                                                 <option value="$1,000">$1,000</option>
                                                 <option value="$5,000">$5,000</option>
@@ -199,7 +200,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="service_fee">{{ __('messages.service_fee') }}</label>
                                         <div class="">
-                                            <select required class="form-control form-select select-style col-md-12" name="service_fee" id="service_fee">
+                                            <select class="form-control form-select select-style col-md-12" name="service_fee" id="service_fee">
                                                 <option value="" selected disabled>{{ __('messages.select_service_fee') }}</option>
                                                 <option value="$650">$650</option>
                                                 <option value="$350">$350</option>

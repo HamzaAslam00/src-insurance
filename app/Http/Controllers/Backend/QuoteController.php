@@ -411,10 +411,10 @@ class QuoteController extends Controller
             'service_type' => 'required',
             'business_name' => 'required',
             'owner_name' => 'required',
-            'email' => 'required|email|unique:clients,email',
+            'email' => 'required|email|unique:users,email',
             'phone' => 'required',
             'client_name' => 'required',
-            'client_email' => 'required|email|unique:clients,client_email',
+            'client_email' => 'required|email|unique:users,email',
             'client_phone' => 'required',
             'client_address' => 'required',
             'client_city' => 'required',
@@ -561,8 +561,8 @@ class QuoteController extends Controller
     
     public function createProposal(Request $request, $quoteId)
     {
+        $quote = Quote::where('id', $quoteId)->first();
         if ($request->isMethod('get')) {
-            $quote = Quote::where('id', $quoteId)->first();
             $client = Client::where('quote_id', $quoteId)->first();
             if ($quote->service_type == 'worker_compensation') {
                 return view('backend.quotes.workr_comp_proposal_form', compact('client', 'quote'));
@@ -572,8 +572,21 @@ class QuoteController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'client_name' => 'required',
             'client_id' => 'required',
+            'quote_id' => 'required',
+            'business_name' => 'required',
+            'owner_name' => 'required',
+            'business_telephone' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'zip_code' => 'required',
+            'insurance_carrier' => 'required',
+            'down_payment' => 'required',
+            'monthly_payment' => 'required',
+            'no_of_monthly_payment' => 'required',
+            'finance_charge' => 'required',
+            'total' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -586,11 +599,80 @@ class QuoteController extends Controller
         try {
             DB::beginTransaction();
             $client = Client::where('id', $request->client_id)->first();
-            $proposal = Proposal::create([
-                'client_id' => $client->id,
-                'quote_id' => $quoteId,
-                'client_name' => $request->client_name,
-            ]);
+            if ($quote->service_type == 'worker_compensation') {
+                $data = [
+                    'client_id' => $request->client_id,
+                    'quote_id' => $request->quote_id,
+                    'business_name' => $request->business_name,
+                    'owner_name' => $request->owner_name,
+                    'business_telephone' => $request->business_telephone,
+                    'address' => $request->address,
+                    'city' => $request->city,
+                    'state' => $request->state,
+                    'zip_code' => $request->zip_code,
+                    'insurance_carrier' => $request->insurance_carrier,
+                    'down_payment' => $request->down_payment,
+                    'monthly_payment' => $request->monthly_payment,
+                    'no_of_monthly_payment' => $request->no_of_monthly_payment,
+                    'finance_charge' => $request->finance_charge,
+                    'total' => $request->total,
+                    'dbl_policy_cost' => $request->dbl_policy_cost,
+                    'brokers_fee_wc' => $request->brokers_fee_wc,
+                    'brokers_fee_wc_other' => $request->brokers_fee_wc_other,
+                    'service_fee_dbl' => $request->service_fee_dbl,
+                    'service_fee_dbl_other' => $request->service_fee_dbl_other,
+                    'wc_coverage_by_accident' => $request->wc_coverage_by_accident,
+                    'wc_coverage_by_accident_other' => $request->wc_coverage_by_accident_other,
+                    'wc_coverage_each_employee' => $request->wc_coverage_each_employee,
+                    'wc_coverage_each_employee_other' => $request->wc_coverage_each_employee_other,
+                    'policy_limit' => $request->policy_limit,
+                ];
+            } else {
+                $data = [
+                    'client_id' => $request->client_id,
+                    'quote_id' => $request->quote_id,
+                    'business_name' => $request->business_name,
+                    'owner_name' => $request->owner_name,
+                    'business_telephone' => $request->business_telephone,
+                    'address' => $request->address,
+                    'city' => $request->city,
+                    'state' => $request->state,
+                    'zip_code' => $request->zip_code,
+                    'insurance_carrier' => $request->insurance_carrier,
+                    'down_payment' => $request->down_payment,
+                    'monthly_payment' => $request->monthly_payment,
+                    'no_of_monthly_payment' => $request->no_of_monthly_payment,
+                    'finance_charge' => $request->finance_charge,
+                    'total' => $request->total,
+                    'aggregate' => $request->aggregate,
+                    'aggregate_other' => $request->aggregate_other,
+                    'products_complicated_oprations' => $request->products_complicated_oprations,
+                    'products_complicated_oprations_other' => $request->products_complicated_oprations_other,
+                    'each_occurence' => $request->each_occurence,
+                    'each_occurence_other' => $request->each_occurence_other,
+                    'damage_to_rented_premises' => $request->damage_to_rented_premises,
+                    'damage_to_rented_premises_other' => $request->damage_to_rented_premises_other,
+                    'medical_expenses' => $request->medical_expenses,
+                    'medical_expenses_other' => $request->medical_expenses_other,
+                    'business_personal_property' => $request->business_personal_property,
+                    'business_personal_property_other' => $request->business_personal_property_other,
+                    'building_coverage' => $request->building_coverage,
+                    'building_coverage_other' => $request->building_coverage_other,
+                    'deductible' => $request->deductible,
+                    'deductible_other' => $request->deductible_other,
+                    'service_fee' => $request->service_fee,
+                    'service_fee_other' => $request->service_fee_other,
+                    'liqour_interruption' => $request->liqour_interruption,
+                    'business_interruption' => $request->business_interruption,
+                    'professional_liability' => $request->professional_liability,
+                    'theft' => $request->theft,
+                    'food_water_damage' => $request->food_water_damage,
+                    'vandalism' => $request->vandalism,
+                    'fire_wind' => $request->fire_wind,
+                ];
+
+            }
+            $proposal = Proposal::create($data);
             Quote::where('id', $client->quote_id)->update(['status' => 'ready_quote']);
             $client->update(['status' => 'active', 'proposal_id' => $proposal->id]);
             
@@ -599,19 +681,21 @@ class QuoteController extends Controller
                 'email' => $client->email,
                 'message' => __('messages.proposal_has_been_created_please_review_and_sign'),
             ];
-            $ccMail = config('services.adminemail');
+            $ccMail[] = config('services.adminemail');
             if ($client->partner_id > 0) {
                 $partner = User::find($client->partner_id);
                 if ($partner) {
-                    $ccMail .= ',' . $partner->email;
+                    $ccMail[]= $partner->email;
                 }
             }
-            Mail::to($request->business_email)->cc($ccMail)->send(new ProposalCreatedMail($data));
+            // dd($ccMail);
+            Mail::to($client->email)->cc($ccMail)->send(new ProposalCreatedMail($data));
             DB::commit();
 
             return response()->json([
                 'success' => JsonResponse::HTTP_OK,
                 'message' => 'Proposal created successfully',
+                'redirectUrl' => route('quotes.index', 'partner'),
             ], JsonResponse::HTTP_OK);
         } catch (\Exception $exception) {
             return response()->json([
