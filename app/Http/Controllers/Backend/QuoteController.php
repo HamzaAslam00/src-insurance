@@ -174,8 +174,9 @@ class QuoteController extends Controller
 
     public function show($id)
     {
-        $quote = Quote::findOrFail($id);
-        return view('backend.quotes.view_modal', compact('quote'));
+        $quoteData = Quote::findOrFail($id);
+        $client = Client::where('quote_id', $quoteData->id)->first();
+        return view('backend.quotes.view_modal', compact('quoteData', 'client'));
     }
     public function create($id)
     {
@@ -344,7 +345,7 @@ class QuoteController extends Controller
                                 </a>';
                 }
                 if (auth()->user()->hasPermissionTo('view_pending_quotes')) {
-                    $actions .= '<a data-act="ajax-modal" data-action-url="' . route('quotes.show', $record->id) . '" data-title="' . __('messages.requested_quote') . '" class="btn btn-sm btn-info">
+                    $actions .= '<a href="' . route('quotes.show', $record->id) . '" class="btn btn-sm btn-info">
                                     <span class="fe fe-eye"> </span>
                                 </a>';
                 }
@@ -550,6 +551,7 @@ class QuoteController extends Controller
         if($formId == 125) {
             $pdf = Pdf::loadView('backend.clients.forms.form125', compact('quote', 'client'));
             return $pdf->download('125.pdf');
+            // return view('backend.clients.forms.form125', compact('quote', 'client'));
         } elseif($formId == 126) {
             $pdf = Pdf::loadView('backend.clients.forms.form125', compact('quote', 'client'));
             return $pdf->download('126.pdf');

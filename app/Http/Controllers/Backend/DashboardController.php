@@ -26,8 +26,10 @@ class DashboardController extends Controller
             return view('backend.dashboard', compact('clientsCount', 'activeCount', 'expiredCount', 'cancelledCount'));
         } else {
             $client = Client::where('status', 'active')->where('client_email', auth()->user()->email)->first();
-            return redirect()->route('clients.edit', $client->id);
+            if ($client) {
+                return redirect()->route('clients.edit', $client->id);
+            }
+            return redirect()->back()->withErrors(['error' => 'These credentials do not match our records.']);
         }
-
     }
 }

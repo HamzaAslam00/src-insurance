@@ -306,6 +306,8 @@
             }
         });
 
+        $('[name="client_business_organization"], [name="client_business_type"]').trigger('change');
+
         // Preview for Business Image
         document.getElementById('image-trigger-business').addEventListener('click', function() {
             document.querySelector('.file-upload-business').click();
