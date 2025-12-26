@@ -427,7 +427,7 @@
           <div style="font-size: 13pt; font-weight: bold;">COMMERCIAL INSURANCE APPLICATION<br><div style="font-size: 10pt;">APPLICANT INFORMATION SECTION</div></div>
         </td>
         <td style="width: 20%; top; padding: 0; text-align:center;">
-          <div class="date-header" style="font-size: 6pt; font-weight: bold; padding-bottom:2px;">DATE (MM/DD/YYYY)<br><div style="font-size: 9pt; padding-top: 6px;">{{ $data['form_date'] ?? '08-06-2025' }}</div></div>
+          <div class="date-header" style="font-size: 6pt; font-weight: bold; padding-bottom:2px;">DATE (MM/DD/YYYY)<br><div style="font-size: 9pt; padding-top: 6px;">{{ $data['date'] ?? '' }}</div></div>
         </td>
       </tr>
     </table>
@@ -536,7 +536,11 @@
             </tr>
             <tr>
               <td colspan="2" style="border: none; border-bottom: 1px solid #000; padding: 0px 4px; line-height:1; padding-bottom: 15px;">
-                <span class="label-bold">POLICY NUMBER</span>
+                <table style="width: 100%; border-collapse: collapse;">
+                  <tr>
+                    <td style="width: 100%; border: none;"><span class="label-bold">POLICY NUMBER</span></td>
+                  </tr>
+                </table>
               </td>
             </tr>
             <tr>
@@ -827,24 +831,24 @@
     <div class="label-bold" style="font-size: 11px; margin-top: 10px;">APPLICANT INFORMATION</div>
     <table class="main-table" style="margin-top: 0;">
       <tr>
-        <td style="width: 50%; vertical-align: top; padding: 0;" colspan="5">
+        <td style="width: 70%; vertical-align: top; padding: 0;" colspan="7">
           <table style="width: 100%; border-collapse: collapse;">
             <tr>
               <td class="label-bold" style="border: none; border-bottom: 0px;">NAME (First Named Insured) AND MAILING ADDRESS (including ZIP+4)</td>
             </tr>
             <tr>
               <td style="border: none; padding: 3px 4px;  vertical-align: top;">
-                <div class="value" style="font-size: 12px;">{{ $data['producer_name'] ?? 'ABC CORP' }}
+                <div class="value" style="font-size: 12px;">{{ $quote['business_name'] }}
                 </div>
-                <div class="value" style="font-size: 12px;">{{ $data['producer_address1'] ?? '123 MERRY STREET' }}
+                <div class="value" style="font-size: 12px;">{{ $quote['business_address'] }}
                 </div>
-                <div class="value" style="position: relative; top: 5px; font-size: 11px;">{{ $data['producer_city_state_zip'] ?? 'Brooklyn, NY 11232' }}</div>
+                <div class="value" style="position: relative; top: 5px; font-size: 11px;">{{ $quote['city'] . ', ' . ($quote['state'] == 'new-york' ? 'NY ' : 'NJ ') . $quote['zip_code'] }}</div>
               </td>
             </tr>
     
           </table>
         </td>
-        <td style="width: 50%; vertical-align: top; padding: 0;" colspan="5">
+        <td style="width: 30%; vertical-align: top; padding: 0;" colspan="3">
           <table style="width: 100%; border-collapse: collapse;">
             <tr>
               <td style="width: 20%; padding-bottom: 15px; border-left: 1px solid #000; padding-left: 4px;" class="label-bold">GL CODE</td>
@@ -903,24 +907,22 @@
     {{-- Other Named Insured --}}
     <table class="main-table" style="margin-top: 0;">
       <tr>
-        <td style="width: 50%; vertical-align: top; padding: 0;" colspan="5">
+        <td style="width: 70%; vertical-align: top; padding: 0;" colspan="7">
           <table style="width: 100%; border-collapse: collapse;">
             <tr>
               <td class="label-bold" style="border: none; border-bottom: 0px;">NAME (First Named Insured) AND MAILING ADDRESS (including ZIP+4)</td>
             </tr>
             <tr>
               <td style="border: none; padding: 3px 4px;  vertical-align: top;">
-                <div class="value" style="font-size: 12px;">{{ $data['producer_name'] ?? 'ABC CORP' }}
-                </div>
-                <div class="value" style="font-size: 12px;">{{ $data['producer_address1'] ?? '123 MERRY STREET' }}
-                </div>
-                <div class="value" style="position: relative; top: 5px; font-size: 11px;">{{ $data['producer_city_state_zip'] ?? 'Brooklyn, NY 11232' }}</div>
+                <div class="value" style="font-size: 12px;"></div>
+                <div class="value" style="font-size: 12px;"></div>
+                <div class="value" style="position: relative; top: 5px; font-size: 11px;"></div>
               </td>
             </tr>
     
           </table>
         </td>
-        <td style="width: 50%; vertical-align: top; padding: 0;" colspan="5">
+        <td style="width: 30%; vertical-align: top; padding: 0;" colspan="3">
           <table style="width: 100%; border-collapse: collapse;">
             <tr>
               <td style="width: 20%; padding-bottom: 15px; border-left: 1px solid #000; padding-left: 4px;" class="label-bold">GL CODE</td>
@@ -1001,24 +1003,22 @@
     {{-- Applicant Information Continued --}}
     <table class="main-table" style="margin-top: 0;">
       <tr>
-        <td style="width: 50%; vertical-align: top; padding: 0;" colspan="5">
+        <td style="width: 70%; vertical-align: top; padding: 0;" colspan="7">
           <table style="width: 100%; border-collapse: collapse;">
             <tr>
               <td class="label-bold" style="border: none; border-bottom: 0px;">NAME (First Named Insured) AND MAILING ADDRESS (including ZIP+4)</td>
             </tr>
             <tr>
               <td style="border: none; padding: 3px 4px;  vertical-align: top;">
-                <div class="value" style="font-size: 12px;">{{ $data['producer_name'] ?? 'ABC CORP' }}
-                </div>
-                <div class="value" style="font-size: 12px;">{{ $data['producer_address1'] ?? '123 MERRY STREET' }}
-                </div>
-                <div class="value" style="position: relative; top: 5px; font-size: 11px;">{{ $data['producer_city_state_zip'] ?? 'Brooklyn, NY 11232' }}</div>
+                <div class="value" style="font-size: 12px;"></div>
+                <div class="value" style="font-size: 12px;"></div>
+                <div class="value" style="position: relative; top: 5px; font-size: 11px;"></div>
               </td>
             </tr>
     
           </table>
         </td>
-        <td style="width: 50%; vertical-align: top; padding: 0;" colspan="5">
+        <td style="width: 30%; vertical-align: top; padding: 0;" colspan="3">
           <table style="width: 100%; border-collapse: collapse;">
             <tr>
               <td style="width: 20%; padding-bottom: 15px; border-left: 1px solid #000; padding-left: 4px;" class="label-bold">GL CODE</td>
@@ -1082,7 +1082,7 @@
         <td><span class="label-bold">CONTACT TYPE:</span></td>
       </tr>
       <tr>
-        <td><span class="label-bold">CONTACT NAME:</span> <span style=" font-size: 12px;">JHON DOE</span></td>
+        <td><span class="label-bold">CONTACT NAME:</span> <span style=" font-size: 12px;">{{ $quote['business_owner'] }}</span></td>
         <td><span class="label-bold">CONTACT NAME:</span></td>
       </tr>
       <tr>
@@ -1104,7 +1104,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="2" style="border: 0px; padding: 0px; font-size: 12px;">123-456-7889</td>
+                    <td colspan="2" style="border: 0px; padding: 0px; font-size: 12px;">{{ $quote['business_telephone'] }}</td>
                   </tr>
                 </table>
               </td>
@@ -1192,7 +1192,7 @@
       </tr>
       <tr>
         <td style="border: 0px; width: 5%; padding-left: 10px; font-size: 12px;" class="label">{{ $data['loc1_num'] ?? '1' }}</td>
-        <td style="border: 0px; border-left: 1px solid #000; font-size: 12px;" class="value" colspan="2">{{ $data['loc1_street'] ?? '123 MERRY STREET' }}</td>
+        <td style="border: 0px; border-left: 1px solid #000; font-size: 12px;" class="value" colspan="2">{{ addEllipsis($quote['business_address'], 75) }}</td>
         <td style="width: 2.5%; font-family: DejaVu Sans, sans-serif;">&#10003;</td>
         <td style="border: 0px; width: 7%;"><span class="label">INSIDE</span></td>
         <td style="width: 2.5%;"></td>
@@ -1203,8 +1203,8 @@
       </tr>
       <tr>
         <td style="border-bottom: 0px;"><span class="label-bold">BLD #</span></td>
-        <td style="width: 15%;"><span class="label-bold">CITY:</span> <span style="font-size: 12px;">BROOKLYN</span></td>
-        <td style="width: 15%;"><span class="label-bold">STATE:</span> <span style="font-size: 12px;">NY</span></td>
+        <td style="width: 15%;"><span class="label-bold">CITY:</span> <span style="font-size: 12px;">{{ $quote['city'] }}</span></td>
+        <td style="width: 15%;"><span class="label-bold">STATE:</span> <span style="font-size: 12px;">{{ $quote['state'] == 'new-york' ? 'NY' : 'NJ'}}</span></td>
         <td style=""></td>
         <td style="border: 0px;" rowspan="2"><span class="label">OUTSIDE</span></td>
         <td style="font-family: DejaVu Sans, sans-serif;">&#10003;</td>
@@ -1216,7 +1216,7 @@
       <tr>
         <td style="border: 0px; "></td>
         <td style=""><span class="label-bold">COUNTRY:</span></td>
-        <td style=""><span class="label-bold">ZIP:</span> <span style="font-size: 12px;">11232</span></td>
+        <td style=""><span class="label-bold">ZIP:</span> <span style="font-size: 12px;">{{ $quote['zip_code'] }}</span></td>
         <td style=""></td>
         <td style=""></td>
         <td style="border-right: 0px;"><span class="label-bold">TOTAL BUILDING AREA:</span></td>
@@ -1320,7 +1320,7 @@
           <td style="border-bottom: 0px;"><div class="label-bold">DESCRIPTION OF PRIMARY OPERATIONS</div></td>
         </tr>
         <tr>
-          <td style="height: 130px; vertical-align: top; border-top: 0px; font-size: 12px;">{{ $data['primary_operations'] ?? 'DELI CONSTRUCTION' }}</td>
+          <td style="height: 130px; vertical-align: top; border-top: 0px; font-size: 12px;">{{ $quote['business_kind'] == 'other' ? $quote['business_kind_other'] : $quote['business_kind'] }}</td>
         </tr>
       </table>
 
@@ -1392,7 +1392,7 @@
         <td class="border-none"><span class="label-bold">ADDITIONAL INSURED</span></td>
         <td style="width: 2.5%;"></td>
         <td class="border-none"><span class="label-bold">LIEN HOLDER</span></td>
-        <td colspan="9" rowspan="5" class="border-top-none"><span class="label" style="font-size: 12px;">LANDLORD <br> 123 MERRY STREET<br> BROOKLYN NY 11232</span></td>
+        <td colspan="9" rowspan="5" class="border-top-none"><span class="label" style="font-size: 12px;">{{ $quote['business_owner'] }} <br> {{ $quote['business_address'] }}<br> {{ $quote['city'] . ($quote['state'] == 'new-york' ? ' NY ' : ' NJ ') . $quote['zip_code'] }}</span></td>
         <td><span class="label-bold">LOCATION:</span></td>
         <td><span class="label-bold">BUILDING:</span></td>
       </tr>

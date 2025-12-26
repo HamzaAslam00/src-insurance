@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Quote;
 use App\Models\Client;
@@ -549,8 +550,9 @@ class QuoteController extends Controller
         $quote = Quote::findOrFail($quoteId);
         $client = Client::where('quote_id', $quoteId)->first();
         if($formId == 125) {
-            $pdf = Pdf::loadView('backend.clients.forms.form125', compact('quote', 'client'));
-            return $pdf->download('125.pdf');
+            $data['date'] = Carbon::today()->format('d-m-Y');
+            $pdf = Pdf::loadView('backend.clients.forms.form125', compact('quote', 'client', 'data'));
+            return $pdf->stream('125.pdf');
             // return view('backend.clients.forms.form125', compact('quote', 'client'));
         } elseif($formId == 126) {
             $pdf = Pdf::loadView('backend.clients.forms.form126', compact('quote', 'client'));
