@@ -109,7 +109,7 @@
                                         <div class="">
                                             <select class="form-control form-select select-style col-md-12" name="service_fee_dbl" id="service_fee_dbl">
                                                 <option value="" selected disabled>{{ __('messages.select_service_fee_dbl') }}</option>
-                                                <option value="$650">$150</option>
+                                                <option value="$150">$150</option>
                                                 <option value="other">{{ __('messages.other') }}</option>
                                             </select>
                                             <div class="col-md-8 other">
@@ -122,7 +122,8 @@
                                         <div class="">
                                             <select class="form-control form-select select-style col-md-12" name="wc_coverage_by_accident" id="wc_coverage_by_accident">
                                                 <option value="" selected disabled>{{ __('messages.select_wc_coverage_by_accident') }}</option>
-                                                <option value="$650">$150</option>
+                                                <option value="$500,000">$500,000</option>
+                                                <option value="$1,000,000">$1,000,000</option>
                                                 <option value="other">{{ __('messages.other') }}</option>
                                             </select>
                                             <div class="col-md-8 other">
@@ -135,7 +136,7 @@
                                         <div class="">
                                             <select class="form-control form-select select-style col-md-12" name="wc_coverage_each_employee" id="wc_coverage_each_employee">
                                                 <option value="" selected disabled>{{ __('messages.select_wc_coverage_each_employee') }}</option>
-                                                <option value="$650">$150</option>
+                                                <option value="$1,000,000">$1,000,000</option>
                                                 <option value="other">{{ __('messages.other') }}</option>
                                             </select>
                                             <div class="col-md-8 other">
@@ -146,6 +147,10 @@
                                     <div class="form-group col-lg-6">
                                         <label for="policy_limit">{{ __('messages.policy_limit') }}</label>
                                         <input type="text" class="form-control" name="policy_limit" id="policy_limit" value="">
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="disability_weekly_pay">{{ __('messages.disability_weekly_pay') }}</label>
+                                        <input type="text" class="form-control" name="disability_weekly_pay" id="disability_weekly_pay" value="">
                                     </div>
                                 </div>
                                 <div class="col-lg-12 px-0">

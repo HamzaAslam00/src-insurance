@@ -328,6 +328,7 @@ return [
     'theft' => 'Theft',
     'dbl_policy_cost' => 'DBL Policy Cost',
     'policy_limit' => 'Policy Limit',
+    'disability_weekly_pay' => 'Disability Weekly Pay',
     'brokers_fee_wc' => 'Brokers Fee WC',
     'select_brokers_fee_wc' => '--- Select Brokers Fee WC ---',
     'other_brokers_fee_wc' => 'Other Brokers Fee WC',

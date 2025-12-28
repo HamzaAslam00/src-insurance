@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('down_payment');
             $table->string('monthly_payment');
             $table->string('no_of_monthly_payment');
-            $table->string('finance_charge');
+            $table->string('finance_charge')->nullable();
             $table->string('total');
             
             $table->string('aggregate')->nullable();
@@ -65,6 +65,7 @@ return new class extends Migration
             $table->string('wc_coverage_each_employee')->nullable();
             $table->string('wc_coverage_each_employee_other')->nullable();
             $table->string('policy_limit')->nullable();
+            $table->string('disability_weekly_pay')->nullable();
             
             $table->string('file_path')->nullable();
             $table->json('client_sign_path')->nullable();

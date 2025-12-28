@@ -364,8 +364,9 @@ class QuoteController extends Controller
                                     </a>';
                     }
                 }
-                if (auth()->user()->user_type == 'partner' && $record->status == 'ready_quote') {
-                    $actions .= '<a href="' . asset('backend/demo_file.pdf') . '" target="_blank" data-title="Requested Quote" class="btn btn-sm btn-success">
+                if (in_array(auth()->user()->user_type, ['partner', 'admin']) && $record->status == 'ready_quote') {
+                    $proposal = Proposal::where('quote_id', $record->id)->first();
+                    $actions .= '<a href="' . route('download-proposal', ['clientId' => $proposal->client_id, 'proposalId' => $proposal->id]) . '" target="_blank" data-title="Requested Quote" class="btn btn-sm btn-success">
                         <span class="fe fe-download"> </span>
                     </a>';
                 }
@@ -590,7 +591,6 @@ class QuoteController extends Controller
             'down_payment' => 'required',
             'monthly_payment' => 'required',
             'no_of_monthly_payment' => 'required',
-            'finance_charge' => 'required',
             'total' => 'required',
         ]);
 
@@ -631,6 +631,7 @@ class QuoteController extends Controller
                     'wc_coverage_each_employee' => $request->wc_coverage_each_employee,
                     'wc_coverage_each_employee_other' => $request->wc_coverage_each_employee_other,
                     'policy_limit' => $request->policy_limit,
+                    'disability_weekly_pay' => $request->disability_weekly_pay,
                 ];
             } else {
                 $data = [
@@ -706,6 +707,24 @@ class QuoteController extends Controller
             return response()->json([
                 'message' => $exception->getMessage()
             ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function downloadProposal($clientId, $proposalId)
+    {
+        $proposalData = Proposal::findOrFail($proposalId);
+        $quote = Quote::where('id', $proposalData->quote_id)->first();
+        $date = Carbon::parse($proposalData->created_at)->format('F j, Y');
+        // $client = Client::where('id', $clientId)->first();
+        if ($proposalData->status == 'signed') {
+            // download file path in proposal signed
+        } else {
+            if ($quote->service_type == 'worker_compensation') {
+                $pdf = Pdf::loadView('backend.clients.forms.wc_proposal_form', compact('proposalData', 'date'));
+                return $pdf->download("Worker's Compensation _Proposal.pdf");
+            }
+            $pdf = Pdf::loadView('backend.clients.forms.bo_proposal_form', compact('proposalData', 'date'));
+            return $pdf->download('Business Owners Proposal.pdf');
         }
     }
     

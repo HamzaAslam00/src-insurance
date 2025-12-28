@@ -287,7 +287,7 @@
     .payment-box {
       border: 1px solid #000;
       width: 340px;
-      margin: 15px auto;
+      margin: 8px auto;
     }
   
     .payment-header {
@@ -577,11 +577,11 @@
         </div>
 
         <div class="prepared-label">Prepared for:</div>
-        <div class="client-name-cover">{{ $data['client_name'] ?? 'LUIS TUFINO' }}</div>
+        <div class="client-name-cover">{{ $proposalData['owner_name'] ?? '' }}</div>
 
-        <div class="company-name-cover">{{ $data['company_name'] ?? 'DON PEPE TORTAS Y JUGOS INC' }}</div>
+        <div class="company-name-cover">{{ $proposalData['business_name'] ?? '' }}</div>
 
-        <div class="date-cover">{{ $data['proposal_date'] ?? 'September 1, 2025' }}</div>
+        <div class="date-cover">{{ $date }}</div>
 
         <div class="broker-name-large">SRC INSURANCE BROKERAGE INC.</div>
         <div class="broker-type">Business Owners Quote</div>
@@ -619,151 +619,152 @@
       <table class="info-table">
         <tr>
           <td class="info-label">Date:</td>
-          <td>{{ $data['quote_date'] ?? '9/1/2025' }}</td>
+          <td>{{ \Carbon\Carbon::parse($date)->format('m/d/Y') }}</td>
         </tr>
         <tr>
           <td class="info-label">Named Insured:</td>
-          <td>{{ $data['company_name'] ?? 'DON PEPE TORTAS Y JUGOS INC' }}</td>
+          <td>{{ $proposalData['business_name'] ?? '' }}</td>
         </tr>
         <tr>
           <td class="info-label">Address:</td>
-          <td>{{ $data['address'] ?? '3908 5TH AVENUE' }}</td>
+          <td><div style="width: 60%;">{{ $proposalData['address'] ?? '' }}</div></td>
         </tr>
         <tr>
           <td class="info-label">City:</td>
-          <td>{{ $data['city'] ?? 'BROOKLYN' }}</td>
+          <td>{{ $proposalData['city'] ?? '' }}</td>
         </tr>
         <tr>
           <td class="info-label">State:</td>
-          <td>{{ $data['state'] ?? 'NY' }}</td>
+          <td>{{ $proposalData['state'] == 'new-york' ? 'NY' : 'NJ' }}</td>
         </tr>
         <tr>
           <td class="info-label">Zip Code</td>
-          <td>{{ $data['zip_code'] ?? '11232' }}</td>
+          <td>{{ $proposalData['zip_code'] ?? '' }}</td>
         </tr>
         <tr>
           <td class="info-label">Telephone:</td>
-          <td>{{ $data['telephone'] ?? '718-435-3826' }}</td>
+          <td>{{ $proposalData['business_telephone'] ?? '' }}</td>
         </tr>
         <tr>
           <td class="info-label">Insurance Carrier:</td>
-          <td>{{ $data['carrier'] ?? 'NEXT' }}</td>
+          <td>{{ $proposalData['insurance_carrier'] ?? '' }}</td>
         </tr>
       </table>
-<div class="px-100">
-  <div class="coverage-wrapper clearfix">
-    <div class="coverage-left">
-      <div class="coverage-header">COMMERCIAL PROPERTY COVERAGE</div>
-      <table style="width: 100%;">
-        <tr class="coverage-row">
-          <td>Business Personal Property:</td>
-          <td>${{ number_format($data['bpp'] ?? 100000, 2) }}</td>
-        </tr>
-        <tr class="coverage-row">
-          <td>Building:</td>
-          <td>{{ $data['building'] ?? 'NONE' }}</td>
-        </tr>
-        <tr class="coverage-row">
-          <td>Deductible:</td>
-          <td>{{ number_format($data['deductible'] ?? 1000) }}</td>
-        </tr>
-      </table>
-  
-      <div class="protection-header">POLICY PROTECTION</div>
-      <table style="width: 100%;">
-        <tr class="protection-row">
-          <td>Professional Liability:</td>
-          <td>{{ $data['professional_liability'] ?? 'NO' }}</td>
-        </tr>
-        <tr class="protection-row">
-          <td>Liquor Liability:</td>
-          <td>{{ $data['liquor_liability'] ?? 'NO' }}</td>
-        </tr>
-        <tr class="protection-row">
-          <td>Business Interruption:</td>
-          <td>{{ $data['business_interruption'] ?? 'YES' }}</td>
-        </tr>
-        <tr class="protection-row">
-          <td>Theft:</td>
-          <td>{{ $data['theft'] ?? 'YES' }}</td>
-        </tr>
-        <tr class="protection-row">
-          <td>Flood/Water Damage:</td>
-          <td>{{ $data['flood_water'] ?? 'NO' }}</td>
-        </tr>
-        <tr class="protection-row">
-          <td>Vandalism:</td>
-          <td>{{ $data['vandalism'] ?? 'YES' }}</td>
-        </tr>
-        <tr class="protection-row">
-          <td>Fire/Wind:</td>
-          <td>{{ $data['fire_wind'] ?? 'YES' }}</td>
-        </tr>
-      </table>
-    </div>
-    <div class="coverage-right">
-      <div class="coverage-header">COMMERCIAL GENERAL LIABILITY</div>
-      <table style="width: 100%;">
-        <tr class="coverage-row">
-          <td>General Aggregate:</td>
-          <td>${{ number_format($data['general_aggregate'] ?? 2000000, 2) }}</td>
-        </tr>
-        <tr class="coverage-row">
-          <td>Products & Completed Op.:</td>
-          <td>${{ number_format($data['products_completed'] ?? 2000000, 2) }}</td>
-        </tr>
-        <tr class="coverage-row">
-          <td>Each Occurrence:</td>
-          <td>${{ number_format($data['each_occurrence'] ?? 1000000, 2) }}</td>
-        </tr>
-        <tr class="coverage-row">
-          <td>Damage to Rented Premises:</td>
-          <td>${{ number_format($data['rented_premises'] ?? 100000, 2) }}</td>
-        </tr>
-        <tr class="coverage-row">
-          <td>Medical Expenses:</td>
-          <td>${{ number_format($data['medical_expenses'] ?? 15000, 2) }}</td>
-        </tr>
-      </table>
-    </div>
-  </div>
-</div>
+      
+      <div class="px-100">
+        <div class="coverage-wrapper clearfix">
+          <div class="coverage-left">
+            <div class="coverage-header">COMMERCIAL PROPERTY COVERAGE</div>
+            <table style="width: 100%;">
+              <tr class="coverage-row">
+                <td>Business Personal Property:</td>
+                <td>{{ $proposalData['business_personal_property'] == 'other' ? '$' . $proposalData['business_personal_property_other'] : ($proposalData['business_personal_property'] ?? '-') }}</td>
+              </tr>
+              <tr class="coverage-row">
+                <td>Building:</td>
+                <td>{{ $proposalData['building_coverage'] == 'other' ? '$' . $proposalData['building_coverage_other'] : ($proposalData['building_coverage'] ?? '-') }}</td>
+              </tr>
+              <tr class="coverage-row">
+                <td>Deductible:</td>
+                <td>{{ $proposalData['deductible'] == 'other' ? '$' . $proposalData['deductible_other'] : ($proposalData['deductible'] ?? '-') }}</td>
+              </tr>
+            </table>
+        
+            <div class="protection-header">POLICY PROTECTION</div>
+            <table style="width: 100%;">
+              <tr class="protection-row">
+                <td>Professional Liability:</td>
+                <td>{{ $proposalData['professional_liability'] ?? '' }}</td>
+              </tr>
+              <tr class="protection-row">
+                <td>Liquor Liability:</td>
+                <td>{{ $proposalData['liqour_interruption'] ?? '' }}</td>
+              </tr>
+              <tr class="protection-row">
+                <td>Business Interruption:</td>
+                <td>{{ $proposalData['business_interruption'] ?? '' }}</td>
+              </tr>
+              <tr class="protection-row">
+                <td>Theft:</td>
+                <td>{{ $proposalData['theft'] ?? '' }}</td>
+              </tr>
+              <tr class="protection-row">
+                <td>Flood/Water Damage:</td>
+                <td>{{ $proposalData['food_water_damage'] ?? '' }}</td>
+              </tr>
+              <tr class="protection-row">
+                <td>Vandalism:</td>
+                <td>{{ $proposalData['vandalism'] ?? '' }}</td>
+              </tr>
+              <tr class="protection-row">
+                <td>Fire/Wind:</td>
+                <td>{{ $proposalData['fire_wind'] ?? '' }}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="coverage-right">
+            <div class="coverage-header">COMMERCIAL GENERAL LIABILITY</div>
+            <table style="width: 100%;">
+              <tr class="coverage-row">
+                <td>General Aggregate:</td>
+                <td>{{ $proposalData['aggregate'] == 'other' ? '$' . $proposalData['aggregate_other'] : ($proposalData['aggregate'] ?? '-') }}</td>
+              </tr>
+              <tr class="coverage-row">
+                <td>Products & Completed Op.:</td>
+                <td>{{ $proposalData['products_complicated_oprations'] == 'other' ? '$' . $proposalData['products_complicated_oprations_other'] : ($proposalData['products_complicated_oprations'] ?? '-') }}</td>
+              </tr>
+              <tr class="coverage-row">
+                <td>Each Occurrence:</td>
+                <td>{{ $proposalData['each_occurence'] == 'other' ? '$' . $proposalData['each_occurence_other'] : ($proposalData['each_occurence'] ?? '-') }}</td>
+              </tr>
+              <tr class="coverage-row">
+                <td>Damage to Rented Premises:</td>
+                <td>{{ $proposalData['damage_to_rented_premises'] == 'other' ? '$' . $proposalData['damage_to_rented_premises_other'] : ($proposalData['damage_to_rented_premises'] ?? '-') }}</td>
+              </tr>
+              <tr class="coverage-row">
+                <td>Medical Expenses:</td>
+                <td>{{ $proposalData['medical_expenses'] == 'other' ? '$' . $proposalData['medical_expenses_other'] : ($proposalData['medical_expenses'] ?? '-') }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
 
-<div class="payment-box">
-  <div class="payment-header text-center">PAYMENT INFORMATION</div>
-  <table style="width: 100%;">
-    <tr class="payment-row">
-      <td>Down Payment:</td>
-      <td>${{ number_format($data['down_payment'] ?? 1196.18, 2) }}</td>
-    </tr>
-    <tr class="payment-row">
-      <td>Monthly Payments:</td>
-      <td>${{ number_format($data['monthly_payment'] ?? 273.09, 2) }}</td>
-    </tr>
-    <tr class="payment-row">
-      <td># of Months:</td>
-      <td>{{ $data['num_months'] ?? 10 }}</td>
-    </tr>
-    <tr class="payment-row">
-      <td>Finance Charge:</td>
-      <td>{{ $data['finance_charge'] ?? '-' }}</td>
-    </tr>
-    <tr class="payment-row">
-      <td><strong>Total Policy Cost:</strong></td>
-      <td><strong>${{ number_format($data['total_cost'] ?? 3927.00, 2) }}</strong></td>
-    </tr>
-    <tr>
-      <td colspan="2" class="payment-note">Checks payable to: <strong>"SRC Insurance Brokerage Inc."</strong></td>
-    </tr>
-    <tr>
-      <td colspan="2" style="height: 8px;"></td>
-    </tr>
-    <tr class="payment-row">
-      <td>Amount Paid Today:</td>
-      <td></td>
-    </tr>
-  </table>
-</div>
+      <div class="payment-box">
+        <div class="payment-header text-center">PAYMENT INFORMATION</div>
+        <table style="width: 100%;">
+          <tr class="payment-row">
+            <td>Down Payment:</td>
+            <td>${{ $proposalData['down_payment'] ?? '' }}</td>
+          </tr>
+          <tr class="payment-row">
+            <td>Monthly Payments:</td>
+            <td>${{ $proposalData['monthly_payment'] ?? '' }}</td>
+          </tr>
+          <tr class="payment-row">
+            <td># of Months:</td>
+            <td>{{ $proposalData['no_of_monthly_payment'] ?? '' }}</td>
+          </tr>
+          <tr class="payment-row">
+            <td>Finance Charge:</td>
+            <td>{{ $proposalData['finance_charge'] ?? '-' }}</td>
+          </tr>
+          <tr class="payment-row">
+            <td><strong>Total Policy Cost:</strong></td>
+            <td><strong>${{ $proposalData['total'] ?? '' }}</strong></td>
+          </tr>
+          <tr>
+            <td colspan="2" class="payment-note">Checks payable to: <strong>"SRC Insurance Brokerage Inc."</strong></td>
+          </tr>
+          <tr>
+            <td colspan="2" style="height: 8px;"></td>
+          </tr>
+          <tr class="payment-row">
+            <td>Amount Paid Today:</td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
 
       <div class="request-text">
         This is a request for insurance with the above stated coverages. Acceptance of these monies does not guarantee
@@ -771,10 +772,10 @@
         check to clear.
       </div>
 
-      <table style="width: 100%; margin-top: 15px;">
+      <table style="width: 100%; margin-top: 10px;">
         <tr>
           <td style="width: 45%;">
-            <div class="sig-line">{{ $data['client_name'] ?? 'LUIS TUFINO' }}</div>
+            <div class="sig-line">{{ $proposalData['owner_name'] ?? '' }}</div>
             <div class="sig-label">Print Name</div>
           </td>
           <td style="width: 10%;"></td>
@@ -810,12 +811,10 @@
       <p class="agreement-text">
         This agreement is made between <strong>SRC INSURANCE BROKERAGE INC.</strong> and
       </p>
-      <p class="agreement-text text-center"><strong>{{ $data['company_name'] ?? 'DON PEPE TORTAS Y JUGOS INC'
-          }}</strong></p>
+      <p class="agreement-text text-center"><strong>{{ $proposalData['business_name'] ?? '' }}</strong></p>
 
       <p class="agreement-text">
-        On this <span style="margin-left: 60px;"><strong>{{ $data['agreement_date'] ?? 'September 1, 2025'
-            }}</strong></span>
+        On this <span style="margin-left: 60px;"><strong>{{ $date }}</strong></span>
       </p>
 
       <p class="agreement-text">
@@ -832,7 +831,7 @@
 
       <p class="agreement-text mt-10">
         The insured will pay <strong>SRC INSURANCE BROKERAGE INC.</strong>
-        <span class="fee-amount">${{ number_format($data['service_fee'] ?? 650.00, 2) }}</span>
+        <span class="fee-amount" style="margin-left: 100px; font-weight: bold;">{{ $proposalData['service_fee'] == 'other' ? '$' . $proposalData['service_fee_other'] : ($proposalData['service_fee'] ?? '-') }}</span>
       </p>
 
       <p class="agreement-text mt-15">
@@ -843,12 +842,10 @@
       <p class="agreement-text">
         Este acuerdo se realiza entre <strong>SRC INSURANCE BROKERAGE INC.</strong> Y
       </p>
-      <p class="agreement-text text-center"><strong>{{ $data['company_name'] ?? 'DON PEPE TORTAS Y JUGOS INC'
-          }}</strong></p>
+      <p class="agreement-text text-center"><strong>{{ $proposalData['business_name'] ?? '' }}</strong></p>
 
       <p class="agreement-text">
-        En la Fecha <span style="margin-left: 60px;"><strong>{{ $data['agreement_date_spanish'] ?? 'Sep 1, 2025'
-            }}</strong></span>
+        En la Fecha <span style="margin-left: 60px;"><strong>{{ $date }}</strong></span>
       </p>
 
       <p class="agreement-text">
@@ -865,14 +862,14 @@
 
       <p class="agreement-text mt-10">
         El asegurado pagara a <strong>SRC INSURANCE BROKERAGE INC.</strong>
-        <span class="fee-amount">${{ number_format($data['service_fee'] ?? 650.00, 2) }}</span>
+        <span class="fee-amount" style="margin-left: 100px; font-weight: bold;">{{ $proposalData['service_fee'] == 'other' ? '$' . $proposalData['service_fee_other'] : ($proposalData['service_fee'] ?? '-') }}</span>
       </p>
 
       <div class="text-center mt-50 mb-80">
         <div style="border-bottom: 1px solid #000; width: 280px; margin: 0 auto; padding-top: 30px;">X</div>
         <div style="font-size: 9pt; margin-top: 5px;">
-          <strong>{{ $data['company_name'] ?? 'DON PEPE TORTAS Y JUGOS INC' }}</strong><br>
-          {{ $data['client_name'] ?? 'LUIS TUFINO' }}
+          <strong>{{ $proposalData['business_name'] ?? '' }}</strong><br>
+          {{ $proposalData['owner_name'] ?? '' }}
         </div>
       </div>
 
@@ -916,12 +913,12 @@
 
       <table style="width: 100%; font-size: 10pt;">
         <tr>
-          <td>I, <strong>{{ $data['client_name'] ?? 'LUIS TUFINO' }}</strong></td>
+          <td>I, <strong>{{ $proposalData['owner_name'] ?? '' }}</strong></td>
           <td style="padding-left: 150px;">Authorize <strong>SRC INSURANCE BROKERAGE INC,</strong></td>
         </tr>
         <tr>
           <td>to charge my</td>
-          <td style="padding-left: 150px;">FOR <span style="margin-left: 150px; margin-right:150px;">on</span> <span><strong>{{ $data['auth_date'] ?? '9/1/2025' }}</strong></span></td>
+          <td style="padding-left: 150px;">FOR <span style="margin-left: 150px; margin-right:150px;">on</span> <span><strong>{{ \Carbon\Carbon::parse($date)->format('m/d/Y') }}</strong></span></td>
         </tr>
       </table>
 
@@ -949,8 +946,8 @@
             <div style="border-bottom: 1px solid #000; padding-bottom: 5px;">X</div>
             <div class="text-center" style="font-size: 9pt;">
               SIGNATURE<br>
-              {{ $data['client_name'] ?? 'LUIS TUFINO' }}<br>
-              {{ $data['company_name'] ?? 'DON PEPE TORTAS Y JUGOS INC' }}
+              {{ $proposalData['owner_name'] ?? '' }}<br>
+              {{ $proposalData['business_name'] ?? '' }}
             </div>
           </td>
           <td style="width: 5%;"></td>
@@ -967,9 +964,9 @@
   </div>
 
   {{-- ============ PAGE 5: ACORD 125 ============ --}}
-  <div class="page">
+  {{-- <div class="page">
     <div class="agency-header" style="text-align: right;">
-      AGENCY CUSTOMER ID: <span class="agency-id-line">{{ $data['agency_customer_id'] ?? '1209557' }}</span>
+      AGENCY CUSTOMER ID: <span class="agency-id-line">{{ $proposalData['agency_customer_id'] ?? '1209557' }}</span>
     </div>
     <div class="acord-page" style="min-height: 720px; position: relative; border: 1px solid #000;">
 
@@ -1021,11 +1018,6 @@
           <th style="width: 40%;" class="pb-20">PRODUCER'S NAME (Please Print)</th>
           <th style="width: 30%;" class="pb-20">STATE PRODUCER LICENSE NO<br><span style="font-weight: normal;">(Required in Florida)</span></th>
         </tr>
-        {{-- <tr>
-          <td style="height: 25px;"></td>
-          <td></td>
-          <td></td>
-        </tr> --}}
       </table>
 
       <div class="applicable-block mt-10 px-10">
@@ -1042,11 +1034,6 @@
           <th style="width: 20%;" class="pb-20">DATE</th>
           <th style="width: 30%;" class="pb-20">NATIONAL PRODUCER NUMBER</th>
         </tr>
-        {{-- <tr>
-          <td style="height: 25px; color: red;">X</td>
-          <td></td>
-          <td></td>
-        </tr> --}}
       </table>
 
       <div class="blank-notice pb-150">
@@ -1058,10 +1045,10 @@
         <div class="acord-footer-center">Page 5 of 5</div>
       </div>
     </div>
-  </div>
+  </div> --}}
 
   {{-- ============ PAGE 6: ACORD 126 ============ --}}
-  <div class="page">
+  {{-- <div class="page">
     <div class="acord-page" style="min-height: 720px; position: relative; border: 1px solid #000;">
       <div class="applicable-block px-10">
         <span class="applicable-title">Applicable in NJ:</span> Any person who includes any false or misleading
@@ -1120,11 +1107,6 @@
           <th style="width: 40%;" class="pb-20">PRODUCER'S NAME (Please Print)</th>
           <th style="width: 30%;" class="pb-20">STATE PRODUCER LICENSE NO<br><span style="font-weight: normal;">(Required in Florida)</span></th>
         </tr>
-        {{-- <tr>
-          <td style="height: 25px;"></td>
-          <td></td>
-          <td></td>
-        </tr> --}}
       </table>
 
       <table class="acord-table">
@@ -1133,11 +1115,6 @@
           <th style="width: 20%;" class="pb-20">DATE</th>
           <th style="width: 30%;" class="pb-20">NATIONAL PRODUCER NUMBER</th>
         </tr>
-        {{-- <tr>
-          <td style="height: 25px; color: red;">X</td>
-          <td></td>
-          <td></td>
-        </tr> --}}
       </table>
 
       <div class="blank-notice pb-150">
@@ -1149,10 +1126,10 @@
         <div class="acord-footer-center">Page 5 of 5</div>
       </div>
     </div>
-  </div>
+  </div> --}}
 
   {{-- ============ PAGE 7: ACORD 140 ============ --}}
-  <div class="page">
+  {{-- <div class="page">
     <table style="width: 100%; margin-bottom: 5px; font-size: 8pt;">
       <tr>
         <td style="width: 50%;"><strong>SIGNATURE</strong></td>
@@ -1250,11 +1227,6 @@
           <th style="width: 40%;" class="pb-20">PRODUCER'S NAME (Please Print)</th>
           <th style="width: 30%;" class="pb-20">STATE PRODUCER LICENSE NO<br><span style="font-weight: normal;">(Required in Florida)</span></th>
         </tr>
-        {{-- <tr>
-          <td style="height: 25px;"></td>
-          <td></td>
-          <td></td>
-        </tr> --}}
       </table>
 
       <table class="acord-table">
@@ -1263,11 +1235,6 @@
           <th style="width: 20%;" class="pb-20">DATE</th>
           <th style="width: 30%;" class="pb-20">NATIONAL PRODUCER NUMBER</th>
         </tr>
-        {{-- <tr>
-          <td style="height: 25px; color: red;">X</td>
-          <td></td>
-          <td></td>
-        </tr> --}}
       </table>
 
       <div class="acord-footer">
@@ -1275,7 +1242,7 @@
         <div class="acord-footer-center">Page 3 of 3</div>
       </div>
     </div>
-  </div>
+  </div> --}}
 
 </body>
 

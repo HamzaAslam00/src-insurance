@@ -59,6 +59,7 @@ class Proposal extends Model
         'wc_coverage_each_employee',
         'wc_coverage_each_employee_other',
         'policy_limit',
+        'disability_weekly_pay',
         'file_path',
         'client_sign_path',
         'sign_date',

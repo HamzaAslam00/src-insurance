@@ -222,36 +222,36 @@
                                     <div class="form-group col-lg-6">
                                         <label for="professional_liability">{{ __('messages.professional_liability') }}</label>
                                         <select class="form-control select2 form-select" name="professional_liability" id="professional_liability">
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="YES">YES</option>
+                                            <option value="NO">NO</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label for="theft">{{ __('messages.theft') }}</label>
                                         <select class="form-control select2 form-select" name="theft" id="theft">
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="YES">YES</option>
+                                            <option value="NO">NO</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label for="food_water_damage">{{ __('messages.food_water_damage') }}</label>
                                         <select class="form-control select2 form-select" name="food_water_damage" id="food_water_damage">
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="YES">YES</option>
+                                            <option value="NO">NO</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label for="vandalism">{{ __('messages.vandalism') }}</label>
                                         <select class="form-control select2 form-select" name="vandalism" id="vandalism">
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="YES">YES</option>
+                                            <option value="NO">NO</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-lg-6">
                                         <label for="fire_wind">{{ __('messages.fire_wind') }}</label>
                                         <select class="form-control select2 form-select" name="fire_wind" id="fire_wind">
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="YES">YES</option>
+                                            <option value="NO">NO</option>
                                         </select>
                                     </div>
                                 </div>

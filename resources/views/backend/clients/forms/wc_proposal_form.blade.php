@@ -400,11 +400,11 @@
                 </div>
     
                 <div class="prepared-label">Prepared for:</div>
-                <div class="client-name-cover">{{ $data['client_name'] ?? 'LUIS TUFINO' }}</div>
+                <div class="client-name-cover">{{ $proposalData['owner_name'] ?? '' }}</div>
     
-                <div class="company-name-cover">{{ $data['company_name'] ?? 'DON PEPE TORTAS Y JUGOS INC' }}</div>
+                <div class="company-name-cover">{{ $proposalData['business_name'] ?? '' }}</div>
     
-                <div class="date-cover">{{ $data['proposal_date'] ?? 'September 1, 2025' }}</div>
+                <div class="date-cover">{{ $date }}</div>
     
                 <div class="broker-name-large">SRC INSURANCE BROKERAGE INC.</div>
                 <div class="broker-type">Worker's Compensation</div>
@@ -457,35 +457,35 @@
             <table class="info-table">
                 <tr>
             <td class="info-label">Date:</td>
-            <td class="pl-8">{{ $data['quote_date'] ?? '9/1/2025' }}</td>
+            <td class="pl-8">{{ \Carbon\Carbon::parse($date)->format('m/d/Y') }}</td>
                 </tr>
                 <tr>
             <td class="info-label">Named Insured:</td>
-            <td class="pl-8">{{ $data['company_name'] ?? 'DON PEPE TORTAS Y JUGOS INC' }}</td>
+            <td class="pl-8">{{ $proposalData['business_name'] ?? '' }}</td>
                 </tr>
                 <tr>
             <td class="info-label">Address:</td>
-            <td class="pl-8">{{ $data['address'] ?? '3908 5TH AVENUE' }}</td>
+            <td class="pl-8"><div style="width: 90%;">{{ $proposalData['address'] ?? '' }}</div></td>
                 </tr>
                 <tr>
             <td class="info-label">City:</td>
-            <td class="pl-8">{{ $data['city'] ?? 'BROOKLYN' }}</td>
+            <td class="pl-8">{{ $proposalData['city'] ?? '' }}</td>
                 </tr>
                 <tr>
             <td class="info-label">State:</td>
-            <td class="pl-8">{{ $data['state'] ?? 'NY' }}</td>
+            <td class="pl-8">{{ $proposalData['state'] == 'new-york' ? 'NY' : 'NJ' }}</td>
                 </tr>
                 <tr>
             <td class="info-label">Zip Code</td>
-            <td class="pl-8">{{ $data['zip_code'] ?? '11232' }}</td>
+            <td class="pl-8">{{ $proposalData['zip_code'] ?? '' }}</td>
                 </tr>
                 <tr>
             <td class="info-label">Telephone:</td>
-            <td class="pl-8">{{ $data['telephone'] ?? '718-435-3826' }}</td>
+            <td class="pl-8">{{ $proposalData['business_telephone'] ?? '' }}</td>
                 </tr>
                 <tr>
             <td class="info-label">Insurance Carrier:</td>
-            <td class="pl-8">{{ $data['carrier'] ?? 'NEXT' }}</td>
+            <td class="pl-8">{{ $proposalData['insurance_carrier'] ?? '' }}</td>
                 </tr>
             </table>
             
@@ -495,22 +495,22 @@
                     <table style="width: 100%;">
                         <tr class="coverage-row">
                             <td>Weekly Pay</td>
-                            <td>${{ $quote->disability_weekly ?? '170.00' }}</td>
+                            <td>${{ $proposalData['disability_weekly_pay'] ?? '' }}</td>
                         </tr>
                     </table>
                     <div class="coverage-header">Worker's Compensation</div>
                     <table style="width: 100%;">
                         <tr class="coverage-row">
                             <td>Bodily Injury by Accident- each accident</td>
-                            <td>${{ $quote->bi_accident ?? '1,000,000.00' }}</td>
+                            <td>{{ $proposalData['wc_coverage_by_accident'] == 'other' ? '$' . $proposalData['wc_coverage_by_accident_other'] : ($proposalData['wc_coverage_by_accident'] ?? '-') }}</td>
                         </tr>
                         <tr class="coverage-row">
                             <td>Bodily Injury by Disease- each employee</td>
-                            <td>${{ $quote->bi_disease_emp ?? '1,000,000.00' }}</td>
+                            <td>{{ $proposalData['wc_coverage_each_employee'] == 'other' ? '$' . $proposalData['wc_coverage_each_employee_other'] : ($proposalData['wc_coverage_each_employee'] ?? '-') }}</td>
                         </tr>
                         <tr class="coverage-row">
                             <td>Bodily Injury by Disease- policy limit</td>
-                            <td>${{ $quote->bi_disease_policy ?? '1,000,000.00' }}</td>
+                            <td>${{ $proposalData['policy_limit'] ?? '' }}</td>
                         </tr>
                     </table>
                     
@@ -522,23 +522,23 @@
                 <table style="width: 100%;">
             <tr class="payment-row">
                 <td>Down Payment:</td>
-                <td>${{ number_format($data['down_payment'] ?? 1432.00, 2) }}</td>
+                <td>${{ $proposalData['down_payment'] ?? '' }}</td>
             </tr>
             <tr class="payment-row">
                 <td>Monthly Payments:</td>
-                <td>${{ number_format($data['monthly_payment'] ?? 782.00, 2) }}</td>
+                <td>${{ $proposalData['monthly_payment'] ?? '' }}</td>
             </tr>
             <tr class="payment-row">
                 <td># of Months:</td>
-                <td>{{ $data['num_months'] ?? 1 }}</td>
+                <td>{{ $proposalData['no_of_monthly_payment'] ?? '' }}</td>
             </tr>
             <tr class="payment-row">
                 <td>Finance Charge:</td>
-                <td>{{ $data['finance_charge'] ?? '$0.00' }}</td>
+                <td>${{ $proposalData['finance_charge'] ?? '' }}</td>
             </tr>
             <tr class="payment-row">
                 <td><strong>Total Policy Cost:</strong></td>
-                <td><strong>${{ number_format($data['total_cost'] ?? 2214.00, 2) }}</strong></td>
+                <td><strong>${{ $proposalData['total'] ?? '' }}</strong></td>
             </tr>
                 </table>
             </div>
@@ -548,7 +548,7 @@
                 <table style="width: 100%;">
             <tr class="payment-row">
                 <td>Full Payment :</td>
-                <td>${{ number_format($data['down_payment'] ?? 395, 2) }}</td>
+                <td>${{ $proposalData['dbl_policy_cost'] ?? '' }}</td>
             </tr>
                 </table>
             </div>
@@ -558,11 +558,11 @@
                 <table style="width: 100%;">
             <tr class="payment-row">
                 <td>Down Payment:</td>
-                <td>${{ number_format($data['down_payment'] ?? 1827.00, 2) }}</td>
+                <td>${{ number_format((float) preg_replace('/[^\d.]/', '', $proposalData['down_payment']) + (float) preg_replace('/[^\d.]/', '', $proposalData['dbl_policy_cost']), 2) }}</td>
             </tr>
             <tr class="payment-row">
                 <td><strong>Total Payment:</strong></td>
-                <td><strong>${{ number_format($data['total_cost'] ?? 2609.00, 2) }}</strong></td>
+                <td><strong>${{ number_format((float) preg_replace('/[^\d.]/', '', $proposalData['dbl_policy_cost']) + (float) preg_replace('/[^\d.]/', '', $proposalData['total']), 2) }}</strong></td>
             </tr>
                 </table>
             </div>
@@ -576,8 +576,8 @@
                         <div style="padding-bottom: 1px; width:240px; margin:0 auto; text-align: left;">X</div>
                         <div
                             style="border-top:1px solid #000; width:240px; margin:0 auto; padding-top:5px; font-size:9pt; font-weight:bold;">
-                            {{ $client->name ?? 'LUIS TUFINO' }}</div>
-                        <div style="font-size:8pt;">{{ $client->company_name ?? 'DON PEPE TORTAS Y JUGOS INC' }}</div>
+                            {{ $proposalData['owner_name'] ?? '' }}</div>
+                        <div style="font-size:8pt;">{{ $proposalData['business_name'] ?? '' }}</div>
                     </td>
                 </tr>
             </table>
@@ -593,8 +593,6 @@
                 <tr>
                     <td style="width:15%; text-align:left; vertical-align:middle;">
                         <img src="{{ public_path('backend/images/wc-pdf-logo-short.png') }}" alt="Logo">
-                        @if(isset($logo_path) && file_exists($logo_path))
-                        @endif
                     </td>
                     <td style="width:70%; text-align:center; vertical-align:middle;">
                         <div class="text-center"><div class="header-company">SRC INSURANCE BROKERAGE INC.</div></div>
@@ -603,8 +601,6 @@
                     </td>
                     <td style="width:15%; text-align:right; vertical-align:middle;">
                         <img src="{{ public_path('backend/images/wc-pdf-logo-short.png') }}" alt="Logo">
-                        @if(isset($logo_path) && file_exists($logo_path))
-                        @endif
                     </td>
                 </tr>
             </table>
@@ -618,10 +614,8 @@
                 Insurance Brokerage Inc. from the purchase of insurance.</div>
             <div style="font-size:10pt; margin-bottom:5px;">This agreement is made between <span style="font-weight: bold;">SRC INSURANCE BROKERAGE INC.</span>
             </div>
-            <div style="font-size:10pt; text-align:center; font-weight:bold; margin-bottom:5px;">{{ $client->company_name ??
-                'DON PEPE TORTAS Y JUGOS INC' }}</div>
-            <div style="font-size:10pt; margin-bottom:10px;">On this <span style="margin-left:120px; font-weight: bold;">{{
-                    $quote->proposal_date ?? 'April 9, 2025' }}</span></div>
+            <div style="font-size:10pt; text-align:center; font-weight:bold; margin-bottom:5px;">{{ $proposalData['business_name'] ?? '' }}</div>
+            <div style="font-size:10pt; margin-bottom:10px;">On this <span style="margin-left:120px; font-weight: bold;">{{ $date }}</span></div>
             <div style="font-size:10pt; line-height:1.5; margin-bottom:8px;">It is agreed that every policy period in return
                 for SRC Insurance Brokerage Inc. following services:</div>
             <div style="margin-left:70px; font-size:10pt; margin-bottom:10px;">
@@ -634,14 +628,12 @@
             <table style="width:100%; margin-bottom:15px;">
                 <tr>
                     <td style="font-size:10pt;">The insured will pay <span style="font-weight: bold;">SRC INSURANCE BROKERAGE INC</span>.</td>
-                    <td style="font-size:10pt; font-weight:bold; text-align:right; width:100px;">${{ $quote->service_fee_wc
-                        ?? '650.00' }}</td>
+                    <td style="font-size:10pt; font-weight:bold; text-align:right; width:100px;">{{ $proposalData['brokers_fee_wc'] == 'other' ? '$' . $proposalData['brokers_fee_wc_other'] : ($proposalData['brokers_fee_wc'] ?? '-') }}</td>
                     <td style="font-size:10pt; text-align:right; width:50px; font-weight: bold;">WC</td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td style="font-size:10pt; font-weight:bold; text-align:right;">${{ $quote->service_fee_dbl ?? '150.00'
-                        }}</td>
+                    <td style="font-size:10pt; font-weight:bold; text-align:right;">{{ $proposalData['service_fee_dbl'] == 'other' ? '$' . $proposalData['service_fee_dbl_other'] : ($proposalData['service_fee_dbl'] ?? '-') }}</td>
                     <td style="font-size:10pt; text-align:right; font-weight: bold;">DBL</td>
                 </tr>
             </table>
@@ -649,10 +641,8 @@
                 puede cobrar una tarifa de servicio solo si usted (el asegurado) acepta esta tarifa por escrito. SRC
                 Insurance Brokerage Inc. recibirá una comisión por la compra del seguro.</div>
             <div style="font-size:10pt; margin-top:12px; margin-bottom:5px;">Este acuerdo se realiza entre <span style="font-weight: bold;">SRC INSURANCE BROKERAGE INC</span>. Y</div>
-            <div style="font-size:10pt; text-align:center; font-weight:bold; margin-bottom:5px;">{{ $client->company_name ??
-                'DON PEPE TORTAS Y JUGOS INC' }}</div>
-            <div style="font-size:10pt; margin-bottom:10px;">En la Fecha <span style="margin-left:100px; font-weight: bold;">{{
-                    $quote->proposal_date_spanish ?? 'Apr 9, 2025' }}</span></div>
+            <div style="font-size:10pt; text-align:center; font-weight:bold; margin-bottom:5px;">{{ $proposalData['business_name'] ?? '' }}</div>
+            <div style="font-size:10pt; margin-bottom:10px;">En la Fecha <span style="margin-left:100px; font-weight: bold;">{{ $date }}</span></div>
             <div style="font-size:10pt; line-height:1.4; font-style:italic; margin-bottom:8px;">Se acuerda que cada periodo
                 de la poliza a cambio de los siguientes servicios de src insurance brokerage inc</div>
             <div style="margin-left:70px; font-size:10pt; font-style:italic; margin-bottom:10px;">
@@ -665,14 +655,12 @@
             <table style="width:100%;">
                 <tr>
                     <td style="font-size:10pt; font-style:italic;">El asegurado pagara a <span style="font-weight: bold;">SRC INSURANCE BROKERAGE INC</span>.</td>
-                    <td style="font-size:10pt; font-weight:bold; text-align:right; width:100px;">${{ $quote->service_fee_wc
-                        ?? '650.00' }}</td>
+                    <td style="font-size:10pt; font-weight:bold; text-align:right; width:100px;">{{ $proposalData['brokers_fee_wc'] == 'other' ? '$' . $proposalData['brokers_fee_wc_other'] : ($proposalData['brokers_fee_wc'] ?? '-') }}</td>
                     <td style="font-size:10pt; text-align:right; width:50px; font-weight: bold;">WC</td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td style="font-size:10pt; font-weight:bold; text-align:right;">${{ $quote->service_fee_dbl ?? '150.00'
-                        }}</td>
+                    <td style="font-size:10pt; font-weight:bold; text-align:right;">{{ $proposalData['service_fee_dbl'] == 'other' ? '$' . $proposalData['service_fee_dbl_other'] : ($proposalData['service_fee_dbl'] ?? '-') }}</td>
                     <td style="font-size:10pt; text-align:right; font-weight: bold;">DBL</td>
                 </tr>
             </table>
@@ -682,8 +670,8 @@
                         <div style="padding-bottom: 1px; width:240px; margin:0 auto; text-align: left;">X</div>
                         <div
                             style="border-top:1px solid #000; width:240px; margin:0 auto; padding-top:5px; font-size:10pt; font-weight:bold;">
-                            {{ $client->name ?? 'LUIS TUFINO' }}</div>
-                        <div style="font-size:9pt;">{{ $client->company_name ?? 'DON PEPE TORTAS Y JUGOS INC' }}</div>
+                            {{ $proposalData['owner_name'] ?? '' }}</div>
+                        <div style="font-size:9pt;">{{ $proposalData['business_name'] ?? '' }}</div>
                     </td>
                 </tr>
             </table>
@@ -699,8 +687,6 @@
                     <tr>
                         <td style="width:15%; text-align:left; vertical-align:middle;">
                             <img src="{{ public_path('backend/images/wc-pdf-logo-short.png') }}" alt="Logo">
-                            @if(isset($logo_path) && file_exists($logo_path))
-                            @endif
                         </td>
                         <td style="width:70%; text-align:center; vertical-align:middle;">
                             <div class="text-center"><div class="header-company">SRC INSURANCE BROKERAGE INC.</div></div>
@@ -709,8 +695,6 @@
                         </td>
                         <td style="width:15%; text-align:right; vertical-align:middle;">
                             <img src="{{ public_path('backend/images/wc-pdf-logo-short.png') }}" alt="Logo">
-                            @if(isset($logo_path) && file_exists($logo_path))
-                            @endif
                         </td>
                     </tr>
                 </table>
@@ -741,13 +725,13 @@
                 this authorization has been terminated as outlined above.</div>
                 <table style="width: 100%; font-size: 10pt; padding:5px 20px;"">
                     <tr>
-                        <td>I, <strong>{{ $data['client_name'] ?? 'LUIS TUFINO' }}</strong></td>
+                        <td>I, <strong>{{ $proposalData['owner_name'] ?? '' }}</strong></td>
                         <td style="padding-left: 120px;">Authorize <strong>SRC INSURANCE BROKERAGE INC,</strong></td>
                     </tr>
                     <tr>
                         <td>to charge my</td>
                         <td style="padding-left: 120px;">FOR <span style="margin-left: 120px; margin-right:120px;">on</span>
-                            <span><strong>{{ $data['auth_date'] ?? '9/1/2025' }}</strong></span></td>
+                            <span><strong>{{ \Carbon\Carbon::parse($date)->format('m/d/Y') }}</strong></span></td>
                     </tr>
                 </table>
                         <table style="width:100%; margin:0px auto; border:1px solid #000; padding:12px 20px;">
@@ -757,19 +741,19 @@
                 </tr>
                 <tr>
                     <td style="width:120px; text-align:right; font-size:10pt; padding:4px 10px;">Card Number #:</td>
-                    <td style="border-bottom:1px solid #000; font-size:10pt;">{{ $quote->card_number ?? '' }}</td>
+                    <td style="border-bottom:1px solid #000; font-size:10pt;">{{ $proposalData->card_number ?? '' }}</td>
                 </tr>
                 <tr>
                     <td style="text-align:right; font-size:10pt; padding:4px 10px;">Expiration:</td>
-                    <td style="border-bottom:1px solid #000; font-size:10pt;">{{ $quote->card_exp ?? '' }}</td>
+                    <td style="border-bottom:1px solid #000; font-size:10pt;">{{ $proposalData->card_exp ?? '' }}</td>
                 </tr>
                 <tr>
                     <td style="text-align:right; font-size:10pt; padding:4px 10px;">CVV:</td>
-                    <td style="border-bottom:1px solid #000; font-size:10pt;">{{ $quote->card_cvv ?? '' }}</td>
+                    <td style="border-bottom:1px solid #000; font-size:10pt;">{{ $proposalData->card_cvv ?? '' }}</td>
                 </tr>
                 <tr>
                     <td style="text-align:right; font-size:10pt; padding:4px 10px;">Zip Code:</td>
-                    <td style="border-bottom:1px solid #000; font-size:10pt;">{{ $quote->card_zip ?? '' }}</td>
+                    <td style="border-bottom:1px solid #000; font-size:10pt;">{{ $proposalData->card_zip ?? '' }}</td>
                 </tr>
                         </table>
                 
@@ -780,11 +764,11 @@
                 </tr>
                 <tr>
                     <td style="width:120px; text-align:right; font-size:10pt; padding:4px 10px;">Routing #:</td>
-                    <td style="border-bottom:1px solid #000; font-size:10pt;">{{ $quote->ach_routing ?? '' }}</td>
+                    <td style="border-bottom:1px solid #000; font-size:10pt;">{{ $proposalData->ach_routing ?? '' }}</td>
                 </tr>
                 <tr>
                     <td style="text-align:right; font-size:10pt; padding:4px 10px;">Account #:</td>
-                    <td style="border-bottom:1px solid #000; font-size:10pt;">{{ $quote->ach_account ?? '' }}</td>
+                    <td style="border-bottom:1px solid #000; font-size:10pt;">{{ $proposalData->ach_account ?? '' }}</td>
                 </tr>
                         </table>
                 
@@ -793,8 +777,8 @@
                     <td style="width:50%; text-align:center; padding:0 25px;">
                         <div style="padding-bottom: 1px; width:240px; margin:0 auto; text-align: left; margin-top:33px; padding-top:5px;">X</div>
                         <div style="border-top:1px solid #000;  font-size:10pt;">
-                            SIGNATURE<br><span style="font-weight:bold;">{{ $client->name ?? 'LUIS TUFINO' }}</span><br>{{
-                            $client->company_name ?? 'DON PEPE TORTAS Y JUGOS INC' }}</div>
+                            SIGNATURE<br><span style="font-weight:bold;">{{ $proposalData['owner_name'] ?? '' }}</span><br>{{
+                            $proposalData['business_name'] ?? '' }}</div>
                     </td>
                     <td style="width:50%; text-align:center; padding:0 25px;">
                         
@@ -811,11 +795,11 @@
     </div>
 
     {{-- ==================== PAGE 5 - ACORD 130 ==================== --}}
-    <div class="page">
+    {{-- <div class="page">
         <table style="width:100%; font-size:9pt; margin-bottom:5px; font-weight:bold;">
             <tr>
                 <td><div style="text-align:left;">GENERAL INFORMATION (continued)</div></td>
-                <td><td style="text-align:right;">AGENCY CUSTOMER ID: <div style="border-bottom:1px solid #000; display: inline-block; width: 200px;">{{ $client->agency_id ?? '' }}</div></td></td>
+                <td><td style="text-align:right;">AGENCY CUSTOMER ID: <div style="border-bottom:1px solid #000; display: inline-block; width: 200px;">{{ $proposalData->agency_id ?? '' }}</div></td></td>
             </tr>
         </table>
         
@@ -828,51 +812,51 @@
                 <td style="padding:4px 5px; border-bottom:1px solid #000;"><span style="font-weight:bold;">16.</span>
                     ARE PHYSICALS REQUIRED AFTER OFFERS OF EMPLOYMENT ARE MADE?</td>
                 <td style="width:35px; text-align:center; border-bottom:1px solid #000; border-left:1px solid #000;">{{
-                    $quote->q16 ?? 'N' }}</td>
+                    $proposalData->q16 ?? 'N' }}</td>
             </tr>
             <tr>
                 <td style="padding:4px 5px; border-bottom:1px solid #000;"><span style="font-weight:bold;">17.</span>
                     ANY OTHER INSURANCE WITH THIS INSURER?</td>
-                <td style="text-align:center; border-bottom:1px solid #000; border-left:1px solid #000;">{{ $quote->q17
+                <td style="text-align:center; border-bottom:1px solid #000; border-left:1px solid #000;">{{ $proposalData->q17
                     ?? 'N' }}</td>
             </tr>
             <tr>
                 <td style="padding:4px 5px; border-bottom:1px solid #000;"><span style="font-weight:bold;">18.</span>
                     ANY PRIOR COVERAGE DECLINED / CANCELLED / NON-RENEWED IN THE LAST THREE (3) YEARS? (Missouri
-                    Applicants - Do not answer this question)<br><span style="margin-left:18px;">{{ $quote->q18_reason
+                    Applicants - Do not answer this question)<br><span style="margin-left:18px;">{{ $proposalData->q18_reason
                         ?? 'NON-PAYMENT OF AUDIT' }}</span></td>
                 <td
                     style="text-align:center; border-bottom:1px solid #000; border-left:1px solid #000; vertical-align:top;">
-                    {{ $quote->q18 ?? 'Y' }}</td>
+                    {{ $proposalData->q18 ?? 'Y' }}</td>
             </tr>
             <tr>
                 <td style="padding:4px 5px; border-bottom:1px solid #000;"><span style="font-weight:bold;">19.</span>
                     ARE EMPLOYEE HEALTH PLANS PROVIDED?</td>
-                <td style="text-align:center; border-bottom:1px solid #000; border-left:1px solid #000;">{{ $quote->q19
+                <td style="text-align:center; border-bottom:1px solid #000; border-left:1px solid #000;">{{ $proposalData->q19
                     ?? 'N' }}</td>
             </tr>
             <tr>
                 <td style="padding:4px 5px; border-bottom:1px solid #000;"><span style="font-weight:bold;">20.</span> DO
                     ANY EMPLOYEES PERFORM WORK FOR OTHER BUSINESSES OR SUBSIDIARIES?</td>
-                <td style="text-align:center; border-bottom:1px solid #000; border-left:1px solid #000;">{{ $quote->q20
+                <td style="text-align:center; border-bottom:1px solid #000; border-left:1px solid #000;">{{ $proposalData->q20
                     ?? 'N' }}</td>
             </tr>
             <tr>
                 <td style="padding:4px 5px; border-bottom:1px solid #000;"><span style="font-weight:bold;">21.</span> DO
                     YOU LEASE EMPLOYEES TO OR FROM OTHER EMPLOYERS?</td>
-                <td style="text-align:center; border-bottom:1px solid #000; border-left:1px solid #000;">{{ $quote->q21
+                <td style="text-align:center; border-bottom:1px solid #000; border-left:1px solid #000;">{{ $proposalData->q21
                     ?? 'N' }}</td>
             </tr>
             <tr>
                 <td style="padding:4px 5px; border-bottom:1px solid #000;"><span style="font-weight:bold;">22.</span> DO
                     ANY EMPLOYEES PREDOMINANTLY WORK AT HOME? If "YES", # of Employees:</td>
-                <td style="text-align:center; border-bottom:1px solid #000; border-left:1px solid #000;">{{ $quote->q22
+                <td style="text-align:center; border-bottom:1px solid #000; border-left:1px solid #000;">{{ $proposalData->q22
                     ?? 'N' }}</td>
             </tr>
             <tr>
                 <td style="padding:4px 5px; border-bottom:1px solid #000;"><span style="font-weight:bold;">23.</span>
                     ANY TAX LIENS OR BANKRUPTCY WITHIN THE LAST FIVE (5) YEARS? (If "YES", please specify)</td>
-                <td style="text-align:center; border-bottom:1px solid #000; border-left:1px solid #000;">{{ $quote->q23
+                <td style="text-align:center; border-bottom:1px solid #000; border-left:1px solid #000;">{{ $proposalData->q23
                     ?? 'N' }}</td>
             </tr>
             <tr>
@@ -880,7 +864,7 @@
                     WORKERS COMPENSATION PREMIUM DUE FROM YOU OR ANY COMMONLY MANAGED OR OWNED ENTERPRISES?<br><span
                         style="margin-left:18px;">IF YES, EXPLAIN INCLUDING ENTITY NAME(S) AND POLICY NUMBER(S).</span>
                 </td>
-                <td style="text-align:center; border-left:1px solid #000; vertical-align:top;">{{ $quote->q24 ?? 'N' }}
+                <td style="text-align:center; border-left:1px solid #000; vertical-align:top;">{{ $proposalData->q24 ?? 'N' }}
                 </td>
             </tr>
         </table>
@@ -977,7 +961,7 @@
         <div class="acord-footer-left">ACORD 130 (2013/01)</div>
         <div class="acord-footer-center">Page 4 of 4</div>
       </div>
-    </div>
+    </div> --}}
 
 </body>
 
