@@ -554,13 +554,12 @@ class QuoteController extends Controller
         if($formId == 125) {
             $pdf = Pdf::loadView('backend.clients.forms.form125', compact('quote', 'client', 'data'));
             return $pdf->stream('125.pdf');
-            // return view('backend.clients.forms.form125', compact('quote', 'client'));
         } elseif($formId == 126) {
             $pdf = Pdf::loadView('backend.clients.forms.form126', compact('quote', 'client', 'data'));
             return $pdf->stream('126.pdf');
         } else {
             $pdf = Pdf::loadView('backend.clients.forms.form140', compact('quote', 'client', 'data'));
-            return $pdf->download('140.pdf');
+            return $pdf->stream('140.pdf');
             // return view('backend.clients.forms.form140', compact('quote', 'client'));
         }
     }
