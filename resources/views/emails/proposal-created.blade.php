@@ -24,6 +24,7 @@
         <li><strong>Client Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> {{ $data['name'] }}</li>
         <li><strong>Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> {{ $data['email'] }}</li>
         <li><strong>Message:</strong> {{ $data['message'] }}</li>
+        <li><strong>File:</strong> <a href="{{ $data['file'] }}">View Proposal</a></li>
     </ul>
     
     <br>

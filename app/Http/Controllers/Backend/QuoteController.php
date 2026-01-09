@@ -9,6 +9,7 @@ use App\Models\Client;
 use App\Models\Proposal;
 use ReCaptcha\ReCaptcha;
 use App\Mail\ContactUsMail;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\QuoteRequestMail;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -364,7 +366,7 @@ class QuoteController extends Controller
                                     </a>';
                     }
                 }
-                if (in_array(auth()->user()->user_type, ['partner', 'admin']) && $record->status == 'ready_quote') {
+                if (in_array(auth()->user()->user_type, ['partner', 'admin']) && ($record->status == 'ready_quote' || $record->status == 'signed')) {
                     $proposal = Proposal::where('quote_id', $record->id)->first();
                     $actions .= '<a href="' . route('download-proposal', ['clientId' => $proposal->client_id, 'proposalId' => $proposal->id]) . '" target="_blank" data-title="Requested Quote" class="btn btn-sm btn-success">
                         <span class="fe fe-download"> </span>
@@ -716,7 +718,7 @@ class QuoteController extends Controller
         $date = Carbon::parse($proposalData->created_at)->format('F j, Y');
         // $client = Client::where('id', $clientId)->first();
         if ($proposalData->status == 'signed') {
-            // download file path in proposal signed
+            return Storage::disk('public')->download($proposalData->file_path);
         } else {
             if ($quote->service_type == 'worker_compensation') {
                 $pdf = Pdf::loadView('backend.clients.forms.wc_proposal_form', compact('proposalData', 'date'));
@@ -729,40 +731,58 @@ class QuoteController extends Controller
     
     public function signProposal(Request $request, $clientId)
     {
+        $client = Client::find($clientId);
+        $quote = Quote::findOrFail($client->quote_id);
+        $data['date'] = Carbon::today()->format('d-m-Y');
         if ($request->isMethod('get')) {
-            $client = Client::find($clientId);
             return view('backend.quotes.sign_proposal_modal', compact('client'));
-        }
-
-        dd($request->all());
-        $validator = Validator::make($request->all(), [
-            'client_name' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => JsonResponse::HTTP_UNPROCESSABLE_ENTITY,
-                'message' => $validator->errors()->first(),
-            ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         try {
             DB::beginTransaction();
-            $client = Client::where('id', $request->client_id)->first();
+            $proposalData = Proposal::where('id', $client->proposal_id)->first();
+            $date = Carbon::parse($proposalData->created_at)->format('F j, Y');
+            $base64Image = $request->profile_signature;
+
+            $image = preg_replace('/^data:image\/\w+;base64,/', '', $base64Image);
+            $image = str_replace(' ', '+', $image);
+            $imageData = base64_decode($image);
+            $tempFile = tmpfile();
+            $tempPath = stream_get_meta_data($tempFile)['uri'];
+            file_put_contents($tempPath, $imageData);
+            $siagnaturePath = saveResizeImage( $tempPath, 'signatures', 500, null, 'png');
+
+            if ($quote->service_type == 'worker_compensation') {
+                $pdf = Pdf::loadView('backend.clients.forms.wc_proposal_form', compact('proposalData', 'date', 'siagnaturePath'));
+                $path = 'pdfs/forms/' . "Worker's Compensation _Proposal" . Str::random(10) . '.pdf';
+            } else {
+                $pdf = Pdf::loadView('backend.clients.forms.bo_proposal_form', compact('proposalData', 'date', 'siagnaturePath'));
+                $path = 'pdfs/forms/' . "Business Owners _Proposal" . Str::random(10) . '.pdf';
+            }
+            Storage::disk('public')->put($path, $pdf->output());
+
+            $proposalData->update([
+                'file_path' => $path,
+                'client_sign_path' => json_encode($siagnaturePath),
+                'sign_date' => Carbon::now(),
+                'status' => 'signed',
+            ]);
+            Quote::where('id', $client->quote_id)->update(['status' => 'signed']);
             
             $data = [
-                'name' => $request->client_name,
+                'name' => $client->client_name,
                 'email' => $client->email,
                 'message' => __('messages.proposal_has_been_signed_successfully'),
+                'file' => env('APP_URL') . getImage($proposalData->file_path),
             ];
-            $ccMail = config('services.adminemail');
+            $ccMail[] = config('services.adminemail');
             if ($client->partner_id > 0) {
                 $partner = User::find($client->partner_id);
                 if ($partner) {
-                    $ccMail .= ',' . $partner->email;
+                    $ccMail[] = $partner->email;
                 }
             }
-            Mail::to($request->business_email)->cc($ccMail)->send(new ProposalCreatedMail($data));
+            Mail::to($client->email)->cc($ccMail)->send(new ProposalCreatedMail($data));
             DB::commit();
 
             return response()->json([

@@ -114,7 +114,7 @@
                             </div>
                         @else
                             <div class="col-md-6">
-                                <a href="{{ asset('backend/demo_file.pdf') }}" target="_blank">
+                                <a href="{{ route('download-proposal', [(auth()->user()->client?->id ?? 0), auth()->user()->client?->proposal?->id]) }}" target="_blank">
                                     <button class="btn btn-light" style="height: 50px; width: 100%;">
                                         {{ __('messages.view_proposal') }}
                                     </button>

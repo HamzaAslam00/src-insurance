@@ -23,6 +23,7 @@ function saveResizeImage($file, $directory, $width = null, $height = null, $type
     }
     $is_preview = strpos($directory, 'previews') !== false;
     $filename = Str::random() . time() . '.' . $type;
+    $extension = strtolower($type);
     $path = "$directory/$filename";
 
     $imageManager = new ImageManager(new Driver());
@@ -37,7 +38,11 @@ function saveResizeImage($file, $directory, $width = null, $height = null, $type
     if ($width && $width == $is_preview) {
         $img = $img->blur(60);
     }
-    $resource = $img->{'to' . ucfirst($type)}($is_preview ? 40 : 85);
+    if ($extension === 'png') {
+        $resource = $img->toPng();
+    } else {
+        $resource = $img->{'to' . ucfirst($type)}($is_preview ? 40 : 85);
+    }
     Storage::disk('public')->put($path, $resource, 'public');
 
     return $path;
@@ -84,6 +89,7 @@ function statusClasses($status)
         case 'accepted':
         case 'completed':
         case 'final':
+        case 'signed':
             $class = 'success';
             break;
         case 'inactive':

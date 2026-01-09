@@ -515,7 +515,7 @@
                   <tr>
                     <td style="width: 37%; border: none; padding-left: 4px;"></td>
                     <td style="width: 13%; border: none; border-left: 1px solid #000; padding-left: 4px;"><div class="value" style="font-size: 13px; text-align: center;">09/24/2025</div></td>
-                    <td style="width: 50%; border: none; border-left: 1px solid #000; padding-left: 4px;"><div class="value" style="font-size: 13px;">ABC CORP</div></td>
+                    <td style="width: 50%; border: none; border-left: 1px solid #000; padding-left: 4px;"><div class="value" style="font-size: 13px;">{{ $quote['business_name'] }}</div></td>
                   </tr>
                 </table>
               </td>

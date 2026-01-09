@@ -775,14 +775,17 @@
                         <table style="width:100%; margin-top:25px;">
                 <tr>
                     <td style="width:50%; text-align:center; padding:0 25px;">
-                        <div style="padding-bottom: 1px; width:240px; margin:0 auto; text-align: left; margin-top:33px; padding-top:5px;">X</div>
+                        @if ($siagnaturePath)
+                            <img src="{{ public_path('storage/'. $siagnaturePath) }}" alt="Signature" style="max-width: 50px; margin: 0 auto; display: block;">
+                        @endif
+                        <div style="padding-bottom: 1px; width:240px; margin:0 auto; text-align: left; @if(!$siagnaturePath) margin-top:33px; @endif padding-top:5px;">X</div>
                         <div style="border-top:1px solid #000;  font-size:10pt;">
                             SIGNATURE<br><span style="font-weight:bold;">{{ $proposalData['owner_name'] ?? '' }}</span><br>{{
                             $proposalData['business_name'] ?? '' }}</div>
                     </td>
                     <td style="width:50%; text-align:center; padding:0 25px;">
                         
-                        <div style="padding-bottom: 1px; width:240px; margin:0 auto; text-align: left; margin-top:33px; padding-top:5px; color: white;">X</div>
+                        <div style="padding-bottom: 1px; width:240px; margin:0 auto; text-align: left; @if(!$siagnaturePath) margin-top:33px; @else margin-top:25px; @endif padding-top:5px; color: white;">X</div>
 
 
                         <div style="border-top:1px solid #000;font-size:10pt;">DATE</div>

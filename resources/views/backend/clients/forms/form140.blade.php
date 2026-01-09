@@ -37,49 +37,12 @@
     }
 
     /* Header styles */
-    .header-row {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .acord-logo {
-      font-size: 14pt;
-      font-weight: bold;
-      letter-spacing: 3px;
-      vertical-align: middle;
-      padding: 2px 5px;
-    }
-
-    .form-title {
-      font-size: 11pt;
-      font-weight: bold;
-      text-align: center;
-      vertical-align: middle;
-    }
-
-    .section-title {
-      font-size: 8pt;
-      font-weight: bold;
-      text-align: center;
-      /* background-color: #d9d9d9; */
-      padding: 2px 5px;
-      border: 1px solid #000;
-    }
 
     .date-header {
       font-size: 7pt;
       text-align: center;
       border: 1px solid #000;
       padding: 2px;
-    }
-
-    .date-value {
-      font-size: 8pt;
-      text-align: center;
-      border: 1px solid #000;
-      border-top: none;
-      padding: 3px;
-      font-weight: bold;
     }
 
     /* Main table structure */
@@ -188,57 +151,6 @@
       content: "✓";
     }
 
-    /* Radio button styles */
-    .radio {
-      display: inline-block;
-      width: 9px;
-      height: 9px;
-      border: 1px solid #000;
-      border-radius: 50%;
-      margin-right: 2px;
-      vertical-align: middle;
-    }
-
-    .radio-checked {
-      display: inline-block;
-      width: 9px;
-      height: 9px;
-      border: 1px solid #000;
-      border-radius: 50%;
-      margin-right: 2px;
-      vertical-align: middle;
-      background: radial-gradient(circle at center, #000 0%, #000 40%, transparent 40%);
-    }
-
-    /* Notice box */
-    .notice-box {
-      border: 2px solid #000;
-      padding: 5px 8px;
-      margin: 5px 0;
-      font-size: 8pt;
-      text-align: center;
-      font-weight: bold;
-    }
-
-    /* Lines of business table */
-    .lob-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .lob-table td {
-      border: 1px solid #000;
-      padding: 1px 3px;
-      font-size: 7pt;
-      height: 14px;
-    }
-
-    .lob-header {
-      /* background-color: #d9d9d9; */
-      font-weight: bold;
-      font-size: 7pt;
-    }
-
     /* Footer */
     .footer {
       font-size: 7pt;
@@ -278,12 +190,6 @@
       padding: 2px;
     }
 
-    /* Underline for values */
-    .underline-value {
-      border-bottom: 1px solid #000;
-      min-width: 50px;
-      display: inline-block;
-    }
 
     /* Cell with no border */
     .no-border {
@@ -567,7 +473,7 @@
                   <tr>
                     <td style="width: 37%; border: none; padding-left: 4px;"></td>
                     <td style="width: 13%; border: none; border-left: 1px solid #000; padding-left: 4px;"><div class="value" style="font-size: 13px; text-align: center;">09/24/2025</div></td>
-                    <td style="width: 50%; border: none; border-left: 1px solid #000; padding-left: 4px;"><div class="value" style="font-size: 13px;">ABC CORP</div></td>
+                    <td style="width: 50%; border: none; border-left: 1px solid #000; padding-left: 4px;"><div class="value" style="font-size: 13px;">{{ $quote['business_name'] }}</div></td>
                   </tr>
                 </table>
               </td>
@@ -610,7 +516,7 @@
       <tr class="border-none">
         <td style="width: 18%;" class="v-bottom text-center label-bold border-none" rowspan="2">PREMISES INFORMATION</td>
         <td style="width: 10%;" class="v-middle label-bold fs-8">PREMISES #: <span class="fs-12 fw-normal">1</span></td>
-        <td class="v-middle label-bold fs-8">STREET ADDRESS: &nbsp;&nbsp;&nbsp;&nbsp;<span class="fs-12 fw-normal">123 MERRY STREET, BROOKLYN NY 11232</span></td>
+        <td class="v-middle label-bold fs-8">STREET ADDRESS: &nbsp;&nbsp;&nbsp;&nbsp;<span class="fs-12 fw-normal">{{ $quote['business_address'] . ', ' . $quote['city'] . ', ' . ($quote['state'] == 'new-york' ? 'NY ' : 'NJ ') . $quote['zip_code'] }}</span></td>
       </tr>
       <tr>
         <td style="" class="v-middle label-bold fs-8">BUILDING#:</td>

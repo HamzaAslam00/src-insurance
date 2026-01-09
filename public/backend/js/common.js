@@ -430,9 +430,12 @@ function initSignaturePad() {
         })
             .then(response => {
                 if (response.status == 200) {
-                    let url = window.location.origin + '/storage/' + response.data.profilr_signature;
+                    let url = window.location.origin + '/storage/' + response.data.profile_signature;
                     $("#saved_sign").attr("src", url);
                     toastMessage(response.data.message, 'success');
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000);
                 } else {
                     toastMessage();
                 }
